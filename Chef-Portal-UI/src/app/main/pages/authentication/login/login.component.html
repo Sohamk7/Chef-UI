@@ -1,0 +1,65 @@
+<div id="login" fxLayout="column">
+
+    <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+
+        <div id="login-form" >
+
+            <div class="title">LOGIN TO YOUR ACCOUNT</div>
+
+            <form [formGroup]="loginForm">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email">
+                    <mat-icon matSuffix class="secondary-text">mail</mat-icon>
+                    <mat-error>
+                        Email is required
+                    </mat-error>
+                    <!-- <mat-error
+                        *ngIf="!loginForm.get('email').hasError('required') &&
+                                loginForm.get('email').hasError('email')">
+                        Please enter a valid email address
+                    </mat-error> -->
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password" placeholder="password" [type]="pwdhide ? 'password' : 'text'">
+                    <button type="button" mat-icon-button matSuffix (click)="pwdhide = !pwdhide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="pwdhide">
+                    <mat-icon  matSuffix class="secondary-text">{{pwdhide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error>
+                        Password is required
+                    </mat-error>
+                    
+                </mat-form-field>
+
+                <!-- <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
+                     fxLayoutAlign="space-between center">
+                    <mat-checkbox class="remember-me" aria-label="Remember Me">
+                        Remember Me
+                    </mat-checkbox>
+
+                    <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">
+                        Forgot Password?
+                    </a>
+                </div> -->
+
+                <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
+                (click)="onLogin()" [disabled]="loginForm.invalid">
+                        <!-- [disabled]="loginForm.invalid" -->
+                    LOGIN
+                </button>
+
+            </form>
+
+            <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                <span class="text">Don't have an account?</span>
+                <a class="link">Create an account</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
