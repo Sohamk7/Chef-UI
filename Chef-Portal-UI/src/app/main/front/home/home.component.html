@@ -6,14 +6,23 @@
       
       <span class="example-spacer"></span>
       <div fxShow="true" fxHide.lt-md="true">
-        <a mat-button routerLink="auth/login">Chef Login</a>
+        <!-- <a mat-button routerLink="auth/login">Login</a> -->
+        <button mat-button [matMenuTriggerFor]="menu">Login</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="auth/login">Checfs Login</button>
+          <button mat-menu-item routerLink="auth/login">Admin Login</button>
+        </mat-menu>
       </div>
      
     </mat-toolbar>
     <mat-sidenav-container fxFlexFill class="example-container">
     <mat-sidenav color="primary" #sidenav fxLayout="column" mode="side" opened="true" fxHide.gt-sm="true">
         <div fxLayout="column">
-          <a mat-button routerLink="/auth/login">Chef Login</a>
+          <button mat-button [matMenuTriggerFor]="menu">Login</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="auth/login">Checfs Login</button>
+            <button mat-menu-item routerLink="auth/login">Admin Login</button>
+          </mat-menu>
         </div>
     </mat-sidenav>
     <mat-sidenav-content fxFlexFill>
