@@ -1,7 +1,8 @@
 
   <mat-sidenav-container fullscreen>
     <mat-sidenav mode="side" #sidenav opened position="start">
-      <h2>Logo</h2>
+      <!-- <h2>Logo</h2> -->
+      <img src="./assets/logo.jpeg" class="image" style="width: 100%;">
       <div fxLayout="column">
         <button mat-button  routerLink="/admin/home" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
           Home</button>
@@ -17,7 +18,7 @@
           <mat-divider></mat-divider>
         <div *ngIf="checkUserType">
         <button mat-button  routerLink="/admin/products" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
-            Custombers</button>
+            Customers</button>
             <mat-divider></mat-divider>
         </div>
         
@@ -51,7 +52,7 @@
         <button mat-icon-button (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
-            Checf Portal
+            Chef Portal
         <span class="toolbar-spacer"></span>
         <button mat-button (click)="logout()" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
             Logout</button>
