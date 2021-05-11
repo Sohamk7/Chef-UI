@@ -6,27 +6,44 @@
         <button mat-button  routerLink="/admin/home" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
           Home</button>
         <mat-divider></mat-divider>
-        <button mat-button *ngIf="!checkUserType" routerLink="/admin/profile" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
-          Profile</button>
-        <mat-divider></mat-divider>
+        <div *ngIf="!checkUserType">
+            <button mat-button  routerLink="/admin/profile" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
+                Profile</button>
+            <mat-divider></mat-divider>
+        </div>
+        
         <button mat-button routerLink="/admin/orders" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
           Orders</button>
           <mat-divider></mat-divider>
-        <button mat-button *ngIf="checkUserType" routerLink="/admin/products" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
-          Custombers</button>
-        <mat-divider></mat-divider>
-        <button mat-button *ngIf="checkUserType" routerLink="/admin/menus" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
-          Chefs</button>
-        <mat-divider></mat-divider>
-        <button mat-button *ngIf="!checkUserType" routerLink="/admin/products" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
-          Products</button>
-        <mat-divider></mat-divider>
-        <button mat-button *ngIf="!checkUserType" routerLink="/admin/menus" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
-          Menus</button>
-        <mat-divider></mat-divider>
-        <button mat-button *ngIf="!checkUserType" routerLink="/admin/schedules" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
-            Schedules</button>
-        <mat-divider></mat-divider>
+        <div *ngIf="checkUserType">
+        <button mat-button  routerLink="/admin/products" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
+            Custombers</button>
+            <mat-divider></mat-divider>
+        </div>
+        
+        <div *ngIf="checkUserType">
+            <button mat-button  routerLink="/admin/menus" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
+                Chefs</button>
+            <mat-divider></mat-divider>
+        </div>
+
+        <div *ngIf="!checkUserType">
+            <button mat-button  routerLink="/admin/products" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
+                Products</button>
+            <mat-divider></mat-divider>
+        </div>
+        
+        <div *ngIf="!checkUserType">
+            <button mat-button  routerLink="/admin/menus" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
+                Menus</button>
+            <mat-divider></mat-divider>
+        </div>
+        <div *ngIf="!checkUserType">
+            <button mat-button  routerLink="/admin/schedules" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
+                Schedules</button>
+            <mat-divider></mat-divider>
+        </div>
+
       </div>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -34,7 +51,7 @@
         <button mat-icon-button (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
-        My Application
+            Checf Portal
         <span class="toolbar-spacer"></span>
         <button mat-button (click)="logout()" routerLinkActive="selected no-border txt-bold" fxLayoutAlign="start" class="py-2 pr-5">
             Logout</button>

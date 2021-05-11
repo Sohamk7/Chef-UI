@@ -63,8 +63,8 @@ export class LoginComponent implements OnInit {
                   let duration = data.status==200 ? 2000 : 50000;
                   // Show the success message
                   this._matSnackBar.open('Login successfully', 'CLOSE', {
-                      verticalPosition: 'top',
-                      horizontalPosition:'right',
+                      verticalPosition: 'bottom',
+                      horizontalPosition:'center',
                       duration        : duration
                   });
                   this._router.navigate(['admin/dashboard']);
@@ -76,11 +76,12 @@ export class LoginComponent implements OnInit {
               },
               error => {
                   // Show the error message
-                  this._matSnackBar.open(error.message, 'Retry', {
-                      verticalPosition: 'top',
-                      horizontalPosition:'right',
+                  this._matSnackBar.open('Incorrect username or password', 'Retry', {
+                      verticalPosition: 'bottom',
+                      horizontalPosition:'center',
                       duration        : 2000
-              });
+                  });
+                  this.loginForm.reset();
           });
      
      }

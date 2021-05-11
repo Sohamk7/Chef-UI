@@ -15,11 +15,7 @@
                     <mat-error>
                         Email is required
                     </mat-error>
-                    <!-- <mat-error
-                        *ngIf="!loginForm.get('email').hasError('required') &&
-                                loginForm.get('email').hasError('email')">
-                        Please enter a valid email address
-                    </mat-error> -->
+                  
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
@@ -34,20 +30,8 @@
                     
                 </mat-form-field>
 
-                <!-- <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
-                     fxLayoutAlign="space-between center">
-                    <mat-checkbox class="remember-me" aria-label="Remember Me">
-                        Remember Me
-                    </mat-checkbox>
-
-                    <a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">
-                        Forgot Password?
-                    </a>
-                </div> -->
-
                 <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
                 (click)="onLogin()" [disabled]="loginForm.invalid">
-                        <!-- [disabled]="loginForm.invalid" -->
                     LOGIN
                 </button>
 
@@ -55,7 +39,7 @@
 
             <div class="register" fxLayout="column" fxLayoutAlign="center center">
                 <span class="text">Don't have an account?</span>
-                <a class="link">Create an account</a>
+                <a class="link">Become a Chefs</a>
             </div>
 
         </div>
