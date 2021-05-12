@@ -9,6 +9,8 @@ import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { MenusModule } from './menus/menus.module';
 import { RouterModule } from '@angular/router';
+import { CustomersModule } from './customers/customers.module';
+import { ChefsModule } from './chefs/chefs.module';
 
 
 
@@ -16,6 +18,8 @@ import { RouterModule } from '@angular/router';
   declarations: [],
   imports: [
     CommonModule,
+    CustomersModule,
+    ChefsModule,
     DashboardModule,
     RouterModule,
     MaterialModule,

@@ -17,13 +17,8 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   });
   
-  // loginForm: FormGroup;
-    // submitted = false;
-    // returnUrl: string;
     public appConfig: any;
     pwdhide = true;
-    // Private
-    // private _unsubscribeAll: Subject<any>;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -65,14 +60,10 @@ export class LoginComponent implements OnInit {
                   this._matSnackBar.open('Login successfully', 'CLOSE', {
                       verticalPosition: 'bottom',
                       horizontalPosition:'center',
-                      duration        : duration
+                      duration        : 2000
                   });
                   this._router.navigate(['admin/dashboard']);
                   
-                  //Set LocalStorage On App Config
-                  // this._appConfig.setLocalStorage(data);
-
-                  // this.router.navigate([this.returnUrl]);
               },
               error => {
                   // Show the error message

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeModule } from './home/home.module';
 import { RouterModule } from '@angular/router';
+import { BecomeAChefsModule } from './become-achefs/become-achefs.module';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     HomeModule,
-    RouterModule
+    RouterModule,
+    BecomeAChefsModule
   ],
   exports: [RouterModule]
 })
