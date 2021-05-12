@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { DataService } from 'src/app/_services/dataservice';
 
@@ -24,6 +25,7 @@ export class BecomeAChefsComponent implements OnInit {
   cpwdhide: boolean = true;
   constructor(
     private _formBuilder:FormBuilder,
+    private _router:Router,
     private _matSnackBar: MatSnackBar,
     private _dataService:DataService
   ) { }
@@ -42,7 +44,7 @@ export class BecomeAChefsComponent implements OnInit {
   }
   let formValue = this.becomechefsForm.value
 
-  this._dataService.post({url:'chef',data:formValue,isLoader:true})
+  this._dataService.post({url:'auth/create_chef',data:formValue,isLoader:true})
       .pipe(first())
       .subscribe(
           data => {
@@ -52,7 +54,7 @@ export class BecomeAChefsComponent implements OnInit {
                   horizontalPosition:'center',
                   duration        : 2000
               });
-              
+              this._router.navigate(['/auth/login']);
           },
           error => {
               // Show the error message
