@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { first } from 'rxjs/operators';
 import { DataService } from 'src/app/_services/dataservice';
 
@@ -15,7 +16,7 @@ export class BecomeAChefsComponent implements OnInit {
   becomechefsForm= new FormGroup({
     first_name: new FormControl('', Validators.required),
     second_name: new FormControl('', Validators.required),
-    phone_number: new FormControl('', Validators.required),
+    phone_number: new FormControl('', [Validators.required,Validators.pattern("^((\\+44-?)|0)?[0-9]{10}$")]),
     password: new FormControl('', [Validators.required,Validators.minLength(8)]),
     confirm_password: new FormControl('',[Validators.required, confirmPasswordValidator]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -23,6 +24,13 @@ export class BecomeAChefsComponent implements OnInit {
 
   pwdhide:boolean = true;
   cpwdhide: boolean = true;
+
+  separateDialCode = false;
+	SearchCountryField = SearchCountryField;
+	CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
+  
   constructor(
     private _formBuilder:FormBuilder,
     private _router:Router,
@@ -49,7 +57,7 @@ export class BecomeAChefsComponent implements OnInit {
       .subscribe(
           data => {
               // Show the success message
-              this._matSnackBar.open('chefs successfully', 'CLOSE', {
+              this._matSnackBar.open('Thank you your response is recorded', 'CLOSE', {
                   verticalPosition: 'bottom',
                   horizontalPosition:'center',
                   duration        : 2000
@@ -65,9 +73,11 @@ export class BecomeAChefsComponent implements OnInit {
               });
               this.becomechefsForm.reset();
       });
- 
-
   }
+
+  changePreferredCountries() {
+		this.preferredCountries = [CountryISO.India, CountryISO.Canada];
+	}
 
 }
 
