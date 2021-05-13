@@ -13,6 +13,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSelectModule} from '@angular/material/select';
+
 
 const modules = [
   CommonModule,
@@ -29,7 +31,8 @@ const modules = [
   MatCheckboxModule,
   MatMenuModule,
   FlexLayoutModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatSelectModule
 ];
 
 @NgModule({
