@@ -1,4 +1,4 @@
 export class Login {
-    token:string = '';
-    last_login: string = '';
+    auth_token:string = '';
+    auth_admin: boolean;
 }
