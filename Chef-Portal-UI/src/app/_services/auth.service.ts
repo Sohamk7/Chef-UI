@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -16,8 +16,9 @@ export class AuthService {
         return this.http.post<any>(`${this.appConfig}auth/login`, { email, password, })
             .pipe(map(loginResponse => {
                 console.log(loginResponse);
-                    localStorage.setItem('token', JSON.stringify(loginResponse.auth_token));
-                    localStorage.setItem('userType', JSON.stringify(loginResponse.auth_admin));
+                localStorage.setItem('token', JSON.stringify(loginResponse.auth_token));
+                localStorage.setItem('userType', JSON.stringify(loginResponse.auth_admin));
+
                 return loginResponse;
             }),catchError(err => { return throwError("Error thrown from Server");}));
     }

@@ -1,0 +1,124 @@
+
+<div fxLayout="column">
+    <div class="header-section" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutGap="15px">
+            <span class="bold">Create New Product</span>
+        </div> 
+        <mat-icon class="icon bold" (click)="dialogRef.close('N');">close</mat-icon>
+     </div>
+     <div id="login" fxLayout="column">
+
+        <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center start">
+    
+            <div id="login-form" >
+                <form [formGroup]="createProductForm" fxLayot="column">
+
+                    <mat-form-field appearance="outline" >
+                        <mat-label>Product Name</mat-label>
+                        <input matInput formControlName="name" placeholder="Product Name">
+                        <mat-error>
+                            Product Name is required
+                        </mat-error>
+                      
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Price</mat-label>
+                        <input matInput formControlName="price" placeholder="Price">
+                        <mat-error>
+                            Price is required
+                        </mat-error>
+                      
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="description" placeholder=""></textarea>
+                       
+                    </mat-form-field>
+    
+                    <mat-radio-group aria-label="Select an option" formControlName="vegetarian" color="primary">
+                        <mat-radio-button [value]="false" class="pr-10">Vegetarin</mat-radio-button>
+                        <mat-radio-button [value]="true"> Non Vegetarin</mat-radio-button>
+                    </mat-radio-group>
+
+                    <h3>Upload Product Image:</h3>
+                    <input  hidden 
+                            #inputfile
+                            [formControl]="createProductForm.get('product_image')"
+                            type="file"
+                            (change)="fileChangeEvent($event)"
+                            [accept]="inputAccpets"
+                            />
+                    <div class="btn mb-4">
+                        <button type="button" mat-stroked-button color="primary" class="mr-12" (click)="inputfile.click();">Upload</button>
+                        <!-- <button type="button" mat-stroked-button color="warn" *ngIf="uploadInfo.media_id>0 || 
+                                uploadedResponse.media_id>0 || uploadInfo.url" (click)="RemovePicture()">Remove</button> -->
+                    </div>
+                    <div class="logo-preview pb-12" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img">
+                        <img [src]="tmp_avatar_img" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img" class="img-responsive" />
+                    </div>
+    
+                </form>
+
+            </div>
+            
+        </div>
+        <div class="button-section" fxLayout="row" fxLayoutAlign="end center" fxFlex="1 0 auto">
+
+            <div class="button-margin pl-4" fxLayout="row" fxLayoutGap="20px">
+    
+                <button mat-raised-button  type="submit" (click)="onSubmit()" [disabled]="createProductForm.invalid" 
+                color="primary" fxFlex="80px" >Save </button>
+                <button (click)="dialogRef.close('N');" mat-raised-button fxFlex="80px"> Cancel</button>
+            </div>
+        </div>
+    
+    </div>
+    <!-- <div   class="content">
+ 
+        <div fxLayout="row" fxLayoutAlign="center" >
+            <form [formGroup]="createProductForm" fxLayot="column">
+
+                <mat-form-field appearance="outline" fxLayout="row" >
+                    <mat-label>Product Name</mat-label>
+                    <input matInput formControlName="name" placeholder="Product Name">
+                    <mat-error>
+                        Product Name is required
+                    </mat-error>
+                  
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Price</mat-label>
+                    <input matInput formControlName="price" placeholder="Price">
+                    <mat-error>
+                        Price is required
+                    </mat-error>
+                  
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="description" placeholder=""></textarea>
+                   
+                </mat-form-field>
+
+                <mat-radio-group aria-label="Select an option" formControlName="vegetarian">
+                    <mat-radio-button value="true"> Non Vegetarin</mat-radio-button>
+                    <mat-radio-button value="false">Vegetarin</mat-radio-button>
+                </mat-radio-group>
+
+            </form>
+        </div>
+    </div>
+    <div class="button-section" fxLayout="row" fxLayoutAlign="end center" fxFlex="1 0 auto">
+
+        <div class="button-margin pl-4" fxLayout="row" fxLayoutGap="20px">
+
+            <button mat-raised-button class="save" type="submit" color="primary" fxFlex="100px" (click)="save()">Save </button>
+            <button (click)="dialogRef.close('N');" mat-raised-button fxFlex="100px"> Cancel</button>
+        </div>
+    </div> -->
+</div>
+

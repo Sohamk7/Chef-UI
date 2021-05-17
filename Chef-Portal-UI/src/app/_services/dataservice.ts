@@ -2,9 +2,14 @@ import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingService } from './loaderservice';
 import { ServerURL } from '../_helpers';
+
+//UPLOAD FILE DATA OPTION HEADERS
+const HttpUploadOptions = {
+    headers: new HttpHeaders({  "Accept":"multipart/form-data" })
+}
 
 @Injectable()
 export class DataService {
@@ -45,7 +50,7 @@ export class DataService {
   post(info: { url: string; data: any; isLoader?: boolean; }): Observable<Response> {
     this.startLoader(info);
 
-    return this.http.post(ServerURL.SERVER_URL_ENDPOINT + info.url, info.data).pipe(
+    return this.http.post(ServerURL.SERVER_URL_ENDPOINT + info.url, info.data, ).pipe(
       map((res) => {
         return this.extractData(res, info);
       }),
@@ -55,6 +60,21 @@ export class DataService {
       })
     );
   }
+
+  /** UPLOAD BASE64 IMAGE */
+  saveMedia(info: { url: string; data: any; isLoader?: boolean; }){
+    this.startLoader(info);
+
+    return this.http.post(ServerURL.SERVER_URL_ENDPOINT + info.url, info.data, HttpUploadOptions).pipe(
+      map((res) => {
+        return this.extractData(res, info);
+      }),
+      catchError((err: Response) => {
+        console.error(err);
+        return this.handleErrorPromise(err, info);
+      })
+    );
+}
 
 
   extractData(res: any, info: { url: string; data?: any; isLoader?: boolean; }) {

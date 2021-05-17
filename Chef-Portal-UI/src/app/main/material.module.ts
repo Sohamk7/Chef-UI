@@ -14,6 +14,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 const modules = [
@@ -32,7 +34,9 @@ const modules = [
   MatMenuModule,
   FlexLayoutModule,
   MatSnackBarModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDialogModule,
+  MatRadioModule
 ];
 
 @NgModule({

@@ -9,13 +9,16 @@ import { MaterialModule } from '../material.module';
 // import { OrdersModule } from './orders/orders.module';
 // import { MenusModule } from './menus/menus.module';
 import { RouterModule } from '@angular/router';
+import { CreateProductComponent } from './products/create-product/create-product.component';
 // import { CustomersModule } from './customers/customers.module';
 // import { ChefsModule } from './chefs/chefs.module';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CreateProductComponent
+  ],
   imports: [
     CommonModule,
     // CustomersModule,
