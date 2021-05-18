@@ -8,6 +8,7 @@
 }
 .bold {
    font-weight: bold; 
+   font-size: medium;
 }
 
 
@@ -39,7 +40,11 @@
                 }
                 .logo-preview{
                     float: left;
-                    max-width: 100px;
+                    max-width: 100%;
+                }
+                img {
+                    width: 50%;
+                    height: 50%;
                 }
 
                 .submit-button {
@@ -50,6 +55,9 @@
                 }
                 .pr-10 {
                     padding-right: 10%;
+                }
+                .pt-10 {
+                    padding-top: 10%;
                 }
             }
         }
