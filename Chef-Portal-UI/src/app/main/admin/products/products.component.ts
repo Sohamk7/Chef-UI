@@ -26,7 +26,7 @@ export class ProductsComponent implements OnInit {
     .subscribe(respose =>{
       this.productList = respose;
       console.log(respose);
-    })
+    });
   }
 
   openCreateProductDialog() {
@@ -34,6 +34,10 @@ export class ProductsComponent implements OnInit {
       height: '700px',
       width: '600px',
       disableClose:true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getProducts();
     });
   }
 
