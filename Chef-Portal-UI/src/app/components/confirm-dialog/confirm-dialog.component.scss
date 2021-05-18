@@ -1,0 +1,48 @@
+
+.main-div{
+    height: 100%;
+    width:100%;
+   
+}
+ .footer{
+    height: 20%;
+   
+}
+.no-container , .yes-container{
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+}
+.no-container > button , .yes-container > button{
+   flex-basis: 100%; 
+   color: white;
+    
+}
+
+.yes-container > button{
+    background: rgb(82, 80, 80); 
+    border-radius: 25px ;
+    color: white;
+    height: 33px;
+}
+.no-container > button{
+    border-radius: 25px ;
+    height: 33px;
+    // color: rgb(82, 80, 80);
+    // border: 1px solid rgb(82, 80, 80);
+    color: #000;
+    background: #fff;
+    border : 1px solid #000;
+}
+.full-height{
+    height: 100%;
+}
+.message{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:black;
+    height: 80%;
+    font-size: 1em;
+    text-transform: none ;
+}

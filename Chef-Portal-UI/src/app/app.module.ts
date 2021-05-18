@@ -7,16 +7,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataService } from './_services/dataservice';
 import { LoaderAuthInterceptor } from './_helpers/auth.interceptor';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MaterialModule } from './main/material.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule
   ],
   providers: [DataService,
     {

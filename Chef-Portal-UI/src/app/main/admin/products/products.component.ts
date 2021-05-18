@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { DataService } from 'src/app/_services/dataservice';
 import { CreateProductComponent } from './create-product/create-product.component';
 
@@ -14,6 +16,7 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
+    private _matSnackBar: MatSnackBar,
     private dataService: DataService) { }
 
   ngOnInit(): void {
@@ -41,4 +44,35 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  openEditDialog(id){
+
+  }
+
+  /**Delete Selected**/
+  deleteSelectedProduct(id) {
+
+    let message = 'Are you want delete this product?'
+    let dialogRef = this.dialog.open(ConfirmDialogComponent, { width: '400px', data: message, disableClose: true })
+       .afterClosed().subscribe(result => {
+         if (result == 'YES') {
+           this.deleteData(id);
+         }
+       });
+   }
+ 
+   deleteData(id) {
+
+     this.dataService.delete({ url: 'product/' + id, isLoader: true })
+       .subscribe((response: any) => {
+         if(response === {}){
+            // Show the success message
+            this._matSnackBar.open('Product deleted successfully', 'CLOSE', {
+              verticalPosition: 'bottom',
+              horizontalPosition:'center',
+              duration        : 2000
+            });
+            this.getProducts();
+         }
+      });
+   }
 }
