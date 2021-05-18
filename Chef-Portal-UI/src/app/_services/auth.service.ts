@@ -1,25 +1,71 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Login } from '../_models';
+import { ServerURL } from '../_helpers';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    public appConfig: string = 'https://x8ki-letl-twmt.n7.xano.io/api:SHauWfXW/';
+
+    private currentUserSubject: BehaviorSubject<Login>;
     constructor(private http: HttpClient) {
+        this.currentUserSubject = new BehaviorSubject<Login>(JSON.parse(localStorage.getItem('token')));
+    }
+
+    public get currentUserValue() {
+        const  jwtHelper  = new JwtHelperService();
+        const  Isexpired  = this.currentUserSubject.value ? jwtHelper.isTokenExpired(this.currentUserSubject.value.auth_token) : true;
+        const  guardInfo  = {
+            'token':this.currentUserSubject.value ? jwtHelper.decodeToken(this.currentUserSubject.value.auth_token) : null || '', 
+            'isExpired':Isexpired,
+            'auth_admin':this.currentUserSubject.value ? this.currentUserSubject.value.auth_admin : true,
+        };
+        return guardInfo;
+    }
+    /** set current uservalue after update welcome popup */
+    public set currentUserValue(tokenInfo:any) {
+        this.currentUserSubject.next(tokenInfo);
     }
 
     login(email: string, password: string) {
 
         //SHOW LOADER BAR #EXTRA Changes
 
-        return this.http.post<any>(`${this.appConfig}auth/login`, { email, password, })
+        return this.http.post<any>(`${ServerURL.SERVER_URL_ENDPOINT}auth/login`, { email, password, })
             .pipe(map(loginResponse => {
                 console.log(loginResponse);
                 localStorage.setItem('token', JSON.stringify(loginResponse.auth_token));
                 localStorage.setItem('userType', JSON.stringify(loginResponse.auth_admin));
+                this.currentUserSubject.next(loginResponse);
 
                 return loginResponse;
             }),catchError(err => { return throwError("Error thrown from Server");}));
+    }
+
+    logout() {
+        
+        const token = this.currentUserValue.token;
+        //remove from database 
+        // return this.http.post<any>(`${this.appConfig.url.apiUrl}auth/logout`, { token })
+        //     .pipe(map(logoutResponse => {
+        //         // login successful if there's a jwt token in the response
+              
+        //         this._fuseProgressBarService.hide();
+        //         if (logoutResponse) {
+        //             // store loginResponse details and jwt token in local storage to keep loginResponse logged in between page refreshes
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userType');
+        //             localStorage.removeItem('themesettings');
+        //             localStorage.removeItem('userInfo');
+                    this.currentUserSubject.next(null);
+        //         }
+        //         return logoutResponse;
+        //     }),catchError(err => { return throwError("Error in logout");}));
+
+
+
+        this.currentUserSubject.next(null);
     }
 }

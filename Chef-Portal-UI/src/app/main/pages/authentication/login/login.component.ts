@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   });
   
-    public appConfig: any;
+    // public appConfig: any;
     pwdhide = true;
 
   constructor(
@@ -27,7 +27,12 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthService,
-  ) { }
+    ) {
+        // redirect to home if already logged in
+      //   if (this.authenticationService.currentUserValue) { 
+      //     this._router.navigate(['admin/dashboard']);
+      // }
+    }
 // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------

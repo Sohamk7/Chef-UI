@@ -34,15 +34,17 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Description</mat-label>
                         <textarea matInput formControlName="description" placeholder=""></textarea>
-                       
+                        <mat-error>
+                            Description is required
+                        </mat-error>
                     </mat-form-field>
     
                     <mat-radio-group aria-label="Select an option" formControlName="vegetarian" color="primary">
-                        <mat-radio-button [value]="false" class="pr-10">Vegetarin</mat-radio-button>
-                        <mat-radio-button [value]="true"> Non Vegetarin</mat-radio-button>
+                        <mat-radio-button [value]="false" class="pr-10">Vegetarian</mat-radio-button>
+                        <mat-radio-button [value]="true"> Non Vegetarian</mat-radio-button>
                     </mat-radio-group>
 
-                    <h3>Upload Product Image:</h3>
+                    <h3 class="pt-10">Upload Product Image:</h3>
                     <input  hidden 
                             #inputfile
                             [formControl]="createProductForm.get('product_image')"
@@ -52,11 +54,11 @@
                             />
                     <div class="btn mb-4">
                         <button type="button" mat-stroked-button color="primary" class="mr-12" (click)="inputfile.click();">Upload</button>
-                        <!-- <button type="button" mat-stroked-button color="warn" *ngIf="uploadInfo.media_id>0 || 
-                                uploadedResponse.media_id>0 || uploadInfo.url" (click)="RemovePicture()">Remove</button> -->
+                        <button type="button" mat-stroked-button color="warn" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img"
+                         (click)="RemovePicture()">Remove</button>
                     </div>
-                    <div class="logo-preview pb-12" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img">
-                        <img [src]="tmp_avatar_img" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img" class="img-responsive" />
+                    <div class="logo-preview pb-12 pt-12" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img">
+                        <img [src]="tmp_avatar_img" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img" />
                     </div>
     
                 </form>

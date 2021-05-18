@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { first } from 'rxjs/operators';
 import { DataService } from 'src/app/_services/dataservice';
 
@@ -25,12 +24,6 @@ export class BecomeAChefsComponent implements OnInit {
   pwdhide:boolean = true;
   cpwdhide: boolean = true;
 
-  separateDialCode = false;
-	SearchCountryField = SearchCountryField;
-	CountryISO = CountryISO;
-  PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
-  
   constructor(
     private _formBuilder:FormBuilder,
     private _router:Router,
@@ -74,10 +67,6 @@ export class BecomeAChefsComponent implements OnInit {
               this.becomechefsForm.reset();
       });
   }
-
-  changePreferredCountries() {
-		this.preferredCountries = [CountryISO.India, CountryISO.Canada];
-	}
 
 }
 

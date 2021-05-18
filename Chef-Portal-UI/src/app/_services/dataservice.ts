@@ -6,10 +6,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingService } from './loaderservice';
 import { ServerURL } from '../_helpers';
 
-//UPLOAD FILE DATA OPTION HEADERS
-const HttpUploadOptions = {
-    headers: new HttpHeaders({  "Accept":"multipart/form-data" })
-}
 
 @Injectable()
 export class DataService {
@@ -61,9 +57,19 @@ export class DataService {
     );
   }
 
+  
   /** UPLOAD BASE64 IMAGE */
   saveMedia(info: { url: string; data: any; isLoader?: boolean; }){
     this.startLoader(info);
+     // var headers = new Headers();
+     let t = localStorage.getItem('token');
+    //  headers.append("Authorization", "Bearer " + t);
+    //UPLOAD FILE DATA OPTION HEADERS
+    const HttpUploadOptions = {
+        headers: new HttpHeaders({  'Accept':'multipart/form-data','Authorization': 'Bearer ' + t })
+    }
+
+   
 
     return this.http.post(ServerURL.SERVER_URL_ENDPOINT + info.url, info.data, HttpUploadOptions).pipe(
       map((res) => {
