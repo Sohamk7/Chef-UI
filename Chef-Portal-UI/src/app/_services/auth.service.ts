@@ -16,10 +16,10 @@ export class AuthService {
 
     public get currentUserValue() {
         const  jwtHelper  = new JwtHelperService();
-        const  Isexpired  = this.currentUserSubject.value ? jwtHelper.isTokenExpired(this.currentUserSubject.value.auth_token) : true;
+        // const  Isexpired  = this.currentUserSubject.value ? jwtHelper.isTokenExpired(this.currentUserSubject.value.auth_token) : true;
         const  guardInfo  = {
-            'token':this.currentUserSubject.value ? jwtHelper.decodeToken(this.currentUserSubject.value.auth_token) : null || '', 
-            'isExpired':Isexpired,
+            'token':this.currentUserSubject.value ? this.currentUserSubject.value.auth_token : null || '', 
+            // 'isExpired':Isexpired,
             'auth_admin':this.currentUserSubject.value ? this.currentUserSubject.value.auth_admin : true,
         };
         return guardInfo;

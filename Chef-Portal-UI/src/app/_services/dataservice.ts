@@ -66,7 +66,7 @@ export class DataService {
     //  headers.append("Authorization", "Bearer " + t);
     //UPLOAD FILE DATA OPTION HEADERS
     const HttpUploadOptions = {
-        headers: new HttpHeaders({  'Accept':'multipart/form-data','Authorization': 'Bearer ' + t })
+        headers: new HttpHeaders({  'Accept':'multipart/form-data','Authorization':  t })
     }
 
    
