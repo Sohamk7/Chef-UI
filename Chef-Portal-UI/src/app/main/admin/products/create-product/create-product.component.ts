@@ -56,24 +56,24 @@ export class CreateProductComponent implements OnInit {
     }
   }
 
-   /**Save Media Without Cropping On user general settings page /users/settings */
-   saveWithoutCrop(image){
-    //Define formdata
-    let mediaInfo = new FormData();
-    mediaInfo.append('product_image',image);
-    this.dataService.saveMedia({url:'product',data:mediaInfo})
-      .subscribe(uploadResponse=>{
-        console.log(uploadResponse);
-    //     // Show the success message
-    //     // this.showSnackBar(uploadResponse.message, 'CLOSE', 2000);
-    //     // this.uploadInfo.url = uploadResponse.media.image ? AppConfig.Settings.url.mediaUrl + uploadResponse.media.image + this.dateTemp : ""; 
-    //     // this.imageUploaded.emit({'uploadResponse':uploadResponse,'formControlName':this.uploadInfo.formControlName});
-    },
-    error => {
-        // Show the error message
-        // this.showSnackBar(error.message, 'RETRY', 2000);
-    });
-  }
+  //  /**Save Media Without Cropping On user general settings page /users/settings */
+  //  saveWithoutCrop(image){
+  //   //Define formdata
+  //   let mediaInfo = new FormData();
+  //   mediaInfo.append('product_image',image);
+  //   this.dataService.saveMedia({url:'product',data:mediaInfo})
+  //     .subscribe(uploadResponse=>{
+  //       console.log(uploadResponse);
+  //   //     // Show the success message
+  //   //     // this.showSnackBar(uploadResponse.message, 'CLOSE', 2000);
+  //   //     // this.uploadInfo.url = uploadResponse.media.image ? AppConfig.Settings.url.mediaUrl + uploadResponse.media.image + this.dateTemp : ""; 
+  //   //     // this.imageUploaded.emit({'uploadResponse':uploadResponse,'formControlName':this.uploadInfo.formControlName});
+  //   },
+  //   error => {
+  //       // Show the error message
+  //       // this.showSnackBar(error.message, 'RETRY', 2000);
+  //   });
+  // }
 
   onSubmit() {
 
