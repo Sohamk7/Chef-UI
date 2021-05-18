@@ -17,16 +17,29 @@
                         <!-- IMAGES  -->
 
                         <div class="media-content" fxLayout="column" fxFlex="1 1 auto">
+
+                            <div class="footer" fxLayout="row" fxLayoutAlign="end center">
+                                <button mat-button (click)="openEditDialog(product.id)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-button (click)="deleteSelectedProduct(product.id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+
+                            </div>
     
                             <div  class="content" fxLayout="column" fxFlex="1 1 auto">
                                 <img [src]="product._product_details?._product_media_of_product_details?.media_url?.url" [alt]="product._product_details.name">
-                                    <div class="h1">{{product._product_details.name}}</div>
+                                    <div class="h1 p-5"><b>{{product._product_details.name}}</b></div>
                             </div>
     
-                            <div class="footer" fxLayout="row" fxLayoutAlign="center center">
-                                <button mat-button color="accent" >
-                                    Preview
-                                </button>
+                            <div class="footer" fxLayout="row" fxLayoutAlign="start center">
+                                
+                                <div><p><b>Price:</b>{{product._product_details.price}}</p></div>
+                            </div>
+                            <div class="footer" fxLayout="row" fxLayoutAlign="start center">
+                                
+                                <div><p>{{product._product_details.description}}</p></div>
                             </div>
     
                         </div>

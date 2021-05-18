@@ -57,6 +57,26 @@ export class DataService {
     );
   }
 
+  delete(info: { url: string; isLoader?: boolean; }): Observable<Response> {
+    this.startLoader(info);
+
+    let t = localStorage.getItem('token').replace('"','');
+     let token = t.replace('"','')
+    //UPLOAD FILE DATA OPTION HEADERS
+    const HttpUploadOptions = {
+        headers: new HttpHeaders({  'Accept':'application/json','Authorization': 'Bearer ' + token })
+    }
+
+    return this.http.delete(ServerURL.SERVER_URL_ENDPOINT + info.url, HttpUploadOptions).pipe(
+      map((res: Response) => {
+        return this.extractData(res, info);
+      }),
+      catchError((err: Response) => {
+        console.error(err);
+        return this.handleErrorPromise(err, info);
+      })
+    );
+  }
   
   /** UPLOAD BASE64 IMAGE */
   saveMedia(info: { url: string; data: any; isLoader?: boolean; }){
