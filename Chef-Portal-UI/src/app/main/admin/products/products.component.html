@@ -2,4 +2,47 @@
     <div fxLayout="row" fxLayoutAlign="end start" class="p-5">
         <button mat-raised-button type="submit" color="primary" (click)="openCreateProductDialog()">Create Product </button>
     </div>
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- CENTER -->
+        <div class="center p-24 pb-56" >
+
+            <!-- CONTENT -->
+            <div class="content">
+                <div class="medias" fxLayout="row wrap" fxLayoutAlign="start">
+
+                    <div class="media" *ngFor="let product of productList" fxFlex="100" fxFlex.gt-xs="25"
+                            fxFlex.gt-sm="25">
+                        <!-- IMAGES  -->
+
+                        <div class="media-content" fxLayout="column" fxFlex="1 1 auto">
+    
+                            <div  class="content" fxLayout="column" fxFlex="1 1 auto">
+                                <img [src]="product._product_details?._product_media_of_product_details?.media_url?.url" [alt]="product._product_details.name">
+                                    <div class="h1">{{product._product_details.name}}</div>
+                            </div>
+    
+                            <div class="footer" fxLayout="row" fxLayoutAlign="center center">
+                                <button mat-button color="accent" >
+                                    Preview
+                                </button>
+                            </div>
+    
+                        </div>
+                        <!-- /IMAGES -->
+
+                    </div>
+                    <!-- IF NO MEDIA IS FOUND -->
+                    <div class="no-record" *ngIf="productList.length===0">No Product found.</div>
+                </div>
+               
+           </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CENTER -->
+
+    </div>
+    <!-- / CONTENT -->
 </div> 

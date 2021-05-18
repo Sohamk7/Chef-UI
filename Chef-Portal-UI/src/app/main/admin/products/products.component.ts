@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DataService } from 'src/app/_services/dataservice';
 import { CreateProductComponent } from './create-product/create-product.component';
 
 @Component({
@@ -9,10 +10,23 @@ import { CreateProductComponent } from './create-product/create-product.componen
 })
 export class ProductsComponent implements OnInit {
 
+  productList:any = [];
+
   constructor(
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.getProducts();
+  }
+
+  getProducts() {
+
+    this.dataService.getAllProduct({url:'product',isLoader:true})
+    .subscribe(respose =>{
+      this.productList = respose;
+      console.log(respose);
+    })
   }
 
   openCreateProductDialog() {

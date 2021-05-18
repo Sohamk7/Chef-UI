@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
@@ -20,6 +21,7 @@ export class CreateProductComponent implements OnInit {
     public dialogRef                      : MatDialogRef<CreateProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data  : any,
     private _fb: FormBuilder,
+    private _matSnackBar:MatSnackBar,
     private dataService :DataService
   ) { }
 
@@ -37,8 +39,6 @@ export class CreateProductComponent implements OnInit {
 
   fileChangeEvent(event: any): void {
     const file = event && event.target.files[0] || null;
-    // this.tmp_avatar_img = URL.createObjectURL(event.target.files[0]);
-    console.log(event)
     this.getBase64(event.target.files[0]);
   }
 
@@ -47,33 +47,10 @@ export class CreateProductComponent implements OnInit {
     reader.readAsDataURL(file); // read file as data url
 
     reader.onload = (event: any) => { // called once readAsDataURL is completed
-      // let base64Image = event.target.result;
       this.file = event.target.result;
-      // this.file = base64Image.replace(/^data:image\/\w+;base64,/, ""); 
-      // this.file = btoa(event.target.result);
       this.tmp_avatar_img = event.target.result;
-      // this.saveWithoutCrop(event.target.result);
     }
   }
-
-  //  /**Save Media Without Cropping On user general settings page /users/settings */
-  //  saveWithoutCrop(image){
-  //   //Define formdata
-  //   let mediaInfo = new FormData();
-  //   mediaInfo.append('product_image',image);
-  //   this.dataService.saveMedia({url:'product',data:mediaInfo})
-  //     .subscribe(uploadResponse=>{
-  //       console.log(uploadResponse);
-  //   //     // Show the success message
-  //   //     // this.showSnackBar(uploadResponse.message, 'CLOSE', 2000);
-  //   //     // this.uploadInfo.url = uploadResponse.media.image ? AppConfig.Settings.url.mediaUrl + uploadResponse.media.image + this.dateTemp : ""; 
-  //   //     // this.imageUploaded.emit({'uploadResponse':uploadResponse,'formControlName':this.uploadInfo.formControlName});
-  //   },
-  //   error => {
-  //       // Show the error message
-  //       // this.showSnackBar(error.message, 'RETRY', 2000);
-  //   });
-  // }
 
   onSubmit() {
 
@@ -95,7 +72,11 @@ export class CreateProductComponent implements OnInit {
         console.log(uploadResponse);
         this.dialogRef.close();
         // Show the success message
-        // this.showSnackBar(uploadResponse.message, 'CLOSE', 2000);
+        this._matSnackBar.open('Product created successfully', 'CLOSE', {
+          verticalPosition: 'bottom',
+          horizontalPosition:'center',
+          duration        : 2000
+      });
         // this.uploadInfo.url = uploadResponse.media.image ? AppConfig.Settings.url.mediaUrl + uploadResponse.media.image + this.dateTemp : ""; 
         // this.imageUploaded.emit({'uploadResponse':uploadResponse,'formControlName':this.uploadInfo.formControlName});
     },
