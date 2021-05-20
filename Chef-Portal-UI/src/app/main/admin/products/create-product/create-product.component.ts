@@ -16,6 +16,7 @@ export class CreateProductComponent implements OnInit {
   public inputAccpets : string = ".jpeg, .jpg, .png";
   private file: string | null = null;
   public tmp_avatar_img;
+  public message:string = '';
 
   constructor(
     public dialogRef                      : MatDialogRef<CreateProductComponent>,
@@ -27,15 +28,64 @@ export class CreateProductComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.createProductForm = this._fb.group({
+    console.log(this.data);
+
+    if(this.data!==null){
+
+      this.message = 'Create New Product';
+      let product_details = this.data._product_details;
+
+      this.createProductForm = this._fb.group({
+        name: this._fb.control(product_details.name,[Validators.required]),
+        price: this._fb.control(product_details.price,[Validators.required]),
+        description: this._fb.control(product_details.description,[Validators.required]),
+        vegetarian: this._fb.control(product_details.vegetarian),
+        chef_id:this._fb.control(1),
+        product_image: this._fb.control('')
+      });
+
+      this.tmp_avatar_img = product_details._product_media_of_product_details.media_url.url;
+
+      this.toDataURL(product_details._product_media_of_product_details.media_url.url);
+    }else{
+
+      this.message = 'Edit Product';
+
+      this.createProductForm = this._fb.group({
         name: this._fb.control('',[Validators.required]),
         price: this._fb.control('',[Validators.required]),
         description: this._fb.control('',[Validators.required]),
         vegetarian: this._fb.control(false),
         chef_id:this._fb.control(1),
         product_image: this._fb.control('',[Validators.required])
-    });
+      });
+    }
   }
+  
+
+  toDataURL(url) {
+    let base64;
+    var xhr = new XMLHttpRequest();
+    
+    xhr.onload = function () {
+        var reader = new FileReader();
+        reader.onloadend = function () {
+         
+          base64 = reader.result;
+          
+          console.log(base64)
+            // callback(reader.result);
+        }
+        reader.readAsDataURL(xhr.response);
+        console.log()
+        
+    };
+    this.file = base64;
+    console.log(this.file)
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+}
 
   fileChangeEvent(event: any): void {
     const file = event && event.target.files[0] || null;
@@ -43,6 +93,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   getBase64(file) {
+    console.log(file);
     var reader = new FileReader();
     reader.readAsDataURL(file); // read file as data url
 
@@ -60,6 +111,10 @@ export class CreateProductComponent implements OnInit {
     let formValue = this.createProductForm.value;
     //Define formdata
     let mediaInfo = new FormData();
+    let message = this.data!==null ? 'Product Edited successfully' : 'Product created successfully';
+    if(this.data!==null){
+      mediaInfo.append('product_id',this.data._product_details.id);
+    }
 
     mediaInfo.append('name',formValue.name);
     mediaInfo.append('price',formValue.price);
@@ -72,7 +127,7 @@ export class CreateProductComponent implements OnInit {
         console.log(uploadResponse);
         this.dialogRef.close();
         // Show the success message
-        this._matSnackBar.open('Product created successfully', 'CLOSE', {
+        this._matSnackBar.open(message, 'CLOSE', {
           verticalPosition: 'bottom',
           horizontalPosition:'center',
           duration        : 2000
