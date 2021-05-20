@@ -34,6 +34,7 @@ export class ProductsComponent implements OnInit {
 
   openCreateProductDialog() {
     let dialogRef = this.dialog.open(CreateProductComponent, {
+      data:null,
       height: '700px',
       width: '600px',
       disableClose:true
@@ -44,8 +45,18 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  openEditDialog(id){
+  openEditDialog(data){
 
+    let dialogRef = this.dialog.open(CreateProductComponent, {
+      data:data,
+      height: '700px',
+      width: '600px',
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getProducts();
+    });
   }
 
   /**Delete Selected**/
