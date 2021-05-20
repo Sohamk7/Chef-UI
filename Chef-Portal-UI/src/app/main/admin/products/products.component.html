@@ -1,5 +1,5 @@
 <div fxLayout="column">
-    <div fxLayout="row" fxLayoutAlign="end start" class="p-5">
+    <div fxLayout="row" fxLayoutAlign="start start" class="p-5">
         <button mat-raised-button type="submit" color="primary" (click)="openCreateProductDialog()">Create Product </button>
     </div>
     <!-- CONTENT -->
@@ -18,13 +18,9 @@
 
                         <div class="media-content" fxLayout="column" fxFlex="1 1 auto">
 
-                            <div class="footer" fxLayout="row" fxLayoutAlign="end center">
-                                <button mat-button (click)="openEditDialog(product)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button mat-button (click)="deleteSelectedProduct(product.id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
+                            <div class="footer" fxLayout="row" fxLayoutAlign="end start">
+                                <mat-icon (click)="openEditDialog(product)">edit</mat-icon>
+                                <mat-icon (click)="deleteSelectedProduct(product.id)" color="warn">delete</mat-icon>
 
                             </div>
     
@@ -46,8 +42,7 @@
                         <!-- /IMAGES -->
 
                     </div>
-                    <!-- IF NO MEDIA IS FOUND -->
-                    <div class="no-record" *ngIf="productList.length===0">No Product found.</div>
+                    
                 </div>
                
            </div>
@@ -58,4 +53,7 @@
 
     </div>
     <!-- / CONTENT -->
+    <!-- IF NO PRODUCT IS FOUND -->
+    <div fxLayout="row" fxLayoutAlign="center center" class="p-10"
+    *ngIf="productList.length===0">No Product found.</div>
 </div> 
