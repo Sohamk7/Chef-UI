@@ -32,7 +32,7 @@ export class CreateProductComponent implements OnInit {
 
     if(this.data!==null){
 
-      this.message = 'Create New Product';
+      this.message = 'Edit Product';
       let product_details = this.data._product_details;
 
       this.createProductForm = this._fb.group({
@@ -46,10 +46,6 @@ export class CreateProductComponent implements OnInit {
 
       this.tmp_avatar_img = product_details._product_media_of_product_details.media_url.url;
 
-      this.toDataURL(product_details._product_media_of_product_details.media_url.url, function (dataUrl) {
-        // this.file = dataUrl;
-console.log(dataUrl)
-    })
     }else{
 
       this.message = 'Edit Product';
@@ -65,31 +61,12 @@ console.log(dataUrl)
     }
   }
   
-
-  toDataURL(url, callback) {
-    let base64;
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        var reader = new FileReader();
-        reader.onloadend = function () {
-          base64 = reader.result;
-            callback(reader.result);
-        }
-        reader.readAsDataURL(xhr.response);
-        console.log(base64);
-    };
-    xhr.open('GET', url);
-    xhr.responseType = 'blob';
-    xhr.send();
-}
-
   fileChangeEvent(event: any): void {
     const file = event && event.target.files[0] || null;
     this.getBase64(event.target.files[0]);
   }
 
   getBase64(file) {
-    console.log(file);
     var reader = new FileReader();
     reader.readAsDataURL(file); // read file as data url
 
@@ -108,17 +85,21 @@ console.log(dataUrl)
     //Define formdata
     let mediaInfo = new FormData();
     let message = this.data!==null ? 'Product Edited successfully' : 'Product created successfully';
-    let url = this.data!==null ? 'product/' + this.data._product_details.id : 'product/create';
+    let url = this.data!==null ? 'product/' + this.data.id : 'product/create';
     if(this.data!==null){
-      mediaInfo.append('product_id',this.data._product_details.id);
+      mediaInfo.append('product_id',this.data.id);
     }
 
+    if(this.file!== null) {
+      mediaInfo.append('product_media',this.file);
+    }
+   
     mediaInfo.append('name',formValue.name);
     mediaInfo.append('price',formValue.price);
     mediaInfo.append('description',formValue.description);
     mediaInfo.append('vegetarian',formValue.vegetarian);
     mediaInfo.append('chef_id',formValue.chef_id);
-    mediaInfo.append('product_media',this.file);
+    
    
     this.dataService.saveMedia({url: url,data:mediaInfo})
       .subscribe(uploadResponse=>{
@@ -130,12 +111,14 @@ console.log(dataUrl)
           horizontalPosition:'center',
           duration        : 2000
       });
-        // this.uploadInfo.url = uploadResponse.media.image ? AppConfig.Settings.url.mediaUrl + uploadResponse.media.image + this.dateTemp : ""; 
-        // this.imageUploaded.emit({'uploadResponse':uploadResponse,'formControlName':this.uploadInfo.formControlName});
     },
     error => {
-        // Show the error message
-        // this.showSnackBar(error.message, 'RETRY', 2000);
+       // Show the error message
+        this._matSnackBar.open(error.message, 'RETRY', {
+          verticalPosition: 'bottom',
+          horizontalPosition:'center',
+          duration        : 2000
+      });
     });
    
   }
