@@ -46,7 +46,10 @@ export class CreateProductComponent implements OnInit {
 
       this.tmp_avatar_img = product_details._product_media_of_product_details.media_url.url;
 
-      this.toDataURL(product_details._product_media_of_product_details.media_url.url);
+      this.toDataURL(product_details._product_media_of_product_details.media_url.url, function (dataUrl) {
+        // this.file = dataUrl;
+console.log(dataUrl)
+    })
     }else{
 
       this.message = 'Edit Product';
@@ -63,25 +66,18 @@ export class CreateProductComponent implements OnInit {
   }
   
 
-  toDataURL(url) {
+  toDataURL(url, callback) {
     let base64;
     var xhr = new XMLHttpRequest();
-    
     xhr.onload = function () {
         var reader = new FileReader();
         reader.onloadend = function () {
-         
           base64 = reader.result;
-          
-          console.log(base64)
-            // callback(reader.result);
+            callback(reader.result);
         }
         reader.readAsDataURL(xhr.response);
-        console.log()
-        
+        console.log(base64);
     };
-    this.file = base64;
-    console.log(this.file)
     xhr.open('GET', url);
     xhr.responseType = 'blob';
     xhr.send();
@@ -112,6 +108,7 @@ export class CreateProductComponent implements OnInit {
     //Define formdata
     let mediaInfo = new FormData();
     let message = this.data!==null ? 'Product Edited successfully' : 'Product created successfully';
+    let url = this.data!==null ? 'product/' + this.data._product_details.id : 'product/create';
     if(this.data!==null){
       mediaInfo.append('product_id',this.data._product_details.id);
     }
@@ -122,7 +119,8 @@ export class CreateProductComponent implements OnInit {
     mediaInfo.append('vegetarian',formValue.vegetarian);
     mediaInfo.append('chef_id',formValue.chef_id);
     mediaInfo.append('product_media',this.file);
-    this.dataService.saveMedia({url:'product/create',data:mediaInfo})
+   
+    this.dataService.saveMedia({url: url,data:mediaInfo})
       .subscribe(uploadResponse=>{
         console.log(uploadResponse);
         this.dialogRef.close();
