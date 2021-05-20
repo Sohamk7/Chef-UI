@@ -75,7 +75,7 @@ export class ProductsComponent implements OnInit {
 
      this.dataService.delete({ url: 'product/' + id, isLoader: true })
        .subscribe((response: any) => {
-         if(response === {}){
+        //  if(response === {}){
             // Show the success message
             this._matSnackBar.open('Product deleted successfully', 'CLOSE', {
               verticalPosition: 'bottom',
@@ -83,7 +83,7 @@ export class ProductsComponent implements OnInit {
               duration        : 2000
             });
             this.getProducts();
-         }
+        //  }
       });
    }
 }
