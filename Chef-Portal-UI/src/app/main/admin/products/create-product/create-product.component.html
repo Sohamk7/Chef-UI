@@ -53,7 +53,8 @@
                             [accept]="inputAccpets"
                             />
                     <div class="btn mb-4">
-                        <button type="button" mat-stroked-button color="primary" class="mr-12" (click)="inputfile.click();">Upload</button>
+                        <button type="button" mat-stroked-button color="primary" 
+                         class="mr-12" (click)="inputfile.click();" >Upload</button>
                         <button type="button" mat-stroked-button color="warn" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img"
                          (click)="RemovePicture()">Remove</button>
                     </div>
