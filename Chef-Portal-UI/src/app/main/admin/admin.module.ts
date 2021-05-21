@@ -10,6 +10,7 @@ import { MaterialModule } from '../material.module';
 // import { MenusModule } from './menus/menus.module';
 import { RouterModule } from '@angular/router';
 import { CreateProductComponent } from './products/create-product/create-product.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 // import { CustomersModule } from './customers/customers.module';
 // import { ChefsModule } from './chefs/chefs.module';
 
@@ -17,7 +18,8 @@ import { CreateProductComponent } from './products/create-product/create-product
 
 @NgModule({
   declarations: [
-    CreateProductComponent
+    CreateProductComponent,
+    EditProfileComponent
   ],
   imports: [
     CommonModule,

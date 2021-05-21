@@ -1,1 +1,14 @@
-<p>profile works!</p>
+<div fxLayout="column">
+    <div fxLayout="column" fxLayoutAlign="start center">
+        <h1 class="p-4"><b>Hello,</b></h1>
+    </div>
+    
+    <div fxLayout="row" fxLayoutAlign="start start" class="p-4" fxLayoutGap="30px">
+        <button mat-raised-button type="submit" color="primary" (click)="editChefPassword('password')">Edit Chef password </button>
+        <button mat-raised-button type="submit" color="primary" (click)="editChefEmail('email')">Edit Chef Email </button>
+        <button mat-raised-button type="submit" color="primary" (click)="editChefPhoneNo('phoneNo')">Edit chef Phone no </button>
+        <button mat-raised-button type="submit" color="primary" (click)="editChefStoreAddress('address')">Edit Chef  Store Address </button>
+    </div>
+</div>
+
+
