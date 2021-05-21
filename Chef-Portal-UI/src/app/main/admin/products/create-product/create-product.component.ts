@@ -48,7 +48,7 @@ export class CreateProductComponent implements OnInit {
 
     }else{
 
-      this.message = 'Edit Product';
+      this.message = 'Create New Product';
 
       this.createProductForm = this._fb.group({
         name: this._fb.control('',[Validators.required]),
