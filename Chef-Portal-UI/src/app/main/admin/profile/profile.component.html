@@ -1,6 +1,20 @@
 <div fxLayout="column">
     <div fxLayout="column" fxLayoutAlign="start center">
-        <h1 class="p-4"><b>Hello,</b></h1>
+        <h1 class="p-4"><b>Hello, {{userInfo.first_name}} {{userInfo.second_name}}</b></h1>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="start start" class="p-2">
+        <!-- <h1 class="p-2"><b>Hello, {{userInfo.first_name}} {{userInfo.second_name}}</b></h1> -->
+        <p><b>Full Name:</b> {{userInfo.first_name}} {{userInfo.second_name}}</p>
+        <p><b>Email:</b> {{userInfo.email}}</p>
+        <p><b>Phone Number:</b> {{userInfo.phone_number}}</p>
+        <p><b>Store Address: </b></p>
+        <p><b>Address 1:</b> {{userInfo._chef_store?._chef_store_address.address_1}}</p>
+        <p><b>Address 2:</b>{{userInfo._chef_store?._chef_store_address.address_2}}</p>
+        <p><b>Address 3:</b> {{userInfo._chef_store?._chef_store_address.address_3}}</p>
+        <p><b>City:</b> {{userInfo._chef_store?._chef_store_address.city}}</p>
+        <p><b>Country:</b> {{userInfo._chef_store?._chef_store_address.country}}</p>
+        <p><b>PostCode:</b> {{userInfo._chef_store?._chef_store_address.postcode}}</p>
     </div>
     
     <div fxLayout="row" fxLayoutAlign="start start" class="p-4" fxLayoutGap="30px">
