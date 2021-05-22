@@ -10,6 +10,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 })
 export class ProfileComponent implements OnInit {
 
+  public userInfo: any = {};
+
   constructor(
     private dialog: MatDialog,
     private _dataService: DataService) { }
@@ -21,8 +23,9 @@ export class ProfileComponent implements OnInit {
 
   getCurrentChefInfo() {
 
-    this._dataService.getChefInfo({url:'auth/me', data:'{chef_id:1}', isLoader:true})
+    this._dataService.getChefInfo({url:'chef', isLoader:true})
     .subscribe(response => {
+      this.userInfo = response;
       console.log(response);
     });
   }
@@ -45,11 +48,17 @@ export class ProfileComponent implements OnInit {
 
   openDialog(type) {
     let data = {type:type};
-    this.dialog.open(EditProfileComponent, { 
+    let dialogRef = this.dialog.open(EditProfileComponent, { 
       width:'500px',
       height:'auto',
       disableClose:true,
       data:data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result!=='N') {
+        this.getCurrentChefInfo();
+      }
     });
   }
 }

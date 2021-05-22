@@ -119,7 +119,7 @@ save(info: { url: string; data: any; isLoader?: boolean; }){
   );
 }
 
-getChefInfo(info: { url: string; data: any; isLoader?: boolean; }){
+getChefInfo(info: { url: string, isLoader?: boolean; }){
   this.startLoader(info);
    let t = localStorage.getItem('token').replace('"','');
    let token = t.replace('"','')
@@ -128,7 +128,7 @@ getChefInfo(info: { url: string; data: any; isLoader?: boolean; }){
       headers: new HttpHeaders({  'Accept':'application/json','Authorization': 'Bearer ' + token })
   }
 
-  return this.http.post(ServerURL.SERVER_URL_ENDPOINT + info.url, info.data, HttpUploadOptions).pipe(
+  return this.http.get(ServerURL.SERVER_URL_ENDPOINT + info.url, HttpUploadOptions).pipe(
     map((res) => {
       return this.extractData(res, info);
     }),
