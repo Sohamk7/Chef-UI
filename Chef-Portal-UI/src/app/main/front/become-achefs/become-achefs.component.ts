@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, first, map } from 'rxjs/operators';
 import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
@@ -11,6 +12,12 @@ import { DataService } from 'src/app/_services/dataservice';
   styleUrls: ['./become-achefs.component.scss']
 })
 export class BecomeAChefsComponent implements OnInit {
+
+  @ViewChild('existsUsername', {static: true})
+  existsUsername: ElementRef;
+
+  @ViewChild('existsPhoneno', {static: true})
+  existsPhoneno: ElementRef;
 
   becomechefsForm= new FormGroup({
     first_name: new FormControl('', Validators.required),
@@ -23,6 +30,8 @@ export class BecomeAChefsComponent implements OnInit {
 
   pwdhide:boolean = true;
   cpwdhide: boolean = true;
+  userNameReqmsg:string="Email is required!";
+  phoneNoReqmsg:string="Phone no is required!";
 
   constructor(
     private _formBuilder:FormBuilder,
@@ -32,10 +41,79 @@ export class BecomeAChefsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      // this.becomechefsForm = this._formBuilder.group({
-      //        email   : ['', [Validators.required, Validators.email]],
-      //        password: ['', Validators.required]
-      //    });
+    //email check exists on add / edit form
+    fromEvent(this.existsUsername.nativeElement, 'keyup').pipe(
+      map((event: any) => {
+        return event.target.value;
+      })
+      ,filter(res => res.length > 2)
+      ,debounceTime(500)        
+      ,distinctUntilChanged()
+      // subscription for response
+      ).subscribe((userNameString: string) => {
+        if(!this.becomechefsForm.get('email').errors){
+          // this.isSearching = true;
+          this._dataService.checkAlreadyExist({url:'chef/check_email', data:{'email':userNameString}}).subscribe((res)=>{
+            
+              if(res.email_available==false){
+                this.userNameReqmsg =  'This Email is already registered.Please,try another email';
+                this.becomechefsForm.get('email').setErrors({'incorrect': true});
+                this.becomechefsForm.get('email').markAsTouched();
+              }
+              else{
+                this.userNameReqmsg = "Email is required!";
+                this.becomechefsForm.get('email').setErrors(null);
+              }
+          // this.isSearching = false;
+          },(err)=>{
+            // this.isSearching = false;
+          });
+        }
+        else if(this.becomechefsForm.get('email').errors.email){
+          this.userNameReqmsg = "Email is invalid!";
+        }
+        else{
+          this.userNameReqmsg = "Email is required!";
+          this.becomechefsForm.get('email').setErrors(null);
+        }
+    });
+
+    //phone no check exists on add / edit form
+    fromEvent(this.existsPhoneno.nativeElement, 'keyup').pipe(
+      map((event: any) => {
+        return event.target.value;
+      })
+      ,filter(res => res.length > 2)
+      ,debounceTime(500)        
+      ,distinctUntilChanged()
+      // subscription for response
+      ).subscribe((phonenoString: string) => {
+        if(!this.becomechefsForm.get('phone_number').errors){
+          // this.isSearching = true;
+          this._dataService.checkAlreadyExist({url:'chef/check_phone', data:{'phone_number':phonenoString}}).subscribe((res)=>{
+            
+              if(res.phone_available==false){
+                this.phoneNoReqmsg =  'This Phone no is already registered.Please,try another Phone no';
+                this.becomechefsForm.get('phone_number').setErrors({'incorrect': true});
+                this.becomechefsForm.get('phone_number').markAsTouched();
+              }
+              else{
+                this.phoneNoReqmsg = "Phone no is required!";
+                this.becomechefsForm.get('phone_number').setErrors(null);
+              }
+          // this.isSearching = false;
+          },(err)=>{
+            // this.isSearching = false;
+          });
+        }
+        else if(this.becomechefsForm.get('phone_number').errors.pattern){
+          this.phoneNoReqmsg = "Please, Enter 10 digit Mobile Number.";
+        }
+        else{
+          this.phoneNoReqmsg = "Phone no is required!";
+          this.becomechefsForm.get('phone_number').setErrors(null);
+        }
+    });
   }
 
   onSubmit(){
