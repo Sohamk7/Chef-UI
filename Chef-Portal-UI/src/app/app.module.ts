@@ -9,6 +9,7 @@ import { DataService } from './_services/dataservice';
 import { LoaderAuthInterceptor } from './_helpers/auth.interceptor';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MaterialModule } from './main/material.module';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MaterialModule } from './main/material.module';
       provide : HTTP_INTERCEPTORS,
       useClass: LoaderAuthInterceptor,
       multi   : true,
-    },],
+    },
+    CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
