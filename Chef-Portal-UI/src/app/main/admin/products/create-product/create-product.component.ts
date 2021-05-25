@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -23,7 +24,8 @@ export class CreateProductComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data  : any,
     private _fb: FormBuilder,
     private _matSnackBar:MatSnackBar,
-    private dataService :DataService
+    private dataService :DataService,
+    private currencyPipe : CurrencyPipe
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +61,12 @@ export class CreateProductComponent implements OnInit {
         product_image: this._fb.control('',[Validators.required])
       });
     }
+  }
+
+  transformAmount(element){
+    let formattedAmount = this.currencyPipe.transform(this.createProductForm.get('price').value, 'EUR');
+
+    element.target.value = formattedAmount;
   }
   
   fileChangeEvent(event: any): void {

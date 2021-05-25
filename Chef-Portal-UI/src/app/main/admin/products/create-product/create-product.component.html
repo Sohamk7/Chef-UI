@@ -24,7 +24,7 @@
     
                     <mat-form-field appearance="outline">
                         <mat-label>Price</mat-label>
-                        <input matInput formControlName="price" placeholder="Price">
+                        <input matInput formControlName="price" placeholder="Price" (blur)="transformAmount($event)">
                         <mat-error>
                             Price is required
                         </mat-error>
