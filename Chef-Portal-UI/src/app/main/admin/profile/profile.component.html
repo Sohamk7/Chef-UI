@@ -1,27 +1,58 @@
 <div fxLayout="column">
     <div fxLayout="column" fxLayoutAlign="start center">
-        <h1 class="p-4"><b>Hello, {{userInfo.first_name}} {{userInfo.second_name}}</b></h1>
+        <h1 class="p-4"><b>Hi {{userInfo.first_name}} {{userInfo.second_name}}</b></h1>
     </div>
 
     <div fxLayout="column" fxLayoutAlign="start start" class="p-2">
-        <!-- <h1 class="p-2"><b>Hello, {{userInfo.first_name}} {{userInfo.second_name}}</b></h1> -->
-        <p><b>Full Name:</b> {{userInfo.first_name}} {{userInfo.second_name}}</p>
-        <p><b>Email:</b> {{userInfo.email}}</p>
-        <p><b>Phone Number:</b> {{userInfo.phone_number}}</p>
-        <p><b>Store Address: </b></p>
-        <p><b>Address 1:</b> {{userInfo._chef_store?._chef_store_address.address_1}}</p>
-        <p><b>Address 2:</b>{{userInfo._chef_store?._chef_store_address.address_2}}</p>
-        <p><b>Address 3:</b> {{userInfo._chef_store?._chef_store_address.address_3}}</p>
-        <p><b>City:</b> {{userInfo._chef_store?._chef_store_address.city}}</p>
-        <p><b>Country:</b> {{userInfo._chef_store?._chef_store_address.country}}</p>
-        <p><b>PostCode:</b> {{userInfo._chef_store?._chef_store_address.postcode}}</p>
-    </div>
-    
-    <div fxLayout="row" fxLayoutAlign="start start" class="p-4" fxLayoutGap="30px">
-        <button mat-raised-button type="submit" color="primary" (click)="editChefPassword('password')">Edit Chef password </button>
-        <button mat-raised-button type="submit" color="primary" (click)="editChefEmail('email')">Edit Chef Email </button>
-        <button mat-raised-button type="submit" color="primary" (click)="editChefPhoneNo('phoneNo')">Edit chef Phone no </button>
-        <button mat-raised-button type="submit" color="primary" (click)="editChefStoreAddress('address')">Edit Chef  Store Address </button>
+
+        <table>
+            <tr fxLayoutAlign="start start"><th><h2><b>Personal Profile</b></h2></th></tr>
+            <tr>
+                <td>BIOGRAPHY(120 chars min)</td>
+                <td><mat-icon>edit</mat-icon></td>
+            </tr>
+            <tr>
+                <td>Profile picture image</td>
+                <td><mat-icon>edit</mat-icon></td>
+            </tr>
+            <tr>
+                <td>Banner picture image</td>
+                <td><mat-icon>edit</mat-icon></td>
+            </tr>
+            <tr fxLayoutAlign="start start"><th><h2><b>Chef store Information</b></h2></th></tr>
+            <tr>
+                <td>List of CUSINE NAMES</td>
+                <td><mat-icon>edit</mat-icon></td>
+            </tr>
+            <tr>
+                <td>
+                    <p><b>Address 1:</b> {{userInfo._chef_store?._chef_store_address.address_1}}</p>
+                    <p><b>Address 2:</b>{{userInfo._chef_store?._chef_store_address.address_2}}</p>
+                    <p><b>Address 3:</b> {{userInfo._chef_store?._chef_store_address.address_3}}</p>
+                    <p><b>City:</b> {{userInfo._chef_store?._chef_store_address.city}}</p>
+                    <p><b>Country:</b> {{userInfo._chef_store?._chef_store_address.country}}</p>
+                    <p><b>PostCode:</b> {{userInfo._chef_store?._chef_store_address.postcode}}</p>
+            
+                </td>
+                <td><mat-icon (click)="editChefStoreAddress('address')">edit</mat-icon></td>
+            </tr>
+            
+            <tr fxLayoutAlign="start start"><th><h2><b>Chef Information</b></h2></th></tr>
+            <tr>
+                <td>Password: ***********</td>
+                <td><mat-icon (click)="editChefPassword('password')">edit</mat-icon></td>
+            </tr>
+            <tr>
+                <td><p><b>Phone Number:</b> {{userInfo.phone_number}}</p></td>
+                <td><mat-icon (click)="editChefPhoneNo('phoneNo')">edit</mat-icon></td>
+            </tr>
+            <tr>
+                <td><p><b>Email:</b> {{userInfo.email}}</p></td>
+                <td><mat-icon (click)="editChefEmail('email')">edit</mat-icon></td>
+            </tr>
+
+        </table>
+        
     </div>
 </div>
 
