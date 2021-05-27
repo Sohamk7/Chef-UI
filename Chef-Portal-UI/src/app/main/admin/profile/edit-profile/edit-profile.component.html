@@ -146,13 +146,7 @@
                             editStoreAddressForm.get('postcode').hasError('maxlength')">
                                       length must be 6 digit
                             </mat-error>
-                            <!-- <mat-error *ngIf="!editStoreAddressForm.get('postcode').hasError('required') && 
-                            !editStoreAddressForm.get('postcode').hasError('minlength') ||
-                            !editStoreAddressForm.get('postcode').hasError('maxlength') &&
-                             editStoreAddressForm.get('postcode').hasError('pattern')">
-                                    Only Numbers are allowed
-                            </mat-error>
-                           -->
+                           
                         </mat-form-field>
         
                         <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
@@ -161,7 +155,49 @@
                         </button>
 
                     </form>
+
                 </div>
+                <div *ngIf="data.type==='biography'">
+                    <form fxLayot="column" [formGroup]="editBiographyForm">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Biography</mat-label>
+                            <textarea matInput formControlName="biography" placeholder=""></textarea>
+
+                            <mat-error *ngIf="editBiographyForm.get('biography').hasError('required')">
+                                Biography is required
+                            </mat-error>
+                            <mat-error *ngIf="!editBiographyForm.get('biography').hasError('required') && 
+                            editBiographyForm.get('biography').hasError('minlength')">
+                                Please, Enter minimum 120 characters.
+                            </mat-error>
+                        </mat-form-field>
+        
+                        <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
+                        (click)="biographySubmit()" [disabled]="editBiographyForm.invalid">
+                            SUBMIT
+                        </button>
+
+                    </form>
+                </div>
+                <div *ngIf="data.type==='profile' || data.type==='banner'">
+                    <input  hidden 
+                            #inputfile
+                            type="file"
+                            (change)="fileChangeEvent($event)"
+                            [accept]="inputAccpets"
+                            />
+                    <div class="btn mb-4">
+                        <button type="button" mat-stroked-button color="primary" 
+                         class="mr-12" (click)="inputfile.click();" >Upload</button>
+                        <button type="button" mat-stroked-button color="warn" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img"
+                         (click)="RemovePicture()">Remove</button>
+                    </div>
+                    <div class="logo-preview pb-12 pt-12" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img">
+                        <img style="width: 50%;" [src]="tmp_avatar_img" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img" />
+                    </div>
+                </div>
+                
             </div>
             
         </div>

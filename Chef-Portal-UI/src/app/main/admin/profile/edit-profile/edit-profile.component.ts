@@ -17,8 +17,12 @@ export class EditProfileComponent implements OnInit {
   editPasswordForm:FormGroup;
   editPhoneNoForm:FormGroup;
   editStoreAddressForm:FormGroup;
+  editBiographyForm:FormGroup;
   pwdhide:boolean = true;
   cpwdhide: boolean = true;
+  public inputAccpets : string = ".jpeg, .jpg, .png";
+  private file: string | null = null;
+  public tmp_avatar_img;
 
   constructor(
     public dialogRef: MatDialogRef<EditProfileComponent>,
@@ -43,6 +47,41 @@ export class EditProfileComponent implements OnInit {
     }else if(this.data.type === 'address'){
       this.message = 'Edit Chef Store Address';
       this.EditStoreAddressFormGroup();
+    }else if(this.data.type === 'biography'){
+      this.message = 'Edit Chef Biography';
+      this.EditBiographyFormGroup();
+    }else if(this.data.type === 'profile'){
+      this.message = 'Edit Chef Profile Picture';
+    }else if(this.data.type === 'banner'){
+      this.message = 'Edit Chef Banner Picture';
+    }else if(this.data.type === 'cuisine'){
+      this.message = 'Edit Cuisine Name';
+    }
+  }
+
+  fileChangeEvent(event: any): void {
+    const file = event && event.target.files[0] || null;
+    this.getBase64(event.target.files[0]);
+  }
+
+  getBase64(file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file); // read file as data url
+
+    reader.onload = (event: any) => { // called once readAsDataURL is completed
+      this.file = event.target.result;
+      this.tmp_avatar_img = event.target.result;
+      let mediaInfo = new FormData();
+      mediaInfo.append('chef_profile_id',this.data.profile_id);
+      if(this.data.type === 'profile'){
+        let message = 'Profile Picture Edited Successfully';
+        mediaInfo.append('profile_picture',this.file);
+        this.postAPIResponse('chef/chef_profile/profile_picture',mediaInfo,message);
+      }else if(this.data.type === 'banner'){
+        let message = 'Banner Picture Edited Successfully';
+        mediaInfo.append('banner_picture',this.file);
+        this.postAPIResponse('chef/chef_profile/banner_picture',mediaInfo,message);
+      }
     }
   }
 
@@ -65,6 +104,13 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  EditBiographyFormGroup() {
+    this.editBiographyForm = this._fb.group({
+      chef_profile_id: this._fb.control(this.data.profile_id),
+      biography: this._fb.control('',[Validators.required,Validators.minLength(120)])
+    });
+  }
+
   EditStoreAddressFormGroup() {
     this.editStoreAddressForm = this._fb.group({
       address_1: this._fb.control('', [Validators.required]),
@@ -79,7 +125,6 @@ export class EditProfileComponent implements OnInit {
   emailSubmit() {
     let message = 'Email Edited Successfully';
     this.postAPIResponse('chef/details/email',this.editEmailForm.value,message);
-
   }
 
   passwordSubmit() {
@@ -92,32 +137,66 @@ export class EditProfileComponent implements OnInit {
     this.postAPIResponse('chef/details/phone_number',this.editPhoneNoForm.value,message);
   }
 
+  biographySubmit() {
+    let message = 'Biography Edited Successfully';
+    this.postAPIResponse('chef/chef_profile/bio',this.editBiographyForm.value,message);
+  }
+
   storeAddressSubmit() {
     let message = 'Store Address Edited Successfully';
     this.postAPIResponse('chef/chef_store/address',this.editStoreAddressForm.value,message);
   }
 
   postAPIResponse(url, value, message){
-    this._dataService.save({url:url,data:value,isLoader:true})
-      .pipe(first())
-      .subscribe(
-          data => {
-              // Show the success message
-              this._matSnackBar.open(message, 'CLOSE', {
-                  verticalPosition: 'bottom',
-                  horizontalPosition:'center',
-                  duration        : 2000
-              });
-              this.dialogRef.close();
-          },
-          error => {
-              // Show the error message
-              this._matSnackBar.open('please try again', 'Retry', {
-                  verticalPosition: 'bottom',
-                  horizontalPosition:'center',
-                  duration        : 2000
-              });
-      });
+
+    if(this.data.type!=='profile' && this.data.type!=='banner'){
+
+      this._dataService.save({url:url,data:value,isLoader:true})
+        .pipe(first())
+        .subscribe(
+            data => {
+                // Show the success message
+                this._matSnackBar.open(message, 'CLOSE', {
+                    verticalPosition: 'bottom',
+                    horizontalPosition:'center',
+                    duration        : 2000
+                });
+                this.dialogRef.close();
+            },
+            error => {
+                // Show the error message
+                this._matSnackBar.open('please try again', 'Retry', {
+                    verticalPosition: 'bottom',
+                    horizontalPosition:'center',
+                    duration        : 2000
+                });
+        });
+    }else{
+      this._dataService.saveMedia({url:url,data:value,isLoader:true})
+        .pipe(first())
+        .subscribe(
+            data => {
+                // Show the success message
+                this._matSnackBar.open(message, 'CLOSE', {
+                    verticalPosition: 'bottom',
+                    horizontalPosition:'center',
+                    duration        : 2000
+                });
+                this.dialogRef.close();
+            },
+            error => {
+                // Show the error message
+                this._matSnackBar.open('please try again', 'Retry', {
+                    verticalPosition: 'bottom',
+                    horizontalPosition:'center',
+                    duration        : 2000
+                });
+        });
+    }
+  }
+
+  RemovePicture() {
+    this.tmp_avatar_img = '';
   }
 }
 
