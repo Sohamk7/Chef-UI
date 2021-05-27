@@ -14,7 +14,7 @@
             <tr>
                 <td><b>Profile picture image : </b>
                     <div class="logo-preview pb-12 pt-12" *ngIf="userInfo._chef_profile?._chef_profile_image?.media_url !== '' && userInfo._chef_profile?._chef_profile_image?.media_url">
-                        <img [src]="userInfo._chef_profile?._chef_profile_image?.media_url" *ngIf="userInfo._chef_profile?._chef_profile_image?.media_url !== '' && userInfo._chef_profile?._chef_profile_image?.media_url" />
+                        <img [src]="userInfo._chef_profile?._chef_profile_image?.media_url?.url" *ngIf="userInfo._chef_profile?._chef_profile_image?.media_url?.url !== '' && userInfo._chef_profile?._chef_profile_image?.media_url?.url" />
                     </div>
                 </td>
                 <td><mat-icon (click)="editChefProfile('profile')">edit</mat-icon></td>
@@ -22,7 +22,7 @@
             <tr>
                 <td><b>Banner picture image : </b>
                     <div class="logo-preview pb-12 pt-12" *ngIf="userInfo._chef_profile?._chef_banner_image?.media_url !== '' && userInfo._chef_profile?._chef_banner_image?.media_url">
-                        <img [src]="userInfo._chef_profile?._chef_banner_image?.media_url" *ngIf="userInfo._chef_profile?._chef_banner_image?.media_url !== '' && userInfo._chef_profile?._chef_banner_image?.media_url" />
+                        <img [src]="userInfo._chef_profile?._chef_banner_image?.media_url?.url" *ngIf="userInfo._chef_profile?._chef_banner_image?.media_url?.url !== '' && userInfo._chef_profile?._chef_banner_image?.media_url?.url" />
                     </div>
                 </td>
                 <td><mat-icon (click)="editChefBiography('banner')">edit</mat-icon></td>
