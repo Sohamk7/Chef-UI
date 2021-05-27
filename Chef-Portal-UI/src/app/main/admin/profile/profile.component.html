@@ -8,22 +8,41 @@
         <table>
             <tr fxLayoutAlign="start start"><th><h2><b>Personal Profile</b></h2></th></tr>
             <tr>
-                <td>BIOGRAPHY(120 chars min)</td>
-                <td><mat-icon>edit</mat-icon></td>
+                <td><b>BIOGRAPHY(120 chars min)</b> : {{userInfo._chef_profile?.biography}}</td>
+                <td><mat-icon (click)="editChefBiography('biography')">edit</mat-icon></td>
             </tr>
             <tr>
-                <td>Profile picture image</td>
-                <td><mat-icon>edit</mat-icon></td>
+                <td><b>Profile picture image : </b>
+                    <div class="logo-preview pb-12 pt-12" *ngIf="userInfo._chef_profile?._chef_profile_image?.media_url !== '' && userInfo._chef_profile?._chef_profile_image?.media_url">
+                        <img [src]="userInfo._chef_profile?._chef_profile_image?.media_url" *ngIf="userInfo._chef_profile?._chef_profile_image?.media_url !== '' && userInfo._chef_profile?._chef_profile_image?.media_url" />
+                    </div>
+                </td>
+                <td><mat-icon (click)="editChefProfile('profile')">edit</mat-icon></td>
             </tr>
             <tr>
-                <td>Banner picture image</td>
-                <td><mat-icon>edit</mat-icon></td>
+                <td><b>Banner picture image : </b>
+                    <div class="logo-preview pb-12 pt-12" *ngIf="userInfo._chef_profile?._chef_banner_image?.media_url !== '' && userInfo._chef_profile?._chef_banner_image?.media_url">
+                        <img [src]="userInfo._chef_profile?._chef_banner_image?.media_url" *ngIf="userInfo._chef_profile?._chef_banner_image?.media_url !== '' && userInfo._chef_profile?._chef_banner_image?.media_url" />
+                    </div>
+                </td>
+                <td><mat-icon (click)="editChefBiography('banner')">edit</mat-icon></td>
+            </tr>
+            <tr fxLayoutAlign="start start"><th><h2><b>Chef Cuisine Names</b></h2></th></tr>
+            <tr>
+                <td><b>List of CUISINE NAMES : </b>
+                    <mat-form-field appearance="outline">
+                        <mat-label>List of CUISINE NAMES</mat-label>
+                        <mat-select multiple>
+                          <mat-option *ngFor="let cuisine of cuisineNamesList" [value]="cuisine" >
+                            {{cuisine.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </td>
+                <td><mat-icon (click)="editChefCuisine('cuisine')">edit</mat-icon></td>
             </tr>
             <tr fxLayoutAlign="start start"><th><h2><b>Chef store Information</b></h2></th></tr>
-            <tr>
-                <td>List of CUSINE NAMES</td>
-                <td><mat-icon>edit</mat-icon></td>
-            </tr>
+
             <tr>
                 <td>
                     <p><b>Address 1:</b> {{userInfo._chef_store?._chef_store_address.address_1}}</p>

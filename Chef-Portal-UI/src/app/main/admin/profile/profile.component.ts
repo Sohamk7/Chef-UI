@@ -11,6 +11,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 export class ProfileComponent implements OnInit {
 
   public userInfo: any = {};
+  public cuisineNamesList: any = [];
 
   constructor(
     private dialog: MatDialog,
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.getCurrentChefInfo();
+    this.getCusineList();
   }
 
   getCurrentChefInfo() {
@@ -26,6 +28,14 @@ export class ProfileComponent implements OnInit {
     this._dataService.getChefInfo({url:'chef', isLoader:true})
     .subscribe(response => {
       this.userInfo = response;
+      console.log(response);
+    });
+  }
+
+  getCusineList() {
+    this._dataService.get({url:'cuisines/options', isLoader:true})
+    .subscribe(response => {
+      this.cuisineNamesList = response;
       console.log(response);
     });
   }
@@ -46,8 +56,24 @@ export class ProfileComponent implements OnInit {
     this.openDialog(type);
   }
 
+  editChefBiography(type) {
+    this.openDialog(type);
+  }
+
+  editChefProfile(type) {
+    this.openDialog(type);
+  }
+
+  editChefBanner(type) {
+    this.openDialog(type);
+  }
+
+  editChefCuisine(type) {
+    this.openDialog(type);
+  }
+  
   openDialog(type) {
-    let data = {type:type};
+    let data = {type:type,profile_id:this.userInfo.chef_profile_id};
     let dialogRef = this.dialog.open(EditProfileComponent, { 
       width:'500px',
       height:'auto',

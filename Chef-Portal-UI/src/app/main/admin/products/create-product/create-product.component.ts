@@ -39,7 +39,7 @@ export class CreateProductComponent implements OnInit {
 
       this.createProductForm = this._fb.group({
         name: this._fb.control(product_details.name,[Validators.required]),
-        price: this._fb.control(product_details.price,[Validators.required]),
+        price: this._fb.control(product_details.price,[Validators.required,Validators.pattern("^[0-9]*$")]),
         description: this._fb.control(product_details.description,[Validators.required]),
         vegetarian: this._fb.control(product_details.vegetarian),
         chef_id:this._fb.control(1),
@@ -54,7 +54,7 @@ export class CreateProductComponent implements OnInit {
 
       this.createProductForm = this._fb.group({
         name: this._fb.control('',[Validators.required]),
-        price: this._fb.control('',[Validators.required]),
+        price: this._fb.control('',[Validators.required,Validators.pattern("^[0-9]*$")]),
         description: this._fb.control('',[Validators.required]),
         vegetarian: this._fb.control(false),
         chef_id:this._fb.control(1),
