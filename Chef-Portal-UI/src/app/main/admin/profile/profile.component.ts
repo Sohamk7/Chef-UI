@@ -11,7 +11,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 export class ProfileComponent implements OnInit {
 
   public userInfo: any = {};
-  public cuisineNamesList: any = [];
+  public cuisineNames: any = [];
 
   constructor(
     private dialog: MatDialog,
@@ -33,9 +33,9 @@ export class ProfileComponent implements OnInit {
   }
 
   getCusineList() {
-    this._dataService.get({url:'cuisines/options', isLoader:true})
+    this._dataService.getAll({url:'chef/chef_store/cuisines', isLoader:true})
     .subscribe(response => {
-      this.cuisineNamesList = response;
+      this.cuisineNames = response[0]._cuisines as any;
       console.log(response);
     });
   }
@@ -69,7 +69,21 @@ export class ProfileComponent implements OnInit {
   }
 
   editChefCuisine(type) {
-    this.openDialog(type);
+    
+    let data = {type:type,profile_id:this.userInfo.chef_profile_id};
+    let dialogRef = this.dialog.open(EditProfileComponent, { 
+      width:'500px',
+      height:'auto',
+      disableClose:true,
+      data:data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result!=='N') {
+        this.getCurrentChefInfo();
+        this.getCusineList();
+      }
+    });
   }
   
   openDialog(type) {

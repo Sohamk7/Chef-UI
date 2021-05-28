@@ -25,7 +25,7 @@ export class ProductsComponent implements OnInit {
 
   getProducts() {
 
-    this.dataService.getAllProduct({url:'product',isLoader:true})
+    this.dataService.getAll({url:'product',isLoader:true})
     .subscribe(response =>{
       this.productList = response;
       console.log(response);
