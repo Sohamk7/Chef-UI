@@ -12,7 +12,6 @@ import { DataService } from 'src/app/_services/dataservice';
 })
 export class CreateProductComponent implements OnInit {
 
-
   createProductForm:FormGroup;
   public inputAccpets : string = ".jpeg, .jpg, .png";
   private file: string | null = null;
