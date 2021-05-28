@@ -197,7 +197,25 @@
                         <img style="width: 50%;" [src]="tmp_avatar_img" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img" />
                     </div>
                 </div>
-                
+                <div *ngIf="data.type==='cuisine'">
+                    <form fxLayot="column" [formGroup]="editCuisineForm">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>List of CUISINE NAMES</mat-label>
+                            <mat-select formControlName="cuisines" multiple>
+                              <mat-option *ngFor="let cuisine of cuisineNamesList" [value]="cuisine.id" >
+                                {{cuisine.name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+        
+                        <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
+                        (click)="CuisineSubmit()" [disabled]="editCuisineForm.invalid">
+                            SUBMIT
+                        </button>
+
+                    </form>
+                </div>                
             </div>
             
         </div>

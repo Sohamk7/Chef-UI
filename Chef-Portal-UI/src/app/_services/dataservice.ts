@@ -152,7 +152,7 @@ getChefInfo(info: { url: string, isLoader?: boolean; }){
   );
 }
 
-getAllProduct(info: { url: string; isLoader?: boolean; }): Observable<Response> {
+getAll(info: { url: string; isLoader?: boolean; }): Observable<Response> {
     this.startLoader(info);
     let t = localStorage.getItem('token').replace('"','');
      let token = t.replace('"','')

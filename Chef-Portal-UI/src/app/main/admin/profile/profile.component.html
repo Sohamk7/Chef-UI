@@ -14,7 +14,8 @@
             <tr>
                 <td><b>Profile picture image : </b>
                     <div class="logo-preview pb-12 pt-12" *ngIf="userInfo._chef_profile?._chef_profile_image?.media_url !== '' && userInfo._chef_profile?._chef_profile_image?.media_url">
-                        <img [src]="userInfo._chef_profile?._chef_profile_image?.media_url?.url" *ngIf="userInfo._chef_profile?._chef_profile_image?.media_url?.url !== '' && userInfo._chef_profile?._chef_profile_image?.media_url?.url" />
+                        <img [src]="userInfo._chef_profile?._chef_profile_image?.media_url?.url" style="width: 40%;"
+                         *ngIf="userInfo._chef_profile?._chef_profile_image?.media_url?.url !== '' && userInfo._chef_profile?._chef_profile_image?.media_url?.url" />
                     </div>
                 </td>
                 <td><mat-icon (click)="editChefProfile('profile')">edit</mat-icon></td>
@@ -22,22 +23,16 @@
             <tr>
                 <td><b>Banner picture image : </b>
                     <div class="logo-preview pb-12 pt-12" *ngIf="userInfo._chef_profile?._chef_banner_image?.media_url !== '' && userInfo._chef_profile?._chef_banner_image?.media_url">
-                        <img [src]="userInfo._chef_profile?._chef_banner_image?.media_url?.url" *ngIf="userInfo._chef_profile?._chef_banner_image?.media_url?.url !== '' && userInfo._chef_profile?._chef_banner_image?.media_url?.url" />
+                        <img [src]="userInfo._chef_profile?._chef_banner_image?.media_url?.url"  style="width: 40%;"
+                            *ngIf="userInfo._chef_profile?._chef_banner_image?.media_url?.url !== '' && userInfo._chef_profile?._chef_banner_image?.media_url?.url" />
                     </div>
                 </td>
                 <td><mat-icon (click)="editChefBiography('banner')">edit</mat-icon></td>
             </tr>
             <tr fxLayoutAlign="start start"><th><h2><b>Chef Cuisine Names</b></h2></th></tr>
             <tr>
-                <td><b>List of CUISINE NAMES : </b>
-                    <mat-form-field appearance="outline">
-                        <mat-label>List of CUISINE NAMES</mat-label>
-                        <mat-select multiple>
-                          <mat-option *ngFor="let cuisine of cuisineNamesList" [value]="cuisine" >
-                            {{cuisine.name}}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                <td><b>CUISINE NAMES : </b>
+                    <div *ngFor="let cuisine of cuisineNames;let i=index">{{i+1}}. {{cuisine?._cuisine?.name}}</div>
                 </td>
                 <td><mat-icon (click)="editChefCuisine('cuisine')">edit</mat-icon></td>
             </tr>
@@ -58,7 +53,7 @@
             
             <tr fxLayoutAlign="start start"><th><h2><b>Chef Information</b></h2></th></tr>
             <tr>
-                <td>Password: ***********</td>
+                <td><b>Password :</b> ***********</td>
                 <td><mat-icon (click)="editChefPassword('password')">edit</mat-icon></td>
             </tr>
             <tr>

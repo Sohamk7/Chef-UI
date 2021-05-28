@@ -13,16 +13,18 @@ import { DataService } from 'src/app/_services/dataservice';
 export class EditProfileComponent implements OnInit {
 
   message: string = '';
-  editEmailForm:FormGroup;
-  editPasswordForm:FormGroup;
-  editPhoneNoForm:FormGroup;
-  editStoreAddressForm:FormGroup;
-  editBiographyForm:FormGroup;
-  pwdhide:boolean = true;
+  editEmailForm: FormGroup;
+  editPasswordForm: FormGroup;
+  editPhoneNoForm: FormGroup;
+  editStoreAddressForm: FormGroup;
+  editBiographyForm: FormGroup;
+  editCuisineForm: FormGroup
+  pwdhide: boolean = true;
   cpwdhide: boolean = true;
   public inputAccpets : string = ".jpeg, .jpg, .png";
   private file: string | null = null;
   public tmp_avatar_img;
+  public cuisineNamesList: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<EditProfileComponent>,
@@ -56,6 +58,8 @@ export class EditProfileComponent implements OnInit {
       this.message = 'Edit Chef Banner Picture';
     }else if(this.data.type === 'cuisine'){
       this.message = 'Edit Cuisine Name';
+      this.EditCuisineFormGroup();
+      this.getCuisineList();
     }
   }
 
@@ -122,6 +126,20 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  EditCuisineFormGroup() {
+    this.editCuisineForm = this._fb.group({
+      cuisines: this._fb.control([])
+    });
+  }
+
+  getCuisineList() {
+    this._dataService.get({url:'cuisines/options', isLoader:true})
+    .subscribe(response => {
+      this.cuisineNamesList = response;
+      console.log(response);
+    });
+  }
+
   emailSubmit() {
     let message = 'Email Edited Successfully';
     this.postAPIResponse('chef/details/email',this.editEmailForm.value,message);
@@ -145,6 +163,11 @@ export class EditProfileComponent implements OnInit {
   storeAddressSubmit() {
     let message = 'Store Address Edited Successfully';
     this.postAPIResponse('chef/chef_store/address',this.editStoreAddressForm.value,message);
+  }
+
+  CuisineSubmit() {
+    let message = 'Cuisines Edited Successfully';
+    this.postAPIResponse('chef/chef_store/cuisines',this.editCuisineForm.value,message);
   }
 
   postAPIResponse(url, value, message){
