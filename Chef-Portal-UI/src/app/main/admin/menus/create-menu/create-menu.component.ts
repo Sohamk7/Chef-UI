@@ -38,7 +38,7 @@ export class CreateMenuComponent implements OnInit {
       this.createManuForm = this._fb.group({
         name: this._fb.control(menu_details.name,[Validators.required, Validators.minLength(5)]),
         description: this._fb.control(menu_details.description,[Validators.required, Validators.minLength(15)]),
-        products: this._fb.control([], [Validators.required]),
+        products: this._fb.control(menu_details._products, [Validators.required]),
         chef_id: this._fb.control(0),
         menu_id: this._fb.control(menu_details.id)
       });
