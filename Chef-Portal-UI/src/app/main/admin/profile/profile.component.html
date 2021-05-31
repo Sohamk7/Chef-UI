@@ -29,13 +29,6 @@
                 </td>
                 <td><mat-icon (click)="editChefBiography('banner')">edit</mat-icon></td>
             </tr>
-            <tr fxLayoutAlign="start start"><th><h2><b>Chef Cuisine Names</b></h2></th></tr>
-            <tr>
-                <td><b>CUISINE NAMES : </b>
-                    <div *ngFor="let cuisine of cuisineNames;let i=index">{{i+1}}. {{cuisine?._cuisine?.name}}</div>
-                </td>
-                <td><mat-icon (click)="editChefCuisine('cuisine')">edit</mat-icon></td>
-            </tr>
             <tr fxLayoutAlign="start start"><th><h2><b>Chef store Information</b></h2></th></tr>
 
             <tr>
@@ -49,6 +42,13 @@
             
                 </td>
                 <td><mat-icon (click)="editChefStoreAddress('address')">edit</mat-icon></td>
+            </tr>
+
+            <tr>
+                <td><b>CUISINE NAMES : </b>
+                    <div *ngFor="let cuisine of cuisineNames;let i=index">{{i+1}}. {{cuisine?._cuisine?.name}}</div>
+                </td>
+                <td><mat-icon (click)="editChefCuisine('cuisine')">edit</mat-icon></td>
             </tr>
             
             <tr fxLayoutAlign="start start"><th><h2><b>Chef Information</b></h2></th></tr>
