@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
 
   editChefCuisine(type) {
     
-    let data = {type:type,profile_id:this.userInfo.chef_profile_id};
+    let data = {type:type,profile_id:this.userInfo.chef_profile_id,cuisineNames:this.cuisineNames};
     let dialogRef = this.dialog.open(EditProfileComponent, { 
       width:'500px',
       height:'auto',
@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit {
   }
   
   openDialog(type) {
-    let data = {type:type,profile_id:this.userInfo.chef_profile_id};
+    let data = {type:type,profile_id:this.userInfo.chef_profile_id,cuisineNames: []};
     let dialogRef = this.dialog.open(EditProfileComponent, { 
       width:'500px',
       height:'auto',

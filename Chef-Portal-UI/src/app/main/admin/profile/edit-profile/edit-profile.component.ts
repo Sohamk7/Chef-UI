@@ -60,6 +60,13 @@ export class EditProfileComponent implements OnInit {
       this.message = 'Edit Cuisine Name';
       this.EditCuisineFormGroup();
       this.getCuisineList();
+      if(this.data.cuisineNames.length >0) {
+        let cuisineNameToDispaly: any = [];
+        this.data.cuisineNames.forEach(cuisine => {
+          cuisineNameToDispaly.push(cuisine.cuisine_id);
+        });
+        this.editCuisineForm.controls['cuisines'].setValue(cuisineNameToDispaly)
+      }
     }
   }
 

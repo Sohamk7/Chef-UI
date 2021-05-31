@@ -21,14 +21,11 @@ export class CreateMenuComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data  : any,
     private _fb: FormBuilder,
     private _matSnackBar:MatSnackBar,
-    private dataService :DataService,
-  ) { }
+    private dataService :DataService) { 
+    this.getProducts();
+  }
 
   ngOnInit(): void {
-
-    console.log(this.data);
-
-    this.getProducts();
 
     if(this.data!==null){
 
@@ -38,12 +35,16 @@ export class CreateMenuComponent implements OnInit {
       this.createManuForm = this._fb.group({
         name: this._fb.control(menu_details.name,[Validators.required, Validators.minLength(5)]),
         description: this._fb.control(menu_details.description,[Validators.required, Validators.minLength(15)]),
-        products: this._fb.control(menu_details._products, [Validators.required]),
+        products: this._fb.control([], [Validators.required]),
         chef_id: this._fb.control(0),
         menu_id: this._fb.control(menu_details.id)
       });
 
-
+      let productNameToDispaly: any = []; 
+      menu_details._products.forEach(product => {
+        productNameToDispaly.push(product.product_id);
+      });
+      this.createManuForm.controls['products'].setValue(productNameToDispaly)
     }else{
 
       this.message = 'Create Menu';
