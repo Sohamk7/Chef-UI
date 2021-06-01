@@ -23,6 +23,9 @@ export class EditProfileComponent implements OnInit {
   editStoreAddressForm: FormGroup;
   editBiographyForm: FormGroup;
   editCuisineForm: FormGroup
+  editCollectionDeliveryForm: FormGroup;
+  editCollectionForm: FormGroup;
+  editDeliveryForm: FormGroup;
   pwdhide: boolean = true;
   cpwdhide: boolean = true;
   public inputAccpets : string = ".jpeg, .jpg, .png";
@@ -52,6 +55,8 @@ export class EditProfileComponent implements OnInit {
   
 
   ngOnInit(): void {
+
+    console.log(this.data)
 
     if(this.data.type === 'email') {
       this.message = 'Edit Chef Email';
@@ -83,6 +88,15 @@ export class EditProfileComponent implements OnInit {
         });
         this.editCuisineForm.controls['cuisines'].setValue(cuisineNameToDispaly)
       }
+    }else if(this.data.type === 'collectionDelivery'){
+      this.message = 'Edit Chef Collection/Delivery Enabled/Disabled';
+      this.EditCollectionDeliveryFormGroup();
+    }else if(this.data.type === 'collection'){
+      this.message = 'Edit Chef Collection slots';
+      this.EditCollectionFormGroup();
+    }else if(this.data.type === 'delivery'){
+      this.message = 'Edit Chef Delivery Slots';
+      this.EditDeliveryFormGroup();
     }
 
     // listen for search field value changes
@@ -143,7 +157,7 @@ export class EditProfileComponent implements OnInit {
       this.file = event.target.result;
       this.tmp_avatar_img = event.target.result;
       let mediaInfo = new FormData();
-      mediaInfo.append('chef_profile_id',this.data.profile_id);
+      mediaInfo.append('chef_profile_id',this.data.profile_data.chef_profile_id);
       if(this.data.type === 'profile'){
         let message = 'Profile Picture Edited Successfully';
         mediaInfo.append('profile_picture',this.file);
@@ -177,7 +191,7 @@ export class EditProfileComponent implements OnInit {
 
   EditBiographyFormGroup() {
     this.editBiographyForm = this._fb.group({
-      chef_profile_id: this._fb.control(this.data.profile_id),
+      chef_profile_id: this._fb.control(this.data.profile_data.chef_profile_id),
       biography: this._fb.control('',[Validators.required,Validators.minLength(120)])
     });
   }
@@ -196,6 +210,27 @@ export class EditProfileComponent implements OnInit {
   EditCuisineFormGroup() {
     this.editCuisineForm = this._fb.group({
       cuisines: this._fb.control([])
+    });
+  }
+
+  EditCollectionDeliveryFormGroup() {
+    let profile_data = this.data.profile_data
+    this.editCollectionDeliveryForm = this._fb.group({
+      chef_id: this._fb.control(0),
+      collection: this._fb.control(profile_data._chef_store.collection,[Validators.required]),
+      delivery: this._fb.control(profile_data._chef_store.delivery,[Validators.required])
+    });
+  }
+
+  EditCollectionFormGroup() {
+    this.editCollectionForm = this._fb.group({
+      chef_id: this._fb.control(0),
+    });
+  }
+
+  EditDeliveryFormGroup() {
+    this.editDeliveryForm = this._fb.group({
+      chef_id: this._fb.control(0),
     });
   }
 
@@ -236,6 +271,21 @@ export class EditProfileComponent implements OnInit {
   CuisineSubmit() {
     let message = 'Cuisines Edited Successfully';
     this.postAPIResponse('chef/chef_store/cuisines',this.editCuisineForm.value,message);
+  }
+
+  collectionDeliverySubmit() {
+    let message = 'Collection/Delivery Edited Successfully';
+    this.postAPIResponse('chef/chef_store/preference',this.editCollectionDeliveryForm.value,message);
+  }
+
+  collectionSubmit() {
+    let message = 'Collection slots Edited Successfully';
+    this.postAPIResponse('chef/chef_store/collection/slot',this.editCollectionForm.value,message);
+  }
+
+  DeliverySubmit() {
+    let message = 'Delivery slots Edited Successfully';
+    this.postAPIResponse('chef/chef_store/delivery/slot',this.editDeliveryForm.value,message);
   }
 
   postAPIResponse(url, value, message){

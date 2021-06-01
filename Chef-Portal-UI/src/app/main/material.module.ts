@@ -17,7 +17,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatRadioModule} from '@angular/material/radio';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatDividerModule} from '@angular/material/divider';
 
 const modules = [
   CommonModule,
@@ -38,7 +39,9 @@ const modules = [
   MatSelectModule,
   MatDialogModule,
   MatRadioModule,
-  NgxMatSelectSearchModule
+  NgxMatSelectSearchModule,
+  MatSlideToggleModule,
+  MatDividerModule
 ];
 
 @NgModule({

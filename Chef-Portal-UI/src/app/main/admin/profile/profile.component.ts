@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
 
   editChefCuisine(type) {
     
-    let data = {type:type,profile_id:this.userInfo.chef_profile_id,cuisineNames:this.cuisineNames};
+    let data = {type:type,profile_data:this.userInfo,cuisineNames:this.cuisineNames};
     let dialogRef = this.dialog.open(EditProfileComponent, { 
       width:'500px',
       height:'auto',
@@ -85,9 +85,21 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+
+  editCollectionDelivery(type) {
+    this.openDialog(type);
+  }
+
+  editCollectionSlots(type) {
+    this.openDialog(type);
+  }
+
+  editDeliverySlots(type) {
+    this.openDialog(type);
+  }
   
   openDialog(type) {
-    let data = {type:type,profile_id:this.userInfo.chef_profile_id,cuisineNames: []};
+    let data = {type:type,profile_data:this.userInfo,cuisineNames: []};
     let dialogRef = this.dialog.open(EditProfileComponent, { 
       width:'500px',
       height:'auto',
