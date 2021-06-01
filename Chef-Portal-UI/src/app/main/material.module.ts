@@ -16,6 +16,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatRadioModule} from '@angular/material/radio';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 const modules = [
@@ -36,7 +37,8 @@ const modules = [
   MatSnackBarModule,
   MatSelectModule,
   MatDialogModule,
-  MatRadioModule
+  MatRadioModule,
+  NgxMatSelectSearchModule
 ];
 
 @NgModule({
