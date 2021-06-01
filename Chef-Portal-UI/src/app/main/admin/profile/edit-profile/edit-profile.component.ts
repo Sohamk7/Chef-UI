@@ -30,7 +30,7 @@ export class EditProfileComponent implements OnInit {
   public tmp_avatar_img;
   // public cuisineNamesList: any = [];
 
-  /** list of banks */
+  /** list of cuisine */
   protected cuisineNamesList: any = [];
 
   /** control for the MatSelect filter keyword multi-selection */
