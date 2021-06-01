@@ -218,6 +218,76 @@
                         </button>
 
                     </form>
+                </div>    
+                <div *ngIf="data.type==='collectionDelivery'">
+                    <form fxLayot="column" [formGroup]="editCollectionDeliveryForm">
+
+                        <div class="p-4" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="40px">
+                            <p class="bold">Collection</p>
+                            <mat-slide-toggle color="primary" formControlName="collection"></mat-slide-toggle>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <div class="p-4" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="55px">
+                            <p class="bold">Delivery</p>
+                            <mat-slide-toggle color="primary" formControlName="delivery"></mat-slide-toggle>
+                        </div>
+        
+                        <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
+                        (click)="collectionDeliverySubmit()" [disabled]="editCollectionDeliveryForm.invalid">
+                            SUBMIT
+                        </button>
+
+                    </form>
+                </div>       
+                <div *ngIf="data.type==='collection'">
+                    <form fxLayot="column" [formGroup]="editCollectionForm">
+
+                        <div class="p-4" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="40px">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Start slot</mat-label>
+                                <mat-select formControlName="start" placeholder="start">
+                                    <mat-option *ngFor="let cuisine of filteredCuisinesMulti | async " [value]="cuisine.id" >
+                                        {{cuis6ine.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>End slot</mat-label>
+                                <mat-select formControlName="end" placeholder="end" [multiple]="true" #multiSelect>
+                                    <mat-option *ngFor="let cuisine of filteredCuisinesMulti | async " [value]="cuisine.id" >
+                                        {{cuisine.name}}
+                                    </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+                        <mat-divider></mat-divider>
+        
+                        <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
+                        (click)="collectionSubmit()" [disabled]="editCollectionForm.invalid">
+                            SUBMIT
+                        </button>
+
+                    </form>
+                </div>       
+                <div *ngIf="data.type==='delivery'">
+                    <form fxLayot="column" [formGroup]="editDeliveryForm">
+
+                        <div class="p-4" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="40px">
+                            <p class="bold">Collection</p>
+                            <mat-slide-toggle color="primary" formControlName="collection"></mat-slide-toggle>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <div class="p-4" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="55px">
+                            <p class="bold">Delivery</p>
+                            <mat-slide-toggle color="primary" formControlName="delivery"></mat-slide-toggle>
+                        </div>
+        
+                        <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
+                        (click)="DeliverySubmit()" [disabled]="editDeliveryForm.invalid">
+                            SUBMIT
+                        </button>
+
+                    </form>
                 </div>                
             </div>
             

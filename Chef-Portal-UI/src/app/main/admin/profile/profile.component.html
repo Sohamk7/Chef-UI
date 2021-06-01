@@ -32,6 +32,13 @@
             <tr fxLayoutAlign="start start"><th><h2><b>Chef store Information</b></h2></th></tr>
 
             <tr>
+                <td><b>CUISINE NAMES : </b>
+                    <div *ngFor="let cuisine of cuisineNames;let i=index">{{i+1}}. {{cuisine?._cuisine?.name}}</div>
+                </td>
+                <td><mat-icon (click)="editChefCuisine('cuisine')">edit</mat-icon></td>
+            </tr>
+
+            <tr>
                 <td>
                     <p><b>Address 1:</b> {{userInfo._chef_store?._chef_store_address.address_1}}</p>
                     <p><b>Address 2:</b>{{userInfo._chef_store?._chef_store_address.address_2}}</p>
@@ -45,10 +52,18 @@
             </tr>
 
             <tr>
-                <td><b>CUISINE NAMES : </b>
-                    <div *ngFor="let cuisine of cuisineNames;let i=index">{{i+1}}. {{cuisine?._cuisine?.name}}</div>
-                </td>
-                <td><mat-icon (click)="editChefCuisine('cuisine')">edit</mat-icon></td>
+                <td><b>Collection Enabled/Disabled<br>Delivery Enabled/Disabled </b></td>
+                <td><mat-icon (click)="editCollectionDelivery('collectionDelivery')">edit</mat-icon></td>
+            </tr>
+
+            <tr>
+                <td><b>Edit Collection Slots</b></td>
+                <td><mat-icon (click)="editCollectionSlots('collection')">edit</mat-icon></td>
+            </tr>
+
+            <tr>
+                <td><b>Edit Delivery Slots</b></td>
+                <td><mat-icon (click)="editDeliverySlots('delivery')">edit</mat-icon></td>
             </tr>
             
             <tr fxLayoutAlign="start start"><th><h2><b>Chef Information</b></h2></th></tr>
