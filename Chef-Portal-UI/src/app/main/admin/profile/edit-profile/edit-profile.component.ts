@@ -1,10 +1,13 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { element } from 'protractor';
 import { ReplaySubject, Subject } from 'rxjs';
 import { first, take, takeUntil } from 'rxjs/operators';
+import { SLOTS } from 'src/app/Constants/Slots';
+import { Slot } from 'src/app/_interface';
 import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
@@ -25,7 +28,7 @@ export class EditProfileComponent implements OnInit {
   editCuisineForm: FormGroup
   editCollectionDeliveryForm: FormGroup;
   editCollectionForm: FormGroup;
-  editDeliveryForm: FormGroup;
+  public slots : FormArray; 
   pwdhide: boolean = true;
   cpwdhide: boolean = true;
   public inputAccpets : string = ".jpeg, .jpg, .png";
@@ -35,6 +38,12 @@ export class EditProfileComponent implements OnInit {
 
   /** list of cuisine */
   protected cuisineNamesList: any = [];
+  public startSlotsList: Slot[] = SLOTS;
+  public endSlotsList: Slot[] = [];
+  public start1SlotsList: Slot[] = [];
+  public end1SlotsList: Slot[] = [];
+  public start2SlotsList: Slot[] = SLOTS;
+  public end2SlotsList: Slot[] = [];
 
   /** control for the MatSelect filter keyword multi-selection */
   public cuisineMultiFilterCtrl: FormControl = new FormControl();
@@ -50,9 +59,11 @@ export class EditProfileComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _fb: FormBuilder,
     private _matSnackBar:MatSnackBar,
-    private _dataService :DataService
-  ) { }
-  
+    private _dataService :DataService) {
+
+    this.slots = this._fb.array([]); 
+    
+   }
 
   ngOnInit(): void {
 
@@ -94,9 +105,11 @@ export class EditProfileComponent implements OnInit {
     }else if(this.data.type === 'collection'){
       this.message = 'Edit Chef Collection slots';
       this.EditCollectionFormGroup();
+      this.editCollectionForm.addControl('slots', this.slots);
     }else if(this.data.type === 'delivery'){
       this.message = 'Edit Chef Delivery Slots';
-      this.EditDeliveryFormGroup();
+      this.EditCollectionFormGroup();
+      this.editCollectionForm.addControl('slots', this.slots);
     }
 
     // listen for search field value changes
@@ -105,6 +118,30 @@ export class EditProfileComponent implements OnInit {
       .subscribe(() => {
         this.filterCuisinesMulti();
       });
+  }
+
+  onAddSelectRow() {
+    console.log('dhbjhsb')
+    this.slots.push(this.createItemFormGroup(null));
+  }
+
+  createItemFormGroup(data): FormGroup {
+    let start = '';
+    let end = '';
+    console.log('in form')
+    
+    if(data){
+      start = data.icon ? data.icon : '';
+      end = data.link ? data.link : '';
+    }
+    return this._fb.group({
+      start: this._fb.control(start),
+      end: this._fb.control(end), 
+    });
+  }
+
+  onRemoveRow(idx) {    
+    this.slots.removeAt(idx);
   }
 
   /**
@@ -225,12 +262,10 @@ export class EditProfileComponent implements OnInit {
   EditCollectionFormGroup() {
     this.editCollectionForm = this._fb.group({
       chef_id: this._fb.control(0),
-    });
-  }
-
-  EditDeliveryFormGroup() {
-    this.editDeliveryForm = this._fb.group({
-      chef_id: this._fb.control(0),
+      start: this._fb.control(''),
+      end: this._fb.control(''),
+      start1: this._fb.control(''),
+      end1: this._fb.control(''),
     });
   }
 
@@ -279,13 +314,21 @@ export class EditProfileComponent implements OnInit {
   }
 
   collectionSubmit() {
-    let message = 'Collection slots Edited Successfully';
-    this.postAPIResponse('chef/chef_store/collection/slot',this.editCollectionForm.value,message);
-  }
-
-  DeliverySubmit() {
-    let message = 'Delivery slots Edited Successfully';
-    this.postAPIResponse('chef/chef_store/delivery/slot',this.editDeliveryForm.value,message);
+    let message = this.data.type === 'collection' ? 'Collection slots Edited Successfully' : 'Delivery slots Edited Successfully';
+    let url = this.data.type === 'collection' ? 'chef/chef_store/collection/slot' : 'chef/chef_store/delivery/slot';
+    let formValue = this.editCollectionForm.value;
+    let tmpArr: any = [{'start':formValue.start.value,'end':formValue.end.value},{'start':formValue.start1.value,'end':formValue.end1.value}];
+    let slotArr = this.slots.value;
+    slotArr.forEach(element => {
+      let object: any = {};
+      object['start'] = element.start.value;
+      object['end'] = element.end.value;
+      tmpArr.push(object);
+    });
+    console.log(tmpArr);
+    console.log(this.slots);
+    // let slots = tmpArr.concat(this.slots.value);
+    this.postAPIResponse(url,{chef_id:0,slots:tmpArr},message);
   }
 
   postAPIResponse(url, value, message){
@@ -338,6 +381,55 @@ export class EditProfileComponent implements OnInit {
 
   RemovePicture() {
     this.tmp_avatar_img = '';
+  }
+
+  startSlotsChange(event) {
+    this.endSlotsList = [];
+    this.start1SlotsList = [];
+    this.end1SlotsList = [];
+    let index = this.startSlotsList.findIndex((x => x === event.value));
+
+    if(index!==-1){
+      for(let i=index + 5;i<this.startSlotsList.length;i++){
+        this.endSlotsList.push(this.startSlotsList[i]);
+      }
+    }
+  }
+
+  endSlotsChange(event) {
+    console.log('end');
+    this.start1SlotsList = [];
+    this.end1SlotsList = [];
+    let index = this.startSlotsList.findIndex((x => x === event.value));
+    if(index!==-1){
+      for(let i=index ;i<this.startSlotsList.length;i++){
+        this.start1SlotsList.push(this.startSlotsList[i]);
+      }
+    }
+  }
+
+  start1SlotsChange(event) {
+    this.end1SlotsList = [];
+    let index = this.startSlotsList.findIndex((x => x === event.value));
+
+    if(index!==-1){
+      for(let i=index + 1;i<this.startSlotsList.length;i++){
+        this.end1SlotsList.push(this.startSlotsList[i]);
+      }
+    }
+  }
+
+  start2SlotsChange(event) {
+    let index = this.startSlotsList.findIndex((x => x === event.value));
+
+    let tmpArr: any = [];
+
+    if(index!==-1){
+      for(let i=index + 5;i<this.startSlotsList.length;i++){
+        tmpArr.push(this.startSlotsList[i]);
+      }
+      this.end2SlotsList = tmpArr;
+    }
   }
 
   ngAfterViewInit() {

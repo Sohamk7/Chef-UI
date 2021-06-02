@@ -41,7 +41,7 @@ const modules = [
   MatRadioModule,
   NgxMatSelectSearchModule,
   MatSlideToggleModule,
-  MatDividerModule
+  MatDividerModule,
 ];
 
 @NgModule({
