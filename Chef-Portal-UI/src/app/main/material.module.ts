@@ -19,6 +19,10 @@ import {MatRadioModule} from '@angular/material/radio';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatDividerModule} from '@angular/material/divider';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const modules = [
   CommonModule,
@@ -42,6 +46,10 @@ const modules = [
   NgxMatSelectSearchModule,
   MatSlideToggleModule,
   MatDividerModule,
+  MatDatepickerModule,
+  MatTooltipModule,
+  ColorPickerModule,
+  MatNativeDateModule
 ];
 
 @NgModule({

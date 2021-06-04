@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 import { CreateProductComponent } from './products/create-product/create-product.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { CreateMenuComponent } from './menus/create-menu/create-menu.component';
+import { CalendarEventFormDialogComponent } from './schedules/event-form/event-form.component';
 
 
 @NgModule({
   declarations: [
     CreateProductComponent,
     EditProfileComponent,
-    CreateMenuComponent
+    CreateMenuComponent,
+    CalendarEventFormDialogComponent
   ],
   imports: [
     CommonModule,
