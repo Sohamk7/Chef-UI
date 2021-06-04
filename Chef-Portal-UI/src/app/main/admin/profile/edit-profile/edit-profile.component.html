@@ -294,9 +294,10 @@
                                 </div>
                             </ng-container>
                             <ng-template #endLimit>
-                                <div class="red" *ngIf="index===6">We can slot upto 5</div>
+                                <div class="red" *ngIf="index===5">We can slot upto 5</div>
                             </ng-template>
                         </div>
+                        
                         <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
                         (click)="collectionSubmit()" [disabled]="editCollectionForm.invalid">
                             SUBMIT
