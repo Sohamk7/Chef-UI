@@ -40,8 +40,6 @@ export class EditProfileComponent implements OnInit {
   protected cuisineNamesList: any = [];
   public startSlotsList: Slot[] = SLOTS;
   public endSlotsList: Slot[] = [];
-  public start1SlotsList: Slot[] = [];
-  public end1SlotsList: Slot[] = [];
   public start2SlotsList: Slot[] = SLOTS;
   public end2SlotsList: Slot[] = [];
 
@@ -120,9 +118,11 @@ export class EditProfileComponent implements OnInit {
       });
   }
 
-  onAddSelectRow() {
+  onAddSelectRow(index) {
     console.log('dhbjhsb')
-    this.slots.push(this.createItemFormGroup(null));
+    if(index<5){
+      this.slots.push(this.createItemFormGroup(null));
+    }   
   }
 
   createItemFormGroup(data): FormGroup {
@@ -264,8 +264,8 @@ export class EditProfileComponent implements OnInit {
       chef_id: this._fb.control(0),
       start: this._fb.control(''),
       end: this._fb.control(''),
-      start1: this._fb.control(''),
-      end1: this._fb.control(''),
+      // start1: this._fb.control(''),
+      // end1: this._fb.control(''),
     });
   }
 
@@ -317,14 +317,14 @@ export class EditProfileComponent implements OnInit {
     let message = this.data.type === 'collection' ? 'Collection slots Edited Successfully' : 'Delivery slots Edited Successfully';
     let url = this.data.type === 'collection' ? 'chef/chef_store/collection/slot' : 'chef/chef_store/delivery/slot';
     let formValue = this.editCollectionForm.value;
-    let tmpArr: any = [{'start':formValue.start.value,'end':formValue.end.value},{'start':formValue.start1.value,'end':formValue.end1.value}];
+    let tmpArr: any = [{'start':formValue.start.value,'end':formValue.end.value}];
     let slotArr = this.slots.value;
     slotArr.forEach(element => {
       let object: any = {};
       object['start'] = element.start.value;
       object['end'] = element.end.value;
       tmpArr.push(object);
-    });
+    });0.
     console.log(tmpArr);
     console.log(this.slots);
     // let slots = tmpArr.concat(this.slots.value);
@@ -335,21 +335,23 @@ export class EditProfileComponent implements OnInit {
 
     if(this.data.type!=='profile' && this.data.type!=='banner'){
 
+      let resMsg;
+
       this._dataService.save({url:url,data:value,isLoader:true})
         .pipe(first())
         .subscribe(
             data => {
                 // Show the success message
                 this._matSnackBar.open(message, 'CLOSE', {
-                    verticalPosition: 'bottom',
-                    horizontalPosition:'center',
-                    duration        : 2000
+                  verticalPosition: 'bottom',
+                  horizontalPosition:'center',
+                  duration        : 2000
                 });
                 this.dialogRef.close();
             },
             error => {
                 // Show the error message
-                this._matSnackBar.open('please try again', 'Retry', {
+                this._matSnackBar.open(error.error.message, 'Retry', {
                     verticalPosition: 'bottom',
                     horizontalPosition:'center',
                     duration        : 2000
@@ -385,36 +387,13 @@ export class EditProfileComponent implements OnInit {
 
   startSlotsChange(event) {
     this.endSlotsList = [];
-    this.start1SlotsList = [];
-    this.end1SlotsList = [];
-    let index = this.startSlotsList.findIndex((x => x === event.value));
-
-    if(index!==-1){
-      for(let i=index + 5;i<this.startSlotsList.length;i++){
-        this.endSlotsList.push(this.startSlotsList[i]);
-      }
-    }
-  }
-
-  endSlotsChange(event) {
-    console.log('end');
-    this.start1SlotsList = [];
-    this.end1SlotsList = [];
-    let index = this.startSlotsList.findIndex((x => x === event.value));
-    if(index!==-1){
-      for(let i=index ;i<this.startSlotsList.length;i++){
-        this.start1SlotsList.push(this.startSlotsList[i]);
-      }
-    }
-  }
-
-  start1SlotsChange(event) {
-    this.end1SlotsList = [];
+    // this.start1SlotsList = [];
+    // this.end1SlotsList = [];
     let index = this.startSlotsList.findIndex((x => x === event.value));
 
     if(index!==-1){
       for(let i=index + 1;i<this.startSlotsList.length;i++){
-        this.end1SlotsList.push(this.startSlotsList[i]);
+        this.endSlotsList.push(this.startSlotsList[i]);
       }
     }
   }
@@ -425,7 +404,7 @@ export class EditProfileComponent implements OnInit {
     let tmpArr: any = [];
 
     if(index!==-1){
-      for(let i=index + 5;i<this.startSlotsList.length;i++){
+      for(let i=index + 1;i<this.startSlotsList.length;i++){
         tmpArr.push(this.startSlotsList[i]);
       }
       this.end2SlotsList = tmpArr;
