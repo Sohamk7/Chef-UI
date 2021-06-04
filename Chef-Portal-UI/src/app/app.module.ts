@@ -10,6 +10,7 @@ import { LoaderAuthInterceptor } from './_helpers/auth.interceptor';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MaterialModule } from './main/material.module';
 import { CurrencyPipe } from '@angular/common';
+import { CalendarService } from './_services/calender.service';
 
 @NgModule({
   declarations: [

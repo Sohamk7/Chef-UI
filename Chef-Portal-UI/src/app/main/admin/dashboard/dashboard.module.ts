@@ -11,6 +11,10 @@ import { OrdersComponent } from '../orders/orders.component';
 import { ProductsComponent } from '../products/products.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { SchedulesComponent } from '../schedules/schedules.component';
+import { CalendarModule as AngularCalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarService } from 'src/app/_services/calender.service';
+import { MenuService } from 'src/app/_services/menu.service';
 
 const routes = [
   {
@@ -23,7 +27,10 @@ const routes = [
         },
         {
           path     : 'menus',
-          component: MenusComponent
+          component: MenusComponent,
+          resolve  : {
+            chat: MenuService
+          }
         },
         {
           path     : 'chefs',
@@ -47,7 +54,10 @@ const routes = [
         },
         {
           path     : 'schedules',
-          component: SchedulesComponent
+          component: SchedulesComponent,
+          resolve  : {
+            chat: CalendarService,
+          }
         }
       ]
   }
@@ -69,7 +79,12 @@ const routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModule,
+    AngularCalendarModule.forRoot({
+      provide   : DateAdapter,
+      useFactory: adapterFactory
+  }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [CalendarService,MenuService]
 })
 export class DashboardModule { }

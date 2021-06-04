@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { DataService } from 'src/app/_services/dataservice';
+import { MenuService } from 'src/app/_services/menu.service';
 import { CreateMenuComponent } from './create-menu/create-menu.component';
 
 @Component({
@@ -11,24 +13,45 @@ import { CreateMenuComponent } from './create-menu/create-menu.component';
   styleUrls: ['./menus.component.scss']
 })
 export class MenusComponent implements OnInit {
+
+  refresh: Subject<any> = new Subject();
   menuList:any = [];
 
   constructor(
     private dialog: MatDialog,
     private _matSnackBar: MatSnackBar,
+    private _manuService: MenuService,
     private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.getMenus();
+
+      /**
+       * Watch re-render-refresh for updating db
+       */
+       this.refresh.subscribe(updateDB => {
+          if ( updateDB )
+          {
+              this._manuService.updateMenus(this.menuList);
+          }
+        });
+
+        this._manuService.onMenusUpdated.subscribe(menus => {
+          console.log(menus);
+            this.getMenus();
+            this.refresh.next();
+        });
+        this.getMenus();
   }
 
-  getMenus() {
-
-    this.dataService.getAll({url:'menu',isLoader:true})
-    .subscribe(response =>{
-      this.menuList = response;
-      console.log(response);
-    });
+  /**
+   * Set menus
+   */
+   getMenus(): void
+  {
+      this.menuList = this._manuService.menus.map(item => {
+        console.log(item)
+          return item;
+      });
   }
 
   openCreateMenuDialog() {
