@@ -56,7 +56,7 @@ const routes = [
           path     : 'schedules',
           component: SchedulesComponent,
           resolve  : {
-            chat: CalendarService,
+            events: CalendarService,
           }
         }
       ]

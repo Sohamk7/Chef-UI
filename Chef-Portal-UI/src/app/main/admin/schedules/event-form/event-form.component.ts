@@ -20,7 +20,8 @@ export class CalendarEventFormDialogComponent implements OnInit {
   eventForm: FormGroup;
   dialogTitle: string = 'New Event';
   presetColors = MatColors.presets;
-  startDate = new Date();
+  startDate = new Date().setDate(new Date().getDate() + 1);
+  endDate =  new Date().setDate(new Date().getDate() + 28);
   menuList: any = [];
 
   /**
@@ -39,21 +40,19 @@ export class CalendarEventFormDialogComponent implements OnInit {
       private _dataService: DataService
   )
   {
+    // console.log(new Date().getDate()+28);
+    console.log(this._data);
       // this.event = _data.event;
       // this.action = _data.action;
 
-      // if ( this.action === 'edit' )
-      // {
-      //     this.dialogTitle = this.event.title;
-      // }
-      // else
-      // {
-      //     this.dialogTitle = 'New Event';
-      //     this.event = new CalendarEventModel({
-      //         start: _data.date,
-      //         end  : _data.date
-      //     });
-      // }
+      if ( this._data)
+      {
+          this.dialogTitle = 'Edit Event';
+      }
+      else
+      {
+          this.dialogTitle = 'New Event';
+      }
 
       this.eventForm = this.createEventForm();
   }
@@ -79,12 +78,27 @@ export class CalendarEventFormDialogComponent implements OnInit {
    */
   createEventForm(): FormGroup
   {
-      return new FormGroup({
+      if(this._data){
+        let chef_id = this._data._product_menu ? this._data._product_menu.chef_id : 0;
+        let menu_id = this._data._product_menu ? this._data._product_menu.id : 0;
+        let available_date = this._data.available_date ? new Date(this._data.available_date) : new Date();
+        let ispublic = this._data.public ? this._data.public : true;
+        let availability_id = this._data.id ? this._data.id : 0;
+        return new FormGroup({
+          chef_id : new FormControl(chef_id),
+          menu_id : new FormControl(menu_id,[Validators.required]),
+          available_date   : new FormControl(available_date,[Validators.required]),
+          public : new FormControl(ispublic,[Validators.required]),
+          availability_id: new FormControl(availability_id)
+        });
+      }else {
+        return new FormGroup({
           chef_id : new FormControl(0),
-          menu_id : new FormControl('',[Validators.required]),
-          available_date   : new FormControl('',[Validators.required]),
+          menu_id : new FormControl(0,[Validators.required]),
+          available_date   : new FormControl(new Date(),[Validators.required]),
           public : new FormControl(true,[Validators.required]),
-      });
+        });
+      }
   }
 
   onClickAdd() {

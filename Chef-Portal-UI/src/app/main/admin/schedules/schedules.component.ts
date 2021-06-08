@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { Subject } from 'rxjs';
 import { startOfDay, isSameDay, isSameMonth} from 'date-fns';
@@ -8,6 +8,9 @@ import { CalendarEventFormDialogComponent } from './event-form/event-form.compon
 import { CalendarService } from 'src/app/_services/calender.service';
 import { fuseAnimations } from 'src/app/animations';
 import { CalendarEventModel } from 'src/app/_models/event.model';
+import { DataService } from 'src/app/_services/dataservice';
+import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-schedules',
@@ -20,9 +23,9 @@ export class SchedulesComponent implements OnInit {
  
   actions: CalendarEventAction[];
   activeDayIsOpen: boolean;
-  // confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  confirmDialogRef: MatDialogRef<ConfirmDialogComponent>;
   dialogRef: any;
-  events: CalendarEvent[];
+  events: CalendarEvent[] = [];
   refresh: Subject<any> = new Subject();
   selectedDay: any;
   view: string;
@@ -30,7 +33,9 @@ export class SchedulesComponent implements OnInit {
 
   constructor(
       private _matDialog: MatDialog,
-      private _calendarService: CalendarService
+      private _calendarService: CalendarService,
+      private _dataService: DataService,
+      private _matSnackBar: MatSnackBar
   )
   {
       // Set the defaults
@@ -75,7 +80,7 @@ export class SchedulesComponent implements OnInit {
       this.refresh.subscribe(updateDB => {
           if ( updateDB )
           {
-              this._calendarService.updateEvents(this.events);
+              this._calendarService.getEvents();
           }
       });
 
@@ -83,6 +88,8 @@ export class SchedulesComponent implements OnInit {
           this.setEvents();
           this.refresh.next();
       });
+      this.setEvents();
+      
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -98,6 +105,7 @@ export class SchedulesComponent implements OnInit {
           item.actions = this.actions;
           return new CalendarEventModel(item);
       });
+      console.log(this.events);
   }
 
   /**
@@ -175,22 +183,38 @@ export class SchedulesComponent implements OnInit {
    */
   deleteEvent(event): void
   {
-      // this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      //     disableClose: false
-      // });
+      let confirmMessage = 'Are you sure you want to delete?';
+      this.confirmDialogRef = this._matDialog.open(ConfirmDialogComponent, { width: '400px', data: confirmMessage,
+          disableClose: false
+      });
 
-      // this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+      console.log(event);
 
-      // this.confirmDialogRef.afterClosed().subscribe(result => {
-      //     if ( result )
-      //     {
-      //         const eventIndex = this.events.indexOf(event);
-      //         this.events.splice(eventIndex, 1);
-      //         this.refresh.next(true);
-      //     }
-      //     this.confirmDialogRef = null;
-      // });
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+          if ( result !== 'N')
+          {
+              this.deleteData(event.id);
+          }
+          this.confirmDialogRef = null;
+      });
 
+  }
+
+  deleteData(id) {
+
+    this._dataService.delete({ url: 'schedule/delete/' + id, isLoader: true })
+      .subscribe((response: any) => {
+       //  if(response === {}){
+           // Show the success message
+           this._matSnackBar.open('Schedule deleted successfully', 'CLOSE', {
+             verticalPosition: 'bottom',
+             horizontalPosition:'center',
+             duration        : 2000
+           });
+           this.refresh.next(true);
+       //  }
+     });
   }
 
   /**
@@ -205,39 +229,17 @@ export class SchedulesComponent implements OnInit {
 
       this.dialogRef = this._matDialog.open(CalendarEventFormDialogComponent, {
           panelClass: 'event-form-dialog',
-          data      : {
-              event : event,
-              action: action
-          }
+          data      : event,
+          width:'500px',
+          disableClose: true
       });
 
       this.dialogRef.afterClosed()
           .subscribe(response => {
-              if ( !response )
+            
+              if ( response !=='N')
               {
-                  return;
-              }
-              const actionType: string = response[0];
-              const formData: FormGroup = response[1];
-              switch ( actionType )
-              {
-                  /**
-                   * Save
-                   */
-                  case 'save':
-
-                      this.events[eventIndex] = Object.assign(this.events[eventIndex], formData.getRawValue());
-                      this.refresh.next(true);
-
-                      break;
-                  /**
-                   * Delete
-                   */
-                  case 'delete':
-
-                      this.deleteEvent(event);
-
-                      break;
+                this.refresh.next(true);
               }
           });
   }
@@ -255,13 +257,6 @@ export class SchedulesComponent implements OnInit {
       });
       this.dialogRef.afterClosed()
           .subscribe((response: FormGroup) => {
-              if ( !response )
-              {
-                  return;
-              }
-              const newEvent = response.getRawValue();
-              newEvent.actions = this.actions;
-              this.events.push(newEvent);
               this.refresh.next(true);
           });
   }

@@ -67,7 +67,7 @@ export class CalendarService implements Resolve<any>
 
             this._httpClient.get(ServerURL.SERVER_URL_ENDPOINT + 'schedule',HttpUploadOptions)
                 .subscribe((response: any) => {
-                    this.events = response.data;
+                    this.events = response;
                     this.onEventsUpdated.next(this.events);
                     resolve(this.events);
                 }, reject);
@@ -83,10 +83,12 @@ export class CalendarService implements Resolve<any>
     updateEvents(events): Promise<any>
     {
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/calendar/events', {
-                id  : 'events',
-                data: [...events]
-            })
+            //UPLOAD FILE DATA OPTION HEADERS
+            const HttpUploadOptions = {
+                headers: new HttpHeaders({  'Accept':'application/json','Authorization': 'Bearer ' + this.token })
+            }
+            this._httpClient.post(ServerURL.SERVER_URL_ENDPOINT + 'schedule',HttpUploadOptions
+            )
                 .subscribe((response: any) => {
                     this.getEvents();
                 }, reject);

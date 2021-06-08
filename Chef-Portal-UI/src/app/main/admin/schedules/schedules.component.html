@@ -17,7 +17,7 @@
                 </div>
 
                 <!-- TOOLBAR -->
-                <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+                <!-- <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
 
                     <button mat-icon-button
                             mwlCalendarToday
@@ -38,7 +38,7 @@
                     <button mat-icon-button (click)="view='month'" aria-label="Month" matTooltip="Month">
                         <mat-icon>view_module</mat-icon>
                     </button>
-                </div>
+                </div> -->
             </div>
             <!-- / TOOLBAR -->
 
@@ -94,7 +94,7 @@
                 (eventTimesChanged)="eventTimesChanged($event)"
                 (beforeViewRender)="beforeMonthViewRender($event)">
             </mwl-calendar-month-view>
-            <mwl-calendar-week-view
+            <!-- <mwl-calendar-week-view
                 *ngSwitchCase="'week'"
                 [viewDate]="viewDate"
                 (viewDateChange)="selectedDay = {date:$event}"
@@ -113,7 +113,7 @@
                 (dayClicked)="dayClicked($event.day)"
                 (eventClicked)="editEvent('edit', $event.event)"
                 (eventTimesChanged)="eventTimesChanged($event)">
-            </mwl-calendar-day-view>
+            </mwl-calendar-day-view> -->
         </div>
     </div>
     <!-- / CONTENT -->
