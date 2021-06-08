@@ -34,7 +34,7 @@
             <mat-form-field appearance="outline" class="pr-sm-8" fxFlex="100">
                 <mat-label>Available date</mat-label>
                 <input matInput [matDatepicker]="startDatePicker" name="available_date" 
-                [min]="startDate" formControlName="available_date" readonly="true">
+                [min]="startDate" [max]="endDate" formControlName="available_date" readonly="true">
                 <mat-datepicker-toggle matSuffix [for]="startDatePicker" ></mat-datepicker-toggle>
                 <mat-datepicker #startDatePicker [startAt]="startDate"></mat-datepicker>
                 <!-- <mat-error *ngIf="eventForm.get('available_date').hasError('required')">

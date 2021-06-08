@@ -3,6 +3,7 @@ import { startOfDay, endOfDay } from 'date-fns';
 
 export class CalendarEventModel
 {
+    id: number;
     start: Date;
     end?: Date;
     title: string;
@@ -22,6 +23,9 @@ export class CalendarEventModel
         location: string,
         notes: string
     };
+    public: boolean;
+    _product_menu: {}
+    available_date: any;
 
     /**
      * Constructor
@@ -31,9 +35,12 @@ export class CalendarEventModel
     constructor(data?)
     {
         data = data || {};
-        this.start = new Date(data.start) || startOfDay(new Date());
-        this.end = new Date(data.end) || endOfDay(new Date());
-        this.title = data.title || '';
+        console.log(data)
+
+        this.id = data.id && data.id || 0;
+        this.start = new Date(data.available_date) || startOfDay(new Date());
+        this.end = new Date(data.available_date) || endOfDay(new Date());;
+        this.title = data._product_menu.name || '';
         this.color = {
             primary  : data.color && data.color.primary || '#1e90ff',
             secondary: data.color && data.color.secondary || '#D1E8FF'
@@ -50,5 +57,10 @@ export class CalendarEventModel
             location: data.meta && data.meta.location || '',
             notes   : data.meta && data.meta.notes || ''
         };
+    
+        this.public = data.public && data.public || true;
+        this._product_menu = data._product_menu && data._product_menu ||{};
+        this.available_date = data.available_date && data.available_date;
     }
+   
 }
