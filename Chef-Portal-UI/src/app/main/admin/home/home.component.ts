@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  public profile_data: any = {};
+
+  constructor(
+    private _dataService : DataService
+  ) { }
 
   ngOnInit(): void {
+
+    this.getProfileCompleteData()
+  }
+
+  getProfileCompleteData() {
+      this._dataService.getAll({url:'chef/account_progress',isLoader:true})
+      .subscribe(res =>{
+        this.profile_data = res;
+      })
   }
 
 }
