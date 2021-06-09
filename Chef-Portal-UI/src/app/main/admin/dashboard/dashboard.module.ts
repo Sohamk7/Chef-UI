@@ -15,6 +15,7 @@ import { CalendarModule as AngularCalendarModule, DateAdapter } from 'angular-ca
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarService } from 'src/app/_services/calender.service';
 import { MenuService } from 'src/app/_services/menu.service';
+import { PaymentComponent } from '../payment/payment.component';
 
 const routes = [
   {
@@ -58,6 +59,10 @@ const routes = [
           resolve  : {
             events: CalendarService,
           }
+        },
+        {
+          path     : 'payment',
+          component: PaymentComponent,
         }
       ]
   }
@@ -73,7 +78,8 @@ const routes = [
     OrdersComponent,
     ProductsComponent,
     ProfileComponent,
-    SchedulesComponent
+    SchedulesComponent,
+    PaymentComponent
   ],
   imports: [
     CommonModule,

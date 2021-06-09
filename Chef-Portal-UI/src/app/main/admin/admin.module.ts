@@ -8,13 +8,12 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { CreateMenuComponent } from './menus/create-menu/create-menu.component';
 import { CalendarEventFormDialogComponent } from './schedules/event-form/event-form.component';
 
-
 @NgModule({
   declarations: [
     CreateProductComponent,
     EditProfileComponent,
     CreateMenuComponent,
-    CalendarEventFormDialogComponent
+    CalendarEventFormDialogComponent,
   ],
   imports: [
     CommonModule,
