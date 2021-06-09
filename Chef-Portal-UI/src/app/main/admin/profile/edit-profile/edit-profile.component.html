@@ -246,7 +246,7 @@
                                 <mat-label>Start slot</mat-label>
                                 <mat-select formControlName="start" placeholder="start" (selectionChange)="startSlotsChange($event)">
                                     <mat-option *ngFor="let slot of startSlotsList" [value]="slot" >
-                                        {{slot.name}}
+                                        {{slot}} : 00
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -254,7 +254,7 @@
                                 <mat-label>End slot</mat-label>
                                 <mat-select formControlName="end" placeholder="end">
                                     <mat-option *ngFor="let slot of endSlotsList " [value]="slot" >
-                                        {{slot.name}}
+                                        {{slot}} : 00
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -270,7 +270,7 @@
                                     <mat-label>Start slot</mat-label>
                                     <mat-select [formControl]="content.get('start')" placeholder="start" (selectionChange)="start2SlotsChange($event)">
                                         <mat-option *ngFor="let slot of start2SlotsList " [value]="slot" >
-                                            {{slot.name}}
+                                            {{slot}} : 00
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -278,7 +278,7 @@
                                     <mat-label>End slot</mat-label>
                                     <mat-select [formControl]="content.get('end')" placeholder="end">
                                         <mat-option *ngFor="let slot of end2SlotsList " [value]="slot" >
-                                            {{slot.name}}
+                                            {{slot}} : 00
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>

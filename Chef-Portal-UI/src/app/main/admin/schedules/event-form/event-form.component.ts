@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CalendarEvent } from 'angular-calendar';
-import { MatColors } from 'src/app/mat-colors';
+// import { MatColors } from 'src/app/mat-colors';
 import { CalendarEventModel } from 'src/app/_models/event.model';
 import { DataService } from 'src/app/_services/dataservice';
 import { MenuService } from 'src/app/_services/menu.service';
@@ -19,7 +19,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   event: CalendarEvent;
   eventForm: FormGroup;
   dialogTitle: string = 'New Event';
-  presetColors = MatColors.presets;
+  // presetColors = MatColors.presets;
   startDate = new Date().setDate(new Date().getDate() + 1);
   endDate =  new Date().setDate(new Date().getDate() + 28);
   menuList: any = [];

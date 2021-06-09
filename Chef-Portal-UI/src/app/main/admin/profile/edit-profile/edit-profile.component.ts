@@ -38,10 +38,10 @@ export class EditProfileComponent implements OnInit {
 
   /** list of cuisine */
   protected cuisineNamesList: any = [];
-  public startSlotsList: Slot[] = SLOTS;
-  public endSlotsList: Slot[] = [];
-  public start2SlotsList: Slot[] = SLOTS;
-  public end2SlotsList: Slot[] = [];
+  public startSlotsList: any[] = SLOTS;
+  public endSlotsList: any[] = [];
+  public start2SlotsList: any[] = SLOTS;
+  public end2SlotsList: any[] = [];
 
   /** control for the MatSelect filter keyword multi-selection */
   public cuisineMultiFilterCtrl: FormControl = new FormControl();
@@ -87,6 +87,7 @@ export class EditProfileComponent implements OnInit {
     }else if(this.data.type === 'banner'){
       this.message = 'Edit Chef Banner Picture';
     }else if(this.data.type === 'cuisine'){
+
       this.message = 'Edit Cuisine Name';
       this.EditCuisineFormGroup();
       this.getCuisineList();
@@ -97,17 +98,30 @@ export class EditProfileComponent implements OnInit {
         });
         this.editCuisineForm.controls['cuisines'].setValue(cuisineNameToDispaly)
       }
+
     }else if(this.data.type === 'collectionDelivery'){
+
       this.message = 'Edit Chef Collection/Delivery Enabled/Disabled';
       this.EditCollectionDeliveryFormGroup();
+
     }else if(this.data.type === 'collection'){
+
       this.message = 'Edit Chef Collection slots';
-      this.EditCollectionFormGroup();
-      this.editCollectionForm.addControl('slots', this.slots);
+      // this.EditCollectionFormGroup();
+      // this.editCollectionForm.addControl('slots', this.slots);
+      let profile_data = this.data.profile_data;
+      let slot_data = profile_data._chef_store?._chef_store_collection_slots;
+      this.onAddExistingRow(slot_data);
+
     }else if(this.data.type === 'delivery'){
+
       this.message = 'Edit Chef Delivery Slots';
-      this.EditCollectionFormGroup();
-      this.editCollectionForm.addControl('slots', this.slots);
+      // this.EditCollectionFormGroup();
+      // this.editCollectionForm.addControl('slots', this.slots);
+      let profile_data = this.data.profile_data;
+      let slot_data = profile_data._chef_store?._chef_store_delivery_slots;
+      this.onAddExistingRow(slot_data);
+
     }
 
     // listen for search field value changes
@@ -125,14 +139,33 @@ export class EditProfileComponent implements OnInit {
     }   
   }
 
+  onAddExistingRow(rowData) {
+    if(rowData.length > 0) {
+      for (var i = 0; i <= rowData.length - 1; i++) {
+        if(i===0){
+          this.EditCollectionFormGroup(rowData[i]);
+          
+        }else{
+          this.slots.push(this.createItemFormGroup(rowData[i]));
+          
+        }
+        this.editCollectionForm.addControl('slots', this.slots);
+      }
+    }
+		else {
+      this.EditCollectionFormGroup(null);
+      this.editCollectionForm.addControl('slots', this.slots);
+    }
+	}
   createItemFormGroup(data): FormGroup {
     let start = '';
     let end = '';
     console.log('in form')
     
     if(data){
-      start = data.icon ? data.icon : '';
-      end = data.link ? data.link : '';
+      this.getStart2Slots(data.start_hour);
+      start = data.start_hour ? data.start_hour : '';
+      end = data.end_hour ? data.end_hour : '';
     }
     return this._fb.group({
       start: this._fb.control(start),
@@ -259,14 +292,23 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  EditCollectionFormGroup() {
-    this.editCollectionForm = this._fb.group({
-      chef_id: this._fb.control(0),
-      start: this._fb.control(''),
-      end: this._fb.control(''),
-      // start1: this._fb.control(''),
-      // end1: this._fb.control(''),
-    });
+  EditCollectionFormGroup(slot_data) {
+    console.log(slot_data);
+    if(slot_data) {
+      this.getStartSlots(slot_data.start_hour);
+      this.editCollectionForm = this._fb.group({
+        chef_id: this._fb.control(slot_data.chef_store_id),
+        start: this._fb.control(slot_data.start_hour),
+        end: this._fb.control(slot_data.end_hour),
+      });
+    }else {
+      this.editCollectionForm = this._fb.group({
+        chef_id: this._fb.control(0),
+        start: this._fb.control(''),
+        end: this._fb.control(''),
+      });
+    }
+    console.log(this.editCollectionForm.value);
   }
 
   getCuisineList() {
@@ -317,12 +359,12 @@ export class EditProfileComponent implements OnInit {
     let message = this.data.type === 'collection' ? 'Collection slots Edited Successfully' : 'Delivery slots Edited Successfully';
     let url = this.data.type === 'collection' ? 'chef/chef_store/collection/slot' : 'chef/chef_store/delivery/slot';
     let formValue = this.editCollectionForm.value;
-    let tmpArr: any = [{'start':formValue.start.value,'end':formValue.end.value}];
+    let tmpArr: any = [{'start':formValue.start,'end':formValue.end}];
     let slotArr = this.slots.value;
     slotArr.forEach(element => {
       let object: any = {};
-      object['start'] = element.start.value;
-      object['end'] = element.end.value;
+      object['start'] = element.start;
+      object['end'] = element.end;
       tmpArr.push(object);
     });0.
     console.log(tmpArr);
@@ -386,10 +428,12 @@ export class EditProfileComponent implements OnInit {
   }
 
   startSlotsChange(event) {
+      this.getStartSlots(event.value);
+  }
+
+  getStartSlots(value) {
     this.endSlotsList = [];
-    // this.start1SlotsList = [];
-    // this.end1SlotsList = [];
-    let index = this.startSlotsList.findIndex((x => x === event.value));
+    let index = this.startSlotsList.findIndex((x => x === value));
 
     if(index!==-1){
       for(let i=index + 1;i<this.startSlotsList.length;i++){
@@ -399,7 +443,11 @@ export class EditProfileComponent implements OnInit {
   }
 
   start2SlotsChange(event) {
-    let index = this.startSlotsList.findIndex((x => x === event.value));
+    this.getStart2Slots(event.value);
+  }
+
+  getStart2Slots(value) {
+    let index = this.startSlotsList.findIndex((x => x === value));
 
     let tmpArr: any = [];
 
