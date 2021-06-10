@@ -52,7 +52,12 @@
             </tr>
 
             <tr>
-                <td><b>Collection Enabled/Disabled<br>Delivery Enabled/Disabled </b></td>
+                <td><b>
+                    <div>
+                        Collection <span *ngIf="userInfo._chef_store?.collection">Enabled</span><span *ngIf="!userInfo._chef_store?.collection">Disabled</span><br>
+                        Delivery <span *ngIf="userInfo._chef_store?.delivery">Enabled</span><span *ngIf="!userInfo._chef_store?.delivery">Disabled</span><br>
+                    </div></b>
+                </td>
                 <td><mat-icon (click)="editCollectionDelivery('collectionDelivery')">edit</mat-icon></td>
             </tr>
 
