@@ -148,7 +148,7 @@ export class CreateMenuComponent implements OnInit {
     },
     error => {
        // Show the error message
-        this._matSnackBar.open(error.message, 'RETRY', {
+        this._matSnackBar.open(error.error.message, 'RETRY', {
           verticalPosition: 'bottom',
           horizontalPosition:'center',
           duration        : 2000
