@@ -9,7 +9,7 @@ import { DataService } from './_services/dataservice';
 import { LoaderAuthInterceptor } from './_helpers/auth.interceptor';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MaterialModule } from './main/material.module';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { CalendarService } from './_services/calender.service';
 
 @NgModule({
@@ -30,6 +30,7 @@ import { CalendarService } from './_services/calender.service';
       useClass: LoaderAuthInterceptor,
       multi   : true,
     },
+    DatePipe,
     CurrencyPipe],
   bootstrap: [AppComponent]
 })
