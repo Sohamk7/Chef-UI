@@ -83,11 +83,11 @@ export class MenuService implements Resolve<any>
      */
     updateMenus(menus): Promise<any>
     {
+        const HttpUploadOptions = {
+            headers: new HttpHeaders({  'Accept':'application/json','Authorization': 'Bearer ' + this.token })
+        }
         return new Promise((resolve, reject) => {
-            this._httpClient.post('api/calendar/events', {
-                id  : 'events',
-                data: [...menus]
-            })
+            this._httpClient.post(ServerURL.SERVER_URL_ENDPOINT + 'menu',HttpUploadOptions)
                 .subscribe((response: any) => {
                     this.getMenus();
                 }, reject);

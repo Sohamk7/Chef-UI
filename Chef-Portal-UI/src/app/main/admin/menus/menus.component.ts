@@ -48,10 +48,10 @@ export class MenusComponent implements OnInit {
    */
    getMenus(): void
   {
-      this.menuList = this._manuService.menus.map(item => {
-        console.log(item)
-          return item;
-      });
+    this.dataService.getAll({url:'menu',isLoader:true})
+    .subscribe(response =>{
+      this.menuList = response;
+    });
   }
 
   openCreateMenuDialog() {
@@ -64,6 +64,7 @@ export class MenusComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getMenus();
+      this.refresh.next();
     });
   }
 
@@ -78,6 +79,7 @@ export class MenusComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getMenus();
+      this.refresh.next();
     });
   }
 
@@ -105,6 +107,7 @@ export class MenusComponent implements OnInit {
               duration        : 2000
             });
             this.getMenus();
+            this.refresh.next();
         //  }
       });
    }
