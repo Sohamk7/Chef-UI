@@ -23,6 +23,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const modules = [
   CommonModule,
@@ -49,7 +51,9 @@ const modules = [
   MatDatepickerModule,
   MatTooltipModule,
   ColorPickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatTableModule,
+  MatPaginatorModule
 ];
 
 @NgModule({
