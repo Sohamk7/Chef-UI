@@ -60,10 +60,10 @@
                 </td>
                 <td><b>
                     <div>
-                         <span *ngIf="userInfo._chef_store?.collection"><mat-icon appearance="bold" (click)="editCollectionDelivery('collectionDelivery')">done</mat-icon></span>
-                         <span *ngIf="!userInfo._chef_store?.collection"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">close</mat-icon></span><br>
-                         <span *ngIf="userInfo._chef_store?.delivery"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">done</mat-icon></span>
-                         <span *ngIf="!userInfo._chef_store?.delivery"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">close</mat-icon></span><br>
+                         <span *ngIf="userInfo._chef_store?.collection"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">check_circle</mat-icon></span>
+                         <span *ngIf="!userInfo._chef_store?.collection"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">cancel</mat-icon></span><br>
+                         <span *ngIf="userInfo._chef_store?.delivery"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">check_circle</mat-icon></span>
+                         <span *ngIf="!userInfo._chef_store?.delivery"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">cancel</mat-icon></span><br>
                     </div></b>
                 </td>
                 
