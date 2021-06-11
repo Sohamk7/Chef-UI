@@ -204,7 +204,8 @@
                             <mat-label>List of CUISINE NAMES</mat-label>
                             <mat-select formControlName="cuisines" placeholder="Cuisines" [multiple]="true" #multiSelect>
                                 <mat-option>
-                                    <ngx-mat-select-search [formControl]="cuisineMultiFilterCtrl"></ngx-mat-select-search>
+                                    <ngx-mat-select-search placeholderLabel="Search" noEntriesFoundLabel="No Cuisine Found"
+                                     [formControl]="cuisineMultiFilterCtrl"></ngx-mat-select-search>
                                 </mat-option>
                                 <mat-option *ngFor="let cuisine of filteredCuisinesMulti | async " [value]="cuisine.id" >
                                     {{cuisine.name}}

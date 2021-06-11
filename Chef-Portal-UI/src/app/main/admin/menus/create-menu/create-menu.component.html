@@ -15,7 +15,7 @@
 
                     <mat-form-field appearance="outline" >
                         <mat-label>Menu Name</mat-label>
-                        <input matInput formControlName="name" placeholder="Product Name">
+                        <input matInput formControlName="name" placeholder="Menu Name">
                         <mat-error *ngIf="createManuForm.get('name').hasError('required')">
                             Menu Name is required
                         </mat-error>
@@ -40,9 +40,10 @@
 
                     <mat-form-field appearance="outline">
                         <mat-label>Products</mat-label>
-                        <mat-select formControlName="products" placeholder="products name" [multiple]="true" #multiSelect>
+                        <mat-select formControlName="products" placeholder="Menu name" [multiple]="true" #multiSelect>
                             <mat-option>
-                                <ngx-mat-select-search [formControl]="productMultiFilterCtrl"></ngx-mat-select-search>
+                                <ngx-mat-select-search placeholderLabel="Search" noEntriesFoundLabel="No Products Found" 
+                                [formControl]="productMultiFilterCtrl"></ngx-mat-select-search>
                             </mat-option>
                             <mat-option *ngFor="let product of filteredProductsMulti | async " [value]="product.id" >
                                 {{product?._product_details?.name}}

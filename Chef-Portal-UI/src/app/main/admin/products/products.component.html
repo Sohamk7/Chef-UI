@@ -29,11 +29,11 @@
                                     <div class="h1 p-5"><b>{{product._product_details.name}}</b></div>
                             </div>
     
-                            <div class="footer" fxLayout="row" fxLayoutAlign="start center">
+                            <div class="footer pt-4" fxLayout="row" fxLayoutAlign="center center">
                                 
-                                <div><p><b>Price:</b>{{product._product_details.price}}</p></div>
+                                <div><p><b>Price:</b>{{product._product_details.price  | currency:'EUR'}}</p></div>
                             </div>
-                            <div class="footer" fxLayout="row" fxLayoutAlign="start center">
+                            <div class="footer pt-4" fxLayout="row" fxLayoutAlign="center center">
                                 
                                 <div><p>{{product._product_details.description}}</p></div>
                             </div>

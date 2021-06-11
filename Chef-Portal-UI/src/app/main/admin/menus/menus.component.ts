@@ -57,7 +57,7 @@ export class MenusComponent implements OnInit {
   openCreateMenuDialog() {
     let dialogRef = this.dialog.open(CreateMenuComponent, {
       data:null,
-      height: '700px',
+      height: '450px',
       width: '600px',
       disableClose:true
     });
