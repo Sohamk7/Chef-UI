@@ -58,7 +58,15 @@
                         Delivery <span *ngIf="userInfo._chef_store?.delivery">Enabled</span><span *ngIf="!userInfo._chef_store?.delivery">Disabled</span><br>
                     </div></b>
                 </td>
-                <td><mat-icon (click)="editCollectionDelivery('collectionDelivery')">edit</mat-icon></td>
+                <td><b>
+                    <div>
+                         <span *ngIf="userInfo._chef_store?.collection"><mat-icon appearance="bold" (click)="editCollectionDelivery('collectionDelivery')">done</mat-icon></span>
+                         <span *ngIf="!userInfo._chef_store?.collection"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">close</mat-icon></span><br>
+                         <span *ngIf="userInfo._chef_store?.delivery"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">done</mat-icon></span>
+                         <span *ngIf="!userInfo._chef_store?.delivery"><mat-icon (click)="editCollectionDelivery('collectionDelivery')">close</mat-icon></span><br>
+                    </div></b>
+                </td>
+                
             </tr>
 
             <tr>

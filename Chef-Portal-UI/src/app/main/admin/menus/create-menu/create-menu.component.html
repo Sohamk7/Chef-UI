@@ -15,7 +15,7 @@
 
                     <mat-form-field appearance="outline" >
                         <mat-label>Menu Name</mat-label>
-                        <input matInput formControlName="name" placeholder="Product Name">
+                        <input matInput formControlName="name" placeholder="Menu Name">
                         <mat-error *ngIf="createManuForm.get('name').hasError('required')">
                             Menu Name is required
                         </mat-error>
@@ -30,7 +30,7 @@
                         <mat-label>Description</mat-label>
                         <textarea matInput formControlName="description" placeholder="Add description about Menu at least 15 chars."></textarea>
                         <mat-error *ngIf="createManuForm.get('description').hasError('required')">
-                            Menu Name is required
+                            Description is required
                         </mat-error>
                         <mat-error *ngIf="!createManuForm.get('description').hasError('required') && 
                         createManuForm.get('description').hasError('minlength')">
@@ -42,7 +42,7 @@
                         <mat-label>Products</mat-label>
                         <mat-select formControlName="products" placeholder="products name" [multiple]="true" #multiSelect>
                             <mat-option>
-                                <ngx-mat-select-search [formControl]="productMultiFilterCtrl"></ngx-mat-select-search>
+                                <ngx-mat-select-search placeholderLabel = "Search" [formControl]="productMultiFilterCtrl"></ngx-mat-select-search>
                             </mat-option>
                             <mat-option *ngFor="let product of filteredProductsMulti | async " [value]="product.id" >
                                 {{product?._product_details?.name}}

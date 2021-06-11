@@ -52,8 +52,8 @@ export class OrdersComponent implements OnInit {
             sortable: true
           },
           {
-            columnDef: 'chefs',
-            header: 'Chefs',
+            columnDef: 'chef',
+            header: 'Chef',
             sortable: true
           },
           {
@@ -67,8 +67,8 @@ export class OrdersComponent implements OnInit {
             sortable:true
           },
           {
-            columnDef: 'orderTime',
-            header:'Order Time',
+            columnDef: 'orderDate',
+            header:'Order Date',
             sortable:true
           },
           {
@@ -141,10 +141,10 @@ export class OrdersComponent implements OnInit {
         let obj: any = {};
         obj['id'] = element.id;
         obj['status'] = '';
-        obj['chefs'] = element._chef.first_name + ' '+ element._chef.second_name;
+        obj['chef'] = element._chef.first_name + ' '+ element._chef.second_name;
         obj['customer'] = element._customer.first_name +' '+ element._customer.second_name;
         obj['deliveryMode'] = '';
-        obj['orderTime'] = this.datepipe.transform(element.order_date, 'dd-MM-yyyy hh:mm');
+        obj['orderDate'] = this.datepipe.transform(element.order_date, 'dd-MM-yyyy hh:mm');
         // obj['scheduleTime'] = element;
         // obj['paymentMethod'] = element;
         obj['address'] = element._chef?._chef_store?.name;
