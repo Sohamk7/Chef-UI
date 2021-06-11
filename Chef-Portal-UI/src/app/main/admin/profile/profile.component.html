@@ -52,11 +52,11 @@
             </tr>
 
             <tr>
-                <td><b>
+                <td>
                     <div>
-                        Collection <span *ngIf="userInfo._chef_store?.collection">Enabled</span><span *ngIf="!userInfo._chef_store?.collection">Disabled</span><br>
-                        Delivery <span *ngIf="userInfo._chef_store?.delivery">Enabled</span><span *ngIf="!userInfo._chef_store?.delivery">Disabled</span><br>
-                    </div></b>
+                       <b> Collection </b> <mat-icon *ngIf="userInfo._chef_store?.collection" class="check">check</mat-icon> <mat-icon *ngIf="!userInfo._chef_store?.collection" class="ncheck">close</mat-icon><br>
+                       <b> Delivery </b><mat-icon *ngIf="userInfo._chef_store?.delivery" class="check">check</mat-icon> <mat-icon *ngIf="!userInfo._chef_store?.delivery" class="ncheck">close</mat-icon>
+                    </div>
                 </td>
                 <td><mat-icon (click)="editCollectionDelivery('collectionDelivery')">edit</mat-icon></td>
             </tr>

@@ -241,8 +241,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   EditEmailFormGroup() {
+    let email = this.data.profile_data !==null ? this.data.profile_data.email : '';
     this.editEmailForm = this._fb.group({
-      email: this._fb.control('', [Validators.required,Validators.email])
+      email: this._fb.control(email, [Validators.required,Validators.email])
     });
   }
 
@@ -254,26 +255,29 @@ export class EditProfileComponent implements OnInit {
   }
 
   EditPhoneNoFormGroup() {
+    let phoneNo = this.data.profile_data !==null ? this.data.profile_data.phone_number : '';
     this.editPhoneNoForm = this._fb.group({
-      phone_number: this._fb.control('', [Validators.required,Validators.pattern("^((\\+44-?)|0)?[0-9]{10}$")])
+      phone_number: this._fb.control(phoneNo, [Validators.required,Validators.pattern("^((\\+44-?)|0)?[0-9]{10}$")])
     });
   }
 
   EditBiographyFormGroup() {
+    let biography = this.data.profile_data !==null ? this.data.profile_data?._chef_profile?.biography : '';
     this.editBiographyForm = this._fb.group({
       chef_profile_id: this._fb.control(this.data.profile_data.chef_profile_id),
-      biography: this._fb.control('',[Validators.required,Validators.minLength(120)])
+      biography: this._fb.control(biography,[Validators.required,Validators.minLength(120)])
     });
   }
 
   EditStoreAddressFormGroup() {
+    let address = this.data.profile_data?._chef_store?._chef_store_address;
     this.editStoreAddressForm = this._fb.group({
-      address_1: this._fb.control('', [Validators.required]),
-      address_2: this._fb.control(''),
-      address_3: this._fb.control(''),
-      city: this._fb.control('', [Validators.required]),
-      country: this._fb.control('', [Validators.required]),
-      postcode: this._fb.control('', [Validators.required, Validators.minLength(6),Validators.maxLength(6)]),
+      address_1: this._fb.control(address.address_1, [Validators.required]),
+      address_2: this._fb.control(address.address_2),
+      address_3: this._fb.control(address.address_3),
+      city: this._fb.control(address.city, [Validators.required]),
+      country: this._fb.control(address.country, [Validators.required]),
+      postcode: this._fb.control(address.postcode, [Validators.required, Validators.minLength(6),Validators.maxLength(6)]),
     });
   }
 
