@@ -25,6 +25,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const modules = [
   CommonModule,
@@ -53,7 +55,9 @@ const modules = [
   ColorPickerModule,
   MatNativeDateModule,
   MatTableModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  NgxSpinnerModule,
+  MatProgressSpinnerModule
 ];
 
 @NgModule({
