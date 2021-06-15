@@ -5,6 +5,7 @@ import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReplaySubject, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import { CommonUtils } from 'src/app/_helpers/common.utils';
 import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
@@ -16,6 +17,7 @@ export class CreateMenuComponent implements OnInit {
 
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect; 
   createManuForm:FormGroup;
+  public isSubmit: boolean = false;
   // productsList: any = [];
   public message:string = '';
   /** list of cuisine */
@@ -125,35 +127,42 @@ export class CreateMenuComponent implements OnInit {
     });
   }
   
-  onSubmit() {
+  onSubmit(event) {
 
-    if (this.createManuForm.invalid) {
-      return;
-    }
-    let formValue = this.createManuForm.value;
-    //Define formdata
-    let message = this.data!==null ? 'Menu Edited successfully' : 'Menu created successfully';
-    let url = this.data!==null ? 'menu/update' : 'menu/create';
-    
-    this.dataService.save({url: url, data:formValue})
-      .subscribe(uploadResponse=>{
-        console.log(uploadResponse);
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.createManuForm.valid) {
+      this.isSubmit = true;
+      let formValue = this.createManuForm.value;
+      //Define formdata
+      let message = this.data!==null ? 'Menu Edited successfully' : 'Menu created successfully';
+      let url = this.data!==null ? 'menu/update' : 'menu/create';
+      
+      this.dataService.save({url: url, data:formValue, isLoader:true})
+        .subscribe(uploadResponse=>{
+          console.log(uploadResponse);
+          
+          // Show the success message
+          this._matSnackBar.open(message, 'CLOSE', {
+            verticalPosition: 'bottom',
+            horizontalPosition:'center',
+            duration        : 2000
+        });
+        this.isSubmit = false;
         this.dialogRef.close();
-        // Show the success message
-        this._matSnackBar.open(message, 'CLOSE', {
-          verticalPosition: 'bottom',
-          horizontalPosition:'center',
-          duration        : 2000
+      },
+      error => {
+        // Show the error message
+          this._matSnackBar.open(error.error.message, 'RETRY', {
+            verticalPosition: 'bottom',
+            horizontalPosition:'center',
+            duration        : 2000
+        });
       });
-    },
-    error => {
-       // Show the error message
-        this._matSnackBar.open(error.error.message, 'RETRY', {
-          verticalPosition: 'bottom',
-          horizontalPosition:'center',
-          duration        : 2000
-      });
-    });
+    }else {
+      CommonUtils.validateAllFormFields(this.createManuForm);
+    }
+    
   }
 
   ngAfterViewInit() {

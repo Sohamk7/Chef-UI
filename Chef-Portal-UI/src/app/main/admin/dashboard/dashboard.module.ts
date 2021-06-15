@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { RouterModule } from '@angular/router';
@@ -16,6 +16,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarService } from 'src/app/_services/calender.service';
 import { MenuService } from 'src/app/_services/menu.service';
 import { PaymentComponent } from '../payment/payment.component';
+import { LoaderService } from 'src/app/_services/loaderservice';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SharedModule } from '../../shared/shared.module';
 
 const routes = [
   {
@@ -83,14 +86,17 @@ const routes = [
   ],
   imports: [
     CommonModule,
+    NgxSpinnerModule,
     RouterModule.forChild(routes),
     MaterialModule,
+    SharedModule,
     AngularCalendarModule.forRoot({
       provide   : DateAdapter,
       useFactory: adapterFactory
   }),
   ],
   exports: [RouterModule],
-  providers: [CalendarService,MenuService]
+  providers: [CalendarService,MenuService,LoaderService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DashboardModule { }

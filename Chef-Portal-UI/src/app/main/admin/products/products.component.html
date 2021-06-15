@@ -2,18 +2,22 @@
     <div fxLayout="row" fxLayoutAlign="start start" class="p-5">
         <button mat-raised-button type="submit" color="primary" (click)="openCreateProductDialog()">Create Product </button>
     </div>
+    <!-- <ngx-spinner
+    bdOpacity = 0.2
+    bdColor = "rgba(255,255,255,0)"
+    size = "default"
+    color = "#1a1919"
+    type = "ball-clip-rotate"
+    [fullScreen] = "false">
+</ngx-spinner> -->
+    <!-- <div fxLayout="row" *ngIf="isShow" fxLayoutAlign="center start">
+        <app-loader></app-loader>
+    </div> -->
     <!-- CONTENT -->
     <div class="content">
-
+       
         <!-- CENTER -->
         <div class="center p-24 pb-56" >
-            <mat-progress-spinner
-        class="example-margin"
-        [color]="color"
-        [mode]="mode"
-        [value]="value">
-    </mat-progress-spinner>
-
             <!-- CONTENT -->
             <div class="content">
                 <div class="medias" fxLayout="row wrap" fxLayoutAlign="start">
@@ -56,10 +60,11 @@
 
         </div>
         <!-- / CENTER -->
+            <!-- IF NO PRODUCT IS FOUND -->
+    <div fxLayout="row" fxLayoutAlign="center center" class="p-10"
+    *ngIf="productList.length===0">No Product found.</div>
 
     </div>
     <!-- / CONTENT -->
-    <!-- IF NO PRODUCT IS FOUND -->
-    <div fxLayout="row" fxLayoutAlign="center center" class="p-10"
-    *ngIf="productList.length===0">No Product found.</div>
+
 </div> 

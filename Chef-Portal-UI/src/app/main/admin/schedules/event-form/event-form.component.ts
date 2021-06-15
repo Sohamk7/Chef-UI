@@ -23,6 +23,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   startDate = new Date().setDate(new Date().getDate() + 1);
   endDate =  new Date().setDate(new Date().getDate() + 28);
   menuList: any = [];
+  public isSubmit: boolean = false;
 
   /**
    * Constructor
@@ -101,33 +102,38 @@ export class CalendarEventFormDialogComponent implements OnInit {
       }
   }
 
-  onClickAdd() {
-    if (this.eventForm.invalid) {
-      return;
+  onClickAdd(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.eventForm.valid) {
+      
+      let formValue = this.eventForm.value;
+      this.isSubmit = true;
+      //Define formdata
+      let message = this._data!==null ? 'Schedule Edited successfully' : 'Schedule created successfully';
+      let url = this._data!==null ? 'schedule/update' : 'schedule/create';
+      
+      this._dataService.save({url: url, data:formValue,isLoader:true})
+        .subscribe(uploadResponse=>{
+          console.log(uploadResponse);
+          this.matDialogRef.close();
+          this.isSubmit = false;
+          // Show the success message
+          this._matSnackBar.open(message, 'CLOSE', {
+            verticalPosition: 'bottom',
+            horizontalPosition:'center',
+            duration        : 2000
+        });
+      },
+      error => {
+        // Show the error message
+          this._matSnackBar.open(error.error.message, 'RETRY', {
+            verticalPosition: 'bottom',
+            horizontalPosition:'center',
+            duration        : 2000
+        });
+      });
     }
-    let formValue = this.eventForm.value;
-    //Define formdata
-    let message = this._data!==null ? 'Schedule Edited successfully' : 'Schedule created successfully';
-    let url = this._data!==null ? 'schedule/update' : 'schedule/create';
     
-    this._dataService.save({url: url, data:formValue})
-      .subscribe(uploadResponse=>{
-        console.log(uploadResponse);
-        this.matDialogRef.close();
-        // Show the success message
-        this._matSnackBar.open(message, 'CLOSE', {
-          verticalPosition: 'bottom',
-          horizontalPosition:'center',
-          duration        : 2000
-      });
-    },
-    error => {
-       // Show the error message
-        this._matSnackBar.open(error.error.message, 'RETRY', {
-          verticalPosition: 'bottom',
-          horizontalPosition:'center',
-          duration        : 2000
-      });
-    });
   }
 }

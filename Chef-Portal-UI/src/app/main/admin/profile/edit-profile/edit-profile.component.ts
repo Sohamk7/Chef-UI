@@ -3,10 +3,12 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { el } from 'date-fns/locale';
 import { element } from 'protractor';
 import { ReplaySubject, Subject } from 'rxjs';
 import { first, take, takeUntil } from 'rxjs/operators';
 import { SLOTS } from 'src/app/Constants/Slots';
+import { CommonUtils } from 'src/app/_helpers/common.utils';
 import { Slot } from 'src/app/_interface';
 import { DataService } from 'src/app/_services/dataservice';
 
@@ -19,6 +21,7 @@ export class EditProfileComponent implements OnInit {
 
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
 
+  public isSubmit: boolean = false;
   message: string = '';
   editEmailForm: FormGroup;
   editPasswordForm: FormGroup;
@@ -324,65 +327,136 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  emailSubmit() {
-    let message = 'Email Edited Successfully';
-    this.postAPIResponse('chef/details/email',this.editEmailForm.value,message);
+  emailSubmit(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+    if(this.editEmailForm.valid) {
+
+      this.isSubmit = true
+      let message = 'Email Edited Successfully';
+      this.postAPIResponse('chef/details/email',this.editEmailForm.value,message);
+    }else{
+      CommonUtils.validateAllFormFields(this.editEmailForm);
+    }
   }
 
-  passwordSubmit() {
-    let message = 'Password Edited Successfully';
-    this.postAPIResponse('chef/details/password',this.editPasswordForm.value,message);
+  passwordSubmit(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+    if(this.editPasswordForm.valid) {
+
+      this.isSubmit = true
+      let message = 'Password Edited Successfully';
+      this.postAPIResponse('chef/details/password',this.editPasswordForm.value,message);
+    }else{
+      CommonUtils.validateAllFormFields(this.editPasswordForm);
+    }
   }
 
-  phoneNoSubmit() {
-    let message = 'Phone No Edited Successfully';
-    this.postAPIResponse('chef/details/phone_number',this.editPhoneNoForm.value,message);
+  phoneNoSubmit(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+    if(this.editPhoneNoForm.valid) {
+
+      this.isSubmit = true
+      let message = 'Phone No Edited Successfully';
+      this.postAPIResponse('chef/details/phone_number',this.editPhoneNoForm.value,message);
+    }else{
+      CommonUtils.validateAllFormFields(this.editPhoneNoForm);
+    }
   }
 
-  biographySubmit() {
-    let message = 'Biography Edited Successfully';
-    this.postAPIResponse('chef/chef_profile/bio',this.editBiographyForm.value,message);
+  biographySubmit(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+    if(this.editBiographyForm.valid) {
+
+      this.isSubmit = true
+      let message = 'Biography Edited Successfully';
+      this.postAPIResponse('chef/chef_profile/bio',this.editBiographyForm.value,message);
+    }else{
+      CommonUtils.validateAllFormFields(this.editBiographyForm);
+    }
   }
 
-  storeAddressSubmit() {
-    let message = 'Store Address Edited Successfully';
-    this.postAPIResponse('chef/chef_store/address',this.editStoreAddressForm.value,message);
+  storeAddressSubmit(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+    if(this.editStoreAddressForm.valid) {
+
+      this.isSubmit = true
+      let message = 'Store Address Edited Successfully';
+      this.postAPIResponse('chef/chef_store/address',this.editStoreAddressForm.value,message);
+    }else{
+      CommonUtils.validateAllFormFields(this.editStoreAddressForm);
+    }
+    
   }
 
-  CuisineSubmit() {
-    let message = 'Cuisines Edited Successfully';
-    this.postAPIResponse('chef/chef_store/cuisines',this.editCuisineForm.value,message);
+  CuisineSubmit(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+    if(this.editCuisineForm.valid) {
+
+      this.isSubmit = true
+      let message = 'Cuisines Edited Successfully';
+      this.postAPIResponse('chef/chef_store/cuisines',this.editCuisineForm.value,message);
+    }else{
+      CommonUtils.validateAllFormFields(this.editCuisineForm);
+    }
+
   }
 
-  collectionDeliverySubmit() {
-    let message = 'Collection/Delivery Edited Successfully';
-    this.postAPIResponse('chef/chef_store/preference',this.editCollectionDeliveryForm.value,message);
+  collectionDeliverySubmit(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+    if(this.editCollectionDeliveryForm.valid) {
+
+      this.isSubmit = true
+      let message = 'Collection/Delivery Edited Successfully';
+      this.postAPIResponse('chef/chef_store/preference',this.editCollectionDeliveryForm.value,message);
+    }else{
+      CommonUtils.validateAllFormFields(this.editCollectionDeliveryForm);
+    }
   }
 
-  collectionSubmit() {
-    let message = this.data.type === 'collection' ? 'Collection slots Edited Successfully' : 'Delivery slots Edited Successfully';
-    let url = this.data.type === 'collection' ? 'chef/chef_store/collection/slot' : 'chef/chef_store/delivery/slot';
-    let formValue = this.editCollectionForm.value;
-    let tmpArr: any = [{'start':formValue.start,'end':formValue.end}];
-    let slotArr = this.slots.value;
-    slotArr.forEach(element => {
-      let object: any = {};
-      object['start'] = element.start;
-      object['end'] = element.end;
-      tmpArr.push(object);
-    });0.
-    console.log(tmpArr);
-    console.log(this.slots);
-    // let slots = tmpArr.concat(this.slots.value);
-    this.postAPIResponse(url,{chef_id:0,slots:tmpArr},message);
+  collectionSubmit(event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+    if(this.editCollectionForm.valid) {
+
+      this.isSubmit = true
+      let message = this.data.type === 'collection' ? 'Collection slots Edited Successfully' : 'Delivery slots Edited Successfully';
+      let url = this.data.type === 'collection' ? 'chef/chef_store/collection/slot' : 'chef/chef_store/delivery/slot';
+      let formValue = this.editCollectionForm.value;
+      let tmpArr: any = [{'start':formValue.start,'end':formValue.end}];
+      let slotArr = this.slots.value;
+      slotArr.forEach(element => {
+        let object: any = {};
+        object['start'] = element.start;
+        object['end'] = element.end;
+        tmpArr.push(object);
+      });0.
+      this.postAPIResponse(url,{chef_id:0,slots:tmpArr},message);
+    }else{
+      CommonUtils.validateAllFormFields(this.editCollectionForm);
+    }
+    
+    
   }
 
   postAPIResponse(url, value, message){
 
     if(this.data.type!=='profile' && this.data.type!=='banner'){
-
-      let resMsg;
-
+      
       this._dataService.save({url:url,data:value,isLoader:true})
         .pipe(first())
         .subscribe(
@@ -394,6 +468,7 @@ export class EditProfileComponent implements OnInit {
                   duration        : 2000
                 });
                 this.dialogRef.close();
+                this,this.isSubmit = false;
             },
             error => {
                 // Show the error message

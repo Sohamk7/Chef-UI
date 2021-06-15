@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -7,22 +7,35 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataService } from './_services/dataservice';
 import { LoaderAuthInterceptor } from './_helpers/auth.interceptor';
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from './main/shared/components/confirm-dialog/confirm-dialog.component';
 import { MaterialModule } from './main/material.module';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { CalendarService } from './_services/calender.service';
+import { LoaderComponent } from './main/shared/components/loader/loader.component';
+import { LoaderService } from './_services/loaderservice';
+import { SharedModule } from './main/shared/shared.module';
+// import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConfirmDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule,
+    // TranslateModule.forRoot({
+    //   loader: {
+    //     provide: TranslateLoader,
+    //     useFactory: HttpLoaderFactory,
+    //     deps: [HttpClient]
+    //   }
+    // })
+  ],
+  exports: [
+    LoaderComponent,
   ],
   providers: [DataService,
     {
@@ -31,7 +44,9 @@ import { CalendarService } from './_services/calender.service';
       multi   : true,
     },
     DatePipe,
+    LoaderService,
     CurrencyPipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

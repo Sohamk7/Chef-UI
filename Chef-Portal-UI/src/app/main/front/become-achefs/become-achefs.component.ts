@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, first, map } from 'rxjs/operators';
+import { CommonUtils } from 'src/app/_helpers/common.utils';
 import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
@@ -18,6 +19,8 @@ export class BecomeAChefsComponent implements OnInit {
 
   @ViewChild('existsPhoneno', {static: true})
   existsPhoneno: ElementRef;
+
+  public isSubmit: boolean = false;
 
   becomechefsForm= new FormGroup({
     first_name: new FormControl('', Validators.required),
@@ -116,34 +119,40 @@ export class BecomeAChefsComponent implements OnInit {
     });
   }
 
-  onSubmit(){
+  onSubmit(event){
 
-    if (this.becomechefsForm.invalid) {
-      return;
-  }
-  let formValue = this.becomechefsForm.value
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.becomechefsForm.valid)
+    {
+      this.isSubmit = true;
+      let formValue = this.becomechefsForm.value
 
-  this._dataService.post({url:'auth/create_chef',data:formValue,isLoader:true})
-      .pipe(first())
-      .subscribe(
-          data => {
-              // Show the success message
-              this._matSnackBar.open('Thank you your response is recorded', 'CLOSE', {
-                  verticalPosition: 'bottom',
-                  horizontalPosition:'center',
-                  duration        : 2000
-              });
-              this._router.navigate(['/auth/login']);
-          },
-          error => {
-              // Show the error message
-              this._matSnackBar.open('please try', 'Retry', {
-                  verticalPosition: 'bottom',
-                  horizontalPosition:'center',
-                  duration        : 2000
-              });
-              this.becomechefsForm.reset();
+      this._dataService.post({url:'auth/create_chef',data:formValue,isLoader:true})
+        .pipe(first())
+        .subscribe(
+            data => {
+                // Show the success message
+                this._matSnackBar.open('Thank you your response is recorded', 'CLOSE', {
+                    verticalPosition: 'bottom',
+                    horizontalPosition:'center',
+                    duration        : 2000
+                });
+                this._router.navigate(['/auth/login']);
+                 this.isSubmit = false;
+            },
+            error => {
+                // Show the error message
+                this._matSnackBar.open('please try', 'Retry', {
+                    verticalPosition: 'bottom',
+                    horizontalPosition:'center',
+                    duration        : 2000
+                });
+                this.becomechefsForm.reset();
       });
+    }else{
+      CommonUtils.validateAllFormFields(this.becomechefsForm);
+    }
   }
 
 }

@@ -5,12 +5,14 @@ import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Login } from '../_models';
 import { ServerURL } from '../_helpers';
+import { LoaderService } from './loaderservice';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
     private currentUserSubject: BehaviorSubject<Login>;
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+        private loader: LoaderService) {
         this.currentUserSubject = new BehaviorSubject<Login>(JSON.parse(localStorage.getItem('token')));
     }
 
@@ -32,10 +34,11 @@ export class AuthService {
     login(email: string, password: string) {
 
         //SHOW LOADER BAR #EXTRA Changes
-
+        this.loader.start();
         return this.http.post<any>(`${ServerURL.SERVER_URL_ENDPOINT}auth/login`, { email, password, })
             .pipe(map(loginResponse => {
                 console.log(loginResponse);
+                this.loader.stop();
                 localStorage.setItem('token', JSON.stringify(loginResponse.auth_token));
                 localStorage.setItem('userType', JSON.stringify(loginResponse.auth_admin));
                 this.currentUserSubject.next(loginResponse);

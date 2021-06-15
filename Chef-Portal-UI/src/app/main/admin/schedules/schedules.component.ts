@@ -9,7 +9,7 @@ import { CalendarService } from 'src/app/_services/calender.service';
 import { fuseAnimations } from 'src/app/animations';
 import { CalendarEventModel } from 'src/app/_models/event.model';
 import { DataService } from 'src/app/_services/dataservice';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from 'src/app/main/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

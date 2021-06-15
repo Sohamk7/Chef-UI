@@ -15,16 +15,15 @@ export class DashboardComponent implements OnInit {
   ) {
     let userType = localStorage.getItem('userType');
     this.checkUserType = userType === 'true' ? true : false;
-    console.log(this.checkUserType);
    }
 
   ngOnInit(): void {
   }
 
   logout() {
-        
-                localStorage.removeItem('userType');
-                this.router.navigate(['/']);
+
+    localStorage.removeItem('userType');
+    this.router.navigate(['/']);
 }
 
 }
