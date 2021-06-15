@@ -7,6 +7,7 @@ import { CreateProductComponent } from './products/create-product/create-product
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { CreateMenuComponent } from './menus/create-menu/create-menu.component';
 import { CalendarEventFormDialogComponent } from './schedules/event-form/event-form.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CalendarEventFormDialogComponent } from './schedules/event-form/event-f
     CommonModule,
     DashboardModule,
     RouterModule,
+    SharedModule,
     MaterialModule,
   ],
   exports: [RouterModule]

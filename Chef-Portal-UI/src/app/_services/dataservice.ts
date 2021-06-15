@@ -3,31 +3,31 @@ import { Injectable } from '@angular/core';
 
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoadingService } from './loaderservice';
+import { LoaderService } from './loaderservice';
 import { ServerURL } from '../_helpers';
 
 
 @Injectable()
 export class DataService {
 
-    constructor(
-        private http: HttpClient,
-        private loader: LoadingService,
-      ) {}
-    
-      startLoader(info: { url: any; data?: any; isLoader?: any; }) {
-        // Start loader before API call
-        if (info.isLoader !== false) {
-          this.loader.start();
-        }
+  constructor(
+      private http: HttpClient,
+      private loader: LoaderService,
+    ) {}
+  
+    startLoader(info: { url: any; data?: any; isLoader?: any; }) {
+      // Start loader before API call
+      if (info.isLoader !== false) {
+        this.loader.start();
       }
-    
-      stopLoader(info: { url: any; data?: any; isLoader?: any; }) {
-        // Reset the loader
-        if (info.isLoader !== false) {
-          this.loader.stop();
-        }
+    }
+  
+    stopLoader(info: { url: any; data?: any; isLoader?: any; }) {
+      // Reset the loader
+      if (info.isLoader !== false) {
+        this.loader.stop();
       }
+    }
 
   get(info: { url: string; isLoader?: boolean; }): Observable<Response> {
     this.startLoader(info);

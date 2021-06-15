@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonUtils } from 'src/app/_helpers/common.utils';
 import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
@@ -17,6 +18,7 @@ export class CreateProductComponent implements OnInit {
   private file: string | null = null;
   public tmp_avatar_img;
   public message:string = '';
+  public isSubmit: boolean = false;
 
   constructor(
     public dialogRef                      : MatDialogRef<CreateProductComponent>,
@@ -83,51 +85,58 @@ export class CreateProductComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(event) {
 
-    if (this.createProductForm.invalid) {
-      return;
-    }
-    let formValue = this.createProductForm.value;
-    //Define formdata
-    let mediaInfo = new FormData();
-    let message = this.data!==null ? 'Product Edited successfully' : 'Product created successfully';
-    let url = this.data!==null ? 'product/' + this.data.id : 'product/create';
-    if(this.data!==null){
-      mediaInfo.append('product_id',this.data.id);
-    }
+    event.preventDefault();
+    event.stopPropagation();
 
-    if(this.file!== null) {
-      mediaInfo.append('product_media',this.file);
-    }
-   
-    mediaInfo.append('name',formValue.name);
-    mediaInfo.append('price',formValue.price);
-    mediaInfo.append('description',formValue.description);
-    mediaInfo.append('vegetarian',formValue.vegetarian);
-    mediaInfo.append('chef_id',formValue.chef_id);
+    if (this.createProductForm.valid) {
+      
+      let formValue = this.createProductForm.value;
+      this.isSubmit = true;
+      //Define formdata
+      let mediaInfo = new FormData();
+      let message = this.data!==null ? 'Product Edited successfully' : 'Product created successfully';
+      let url = this.data!==null ? 'product/' + this.data.id : 'product/create';
+      if(this.data!==null){
+        mediaInfo.append('product_id',this.data.id);
+      }
+
+      if(this.file!== null) {
+        mediaInfo.append('product_media',this.file);
+      }
     
-   
-    this.dataService.saveMedia({url: url,data:mediaInfo})
-      .subscribe(uploadResponse=>{
-        console.log(uploadResponse);
+      mediaInfo.append('name',formValue.name);
+      mediaInfo.append('price',formValue.price);
+      mediaInfo.append('description',formValue.description);
+      mediaInfo.append('vegetarian',formValue.vegetarian);
+      mediaInfo.append('chef_id',formValue.chef_id);
+      
+    
+      this.dataService.saveMedia({url: url,data:mediaInfo, isLoader:true})
+        .subscribe(uploadResponse=>{
+          console.log(uploadResponse);
+          
+          // Show the success message
+          this._matSnackBar.open(message, 'CLOSE', {
+            verticalPosition: 'bottom',
+            horizontalPosition:'center',
+            duration        : 2000
+        });
         this.dialogRef.close();
-        // Show the success message
-        this._matSnackBar.open(message, 'CLOSE', {
-          verticalPosition: 'bottom',
-          horizontalPosition:'center',
-          duration        : 2000
+        this.isSubmit = false;
+      },
+      error => {
+        // Show the error message
+          this._matSnackBar.open(error.message, 'RETRY', {
+            verticalPosition: 'bottom',
+            horizontalPosition:'center',
+            duration        : 2000
+        });
       });
-    },
-    error => {
-       // Show the error message
-        this._matSnackBar.open(error.message, 'RETRY', {
-          verticalPosition: 'bottom',
-          horizontalPosition:'center',
-          duration        : 2000
-      });
-    });
-   
+    }else{
+      CommonUtils.validateAllFormFields(this.createProductForm);
+    }
   }
 
   RemovePicture() {

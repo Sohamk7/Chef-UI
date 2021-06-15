@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first, takeUntil } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
+import { CommonUtils } from 'src/app/_helpers/common.utils';
 import { AuthService } from 'src/app/_services';
 
 @Component({
@@ -12,13 +13,9 @@ import { AuthService } from 'src/app/_services';
 })
 export class LoginComponent implements OnInit {
   
-  loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required)
-  });
-  
-    // public appConfig: any;
-    pwdhide = true;
+  loginForm:FormGroup;
+  pwdhide = true;
+  public isSubmit: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -42,25 +39,24 @@ export class LoginComponent implements OnInit {
      */
      ngOnInit(): void
      {
-        //  this.loginForm = this._formBuilder.group({
-        //      email   : ['', [Validators.required, Validators.email]],
-        //      password: ['', Validators.required]
-        //  });
+         this.loginForm = this._formBuilder.group({
+             email   : ['', [Validators.required, Validators.email]],
+             password: ['', Validators.required]
+         });
      }
-    onLogin() {
-      // this.submitted = true;
-      // this.returnUrl = this.route.snapshot.queryParams.returnUrl || this.appConfig.url.redirectAfterLogin;
-      // stop here if form is invalid
-      if (this.loginForm.invalid) {
-          return;
-      }
-      let formValue = this.loginForm.value
+    onLogin(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (this.loginForm.valid)
+      {
+          this.isSubmit = true; 
+          let formValue = this.loginForm.value
 
-      this.authenticationService.login(formValue.email, formValue.password,)
+        this.authenticationService.login(formValue.email, formValue.password,)
           .pipe(first())
           .subscribe(
               data => {
-                  let duration = data.status==200 ? 2000 : 50000;
+                  this.isSubmit = false;
                   // Show the success message
                   this._matSnackBar.open('Login successfully', 'CLOSE', {
                       verticalPosition: 'bottom',
@@ -79,6 +75,9 @@ export class LoginComponent implements OnInit {
                   });
                   this.loginForm.reset();
           });
-     
+      }else{
+        CommonUtils.validateAllFormFields(this.loginForm);
+      }
+
      }
 }

@@ -31,7 +31,7 @@
                 </mat-form-field>
 
                 <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
-                (click)="onLogin()" [disabled]="loginForm.invalid">
+                (click)="onLogin($event)" [disabled]="isSubmit">
                     LOGIN
                 </button>
 

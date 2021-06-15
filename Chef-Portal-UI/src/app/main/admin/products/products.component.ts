@@ -3,7 +3,8 @@ import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { info } from 'console';
+import { ConfirmDialogComponent } from 'src/app/main/shared/components/confirm-dialog/confirm-dialog.component';
 import { DataService } from 'src/app/_services/dataservice';
 import { CreateProductComponent } from './create-product/create-product.component';
 
@@ -33,7 +34,6 @@ export class ProductsComponent implements OnInit {
     this.dataService.getAll({url:'product',isLoader:true})
     .subscribe(response =>{
       this.productList = response;
-      console.log(response);
     });
   }
 

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ServerURL } from '../_helpers';
+import { LoaderService } from './loaderservice';
 
 @Injectable()
 export class CalendarService implements Resolve<any>
@@ -17,7 +18,8 @@ export class CalendarService implements Resolve<any>
      * @param {HttpClient} _httpClient
      */
     constructor(
-        private _httpClient: HttpClient
+        private _httpClient: HttpClient,
+        private loader:LoaderService
     )
     {
         // Set the defaults
@@ -64,10 +66,11 @@ export class CalendarService implements Resolve<any>
             const HttpUploadOptions = {
                 headers: new HttpHeaders({  'Accept':'application/json','Authorization': 'Bearer ' + this.token })
             }
-
+            this.loader.start();
             this._httpClient.get(ServerURL.SERVER_URL_ENDPOINT + 'schedule',HttpUploadOptions)
                 .subscribe((response: any) => {
                     this.events = response;
+                    this.loader.stop();
                     this.onEventsUpdated.next(this.events);
                     resolve(this.events);
                 }, reject);
