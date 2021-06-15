@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { DataService } from 'src/app/_services/dataservice';
@@ -13,6 +15,9 @@ import { CreateProductComponent } from './create-product/create-product.componen
 export class ProductsComponent implements OnInit {
 
   productList:any = [];
+  color: ThemePalette = 'primary';
+  mode: ProgressSpinnerMode = 'indeterminate';
+  value = 50;
 
   constructor(
     private dialog: MatDialog,
