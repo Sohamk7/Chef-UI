@@ -12,6 +12,7 @@ export class ProfileComponent implements OnInit {
 
   public userInfo: any = {};
   public cuisineNames: any = [];
+  public showLoader:boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -28,7 +29,7 @@ export class ProfileComponent implements OnInit {
     this._dataService.getChefInfo({url:'chef', isLoader:true})
     .subscribe(response => {
       this.userInfo = response;
-      console.log(response);
+      this.showLoader = false;
     });
   }
 
@@ -36,7 +37,6 @@ export class ProfileComponent implements OnInit {
     this._dataService.getAll({url:'chef/chef_store/cuisines', isLoader:true})
     .subscribe(response => {
       this.cuisineNames = response[0]._cuisines as any;
-      console.log(response);
     });
   }
 

@@ -1,4 +1,6 @@
-<div id="calendar" class="page-layout simple fullwidth">
+
+<app-loader *ngIf="showLoader"></app-loader>
+<div id="calendar" class="page-layout simple fullwidth" *ngIf="!showLoader">
 
     <!-- HEADER -->
     <div class="header p-16 p-sm-24" [ngClass]="viewDate | date:'MMM'">

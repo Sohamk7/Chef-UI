@@ -1,4 +1,5 @@
-<div fxLayout="column" class="p-4">
+<app-loader *ngIf="showLoader"></app-loader>
+<div fxLayout="column" class="p-4" *ngIf="!showLoader">
   <div fxLayout="column" fxLayoutAlign="start start" fxFlex="50">
     <h1>Welcome to your marketplace</h1>
     <div class="hr"></div>

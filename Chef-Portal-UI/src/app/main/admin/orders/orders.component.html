@@ -1,4 +1,5 @@
-<div class="mat-elevation-z8">
+<app-loader *ngIf="showLoader"></app-loader>
+<div class="mat-elevation-z8" *ngIf="!showLoader">
 
     <table mat-table [dataSource]="dataSource" (matSortChange)="sortData($event)">
 

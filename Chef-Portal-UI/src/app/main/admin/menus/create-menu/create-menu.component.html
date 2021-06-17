@@ -1,4 +1,4 @@
-
+<app-loader></app-loader>
 <div fxLayout="column">
     <div class="header-section" fxLayout="row" fxLayoutAlign="space-between">
         <div fxLayout="row" fxLayoutGap="15px">
@@ -30,11 +30,11 @@
                         <mat-label>Description</mat-label>
                         <textarea matInput formControlName="description" placeholder="Add description about Menu at least 15 chars."></textarea>
                         <mat-error *ngIf="createManuForm.get('description').hasError('required')">
-                            Menu Name is required
+                            Menu Description is required
                         </mat-error>
                         <mat-error *ngIf="!createManuForm.get('description').hasError('required') && 
                         createManuForm.get('description').hasError('minlength')">
-                            Menu name should be at least 5 chars
+                            Menu Description should be at least 15 chars
                         </mat-error>
                     </mat-form-field>
 

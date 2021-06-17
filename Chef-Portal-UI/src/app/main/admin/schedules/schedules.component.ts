@@ -30,6 +30,7 @@ export class SchedulesComponent implements OnInit {
   selectedDay: any;
   view: string;
   viewDate: Date;
+  public showLoader: boolean = true;
 
   constructor(
       private _matDialog: MatDialog,
@@ -105,6 +106,7 @@ export class SchedulesComponent implements OnInit {
           item.actions = this.actions;
           return new CalendarEventModel(item);
       });
+      this.showLoader = false;
       console.log(this.events);
   }
 
@@ -194,6 +196,7 @@ export class SchedulesComponent implements OnInit {
         console.log(result);
           if ( result !== 'N')
           {
+              this.showLoader = true;
               this.deleteData(event.id);
           }
           this.confirmDialogRef = null;
@@ -207,6 +210,7 @@ export class SchedulesComponent implements OnInit {
       .subscribe((response: any) => {
        //  if(response === {}){
            // Show the success message
+           this.showLoader = false;
            this._matSnackBar.open('Schedule deleted successfully', 'CLOSE', {
              verticalPosition: 'bottom',
              horizontalPosition:'center',
