@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/main/material.module';
+import { SharedModule } from 'src/app/main/shared/shared.module';
 
 const routes = [
   {
@@ -18,7 +19,8 @@ const routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   exports: [
     RouterModule

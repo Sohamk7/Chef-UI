@@ -26,7 +26,7 @@ const routes = [
       component: DashboardComponent,
       children : [
         {
-          path     : 'home',
+          path     : '',
           component: HomeComponent,
         },
         {

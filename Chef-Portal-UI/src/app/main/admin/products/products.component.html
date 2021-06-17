@@ -1,18 +1,10 @@
-<div fxLayout="column">
+
+<app-loader *ngIf="showLoader"></app-loader>
+<div fxLayout="column" *ngIf="!showLoader">
     <div fxLayout="row" fxLayoutAlign="start start" class="p-5">
         <button mat-raised-button type="submit" color="primary" (click)="openCreateProductDialog()">Create Product </button>
     </div>
-    <!-- <ngx-spinner
-    bdOpacity = 0.2
-    bdColor = "rgba(255,255,255,0)"
-    size = "default"
-    color = "#1a1919"
-    type = "ball-clip-rotate"
-    [fullScreen] = "false">
-</ngx-spinner> -->
-    <!-- <div fxLayout="row" *ngIf="isShow" fxLayoutAlign="center start">
-        <app-loader></app-loader>
-    </div> -->
+    
     <!-- CONTENT -->
     <div class="content">
        

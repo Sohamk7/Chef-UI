@@ -19,6 +19,7 @@ export class ProductsComponent implements OnInit {
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'indeterminate';
   value = 50;
+  public showLoader:boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -34,6 +35,7 @@ export class ProductsComponent implements OnInit {
     this.dataService.getAll({url:'product',isLoader:true})
     .subscribe(response =>{
       this.productList = response;
+      this.showLoader = false;
     });
   }
 
@@ -71,6 +73,7 @@ export class ProductsComponent implements OnInit {
     let dialogRef = this.dialog.open(ConfirmDialogComponent, { width: '400px', data: message, disableClose: true })
        .afterClosed().subscribe(result => {
          if (result == 'YES') {
+          this.showLoader = true;
            this.deleteData(id);
          }
        });
@@ -82,6 +85,7 @@ export class ProductsComponent implements OnInit {
        .subscribe((response: any) => {
         //  if(response === {}){
             // Show the success message
+            this.showLoader = false;
             this._matSnackBar.open('Product deleted successfully', 'CLOSE', {
               verticalPosition: 'bottom',
               horizontalPosition:'center',

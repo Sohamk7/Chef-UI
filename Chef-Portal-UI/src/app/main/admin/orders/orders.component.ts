@@ -28,6 +28,7 @@ export class OrdersComponent implements OnInit {
   page: number = 1;
   sortColumn: string;
   sortDirection: string;
+  public showLoader: boolean = true;
 
   // MatPaginator Output
   pageEvent: PageEvent;
@@ -127,7 +128,7 @@ export class OrdersComponent implements OnInit {
     this._dataService.getAll({url:'order', isLoader:true})
       .subscribe(response =>
                   {
-                    console.log(response);
+                      this.showLoader = false;
                       this.tableContents = this.formatElement(response);
                       this.dataSource = new MatTableDataSource(this.tableContents);
                       this.length = this.tableContents.length;

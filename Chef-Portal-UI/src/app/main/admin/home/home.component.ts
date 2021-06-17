@@ -9,6 +9,7 @@ import { DataService } from 'src/app/_services/dataservice';
 export class HomeComponent implements OnInit {
 
   public profile_data: any = {};
+  public showLoader: boolean = true;
 
   constructor(
     private _dataService : DataService
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
       this._dataService.getAll({url:'chef/account_progress',isLoader:true})
       .subscribe(res =>{
         this.profile_data = res;
+        this.showLoader = false;
       })
   }
 

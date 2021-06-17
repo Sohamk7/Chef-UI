@@ -1,4 +1,5 @@
-<div fxLayout="column">
+<app-loader *ngIf="showLoader"></app-loader>
+<div fxLayout="column" *ngIf="!showLoader">
     <div fxLayout="row" fxLayoutAlign="start start" class="p-5">
         <button mat-raised-button type="submit" color="primary" (click)="openCreateMenuDialog()">Create Menu </button>
     </div>

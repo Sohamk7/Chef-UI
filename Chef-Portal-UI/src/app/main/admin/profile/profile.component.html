@@ -1,4 +1,5 @@
-<div fxLayout="column">
+<app-loader *ngIf="showLoader"></app-loader>
+<div fxLayout="column" *ngIf="!showLoader">
     <div fxLayout="column" fxLayoutAlign="start center">
         <h1 class="p-4"><b>Hi {{userInfo.first_name}} {{userInfo.second_name}}</b></h1>
     </div>
