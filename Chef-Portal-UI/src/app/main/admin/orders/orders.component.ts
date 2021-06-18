@@ -141,7 +141,8 @@ export class OrdersComponent implements OnInit {
     data.forEach(element => {
         let obj: any = {};
         obj['id'] = element.id;
-        obj['status'] = '';
+        obj['status'] = element._order_status ? element._order_status.id : 0;
+        obj['statusName'] = element._order_status ? element._order_status.status : '';
         obj['chef'] = element._chef.first_name + ' '+ element._chef.second_name;
         obj['customer'] = element._customer.first_name +' '+ element._customer.second_name;
         obj['deliveryMode'] = element.collection ? 'Collection' : 'Delivery';

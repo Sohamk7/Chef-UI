@@ -64,6 +64,7 @@ export class EditProfileComponent implements OnInit {
 
     this.slots = this._fb.array([]); 
     
+    
    }
 
   ngOnInit(): void {
@@ -137,7 +138,7 @@ export class EditProfileComponent implements OnInit {
 
   onAddSelectRow(index) {
     console.log('dhbjhsb')
-    if(index<5){
+    if(index<4){
       this.slots.push(this.createItemFormGroup(null));
     }   
   }
@@ -146,7 +147,8 @@ export class EditProfileComponent implements OnInit {
     if(rowData.length > 0) {
       for (var i = 0; i <= rowData.length - 1; i++) {
         if(i===0){
-          this.EditCollectionFormGroup(rowData[i]);
+          this.EditCollectionFormGroup(null);
+          this.slots.push(this.createItemFormGroup(rowData[i]));
           
         }else{
           this.slots.push(this.createItemFormGroup(rowData[i]));
@@ -305,14 +307,14 @@ export class EditProfileComponent implements OnInit {
       this.getStartSlots(slot_data.start_hour);
       this.editCollectionForm = this._fb.group({
         chef_id: this._fb.control(slot_data.chef_store_id),
-        start: this._fb.control(slot_data.start_hour),
-        end: this._fb.control(slot_data.end_hour),
+        // start: this._fb.control(slot_data.start_hour),
+        // end: this._fb.control(slot_data.end_hour),
       });
     }else {
       this.editCollectionForm = this._fb.group({
         chef_id: this._fb.control(0),
-        start: this._fb.control(''),
-        end: this._fb.control(''),
+        // start: this._fb.control(''),
+        // end: this._fb.control(''),
       });
     }
     console.log(this.editCollectionForm.value);
