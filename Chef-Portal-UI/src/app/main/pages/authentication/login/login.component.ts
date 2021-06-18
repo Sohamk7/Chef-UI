@@ -63,7 +63,14 @@ export class LoginComponent implements OnInit {
                       horizontalPosition:'center',
                       duration        : 2000
                   });
-                  this._router.navigate(['admin/dashboard']);
+                  let userType = localStorage.getItem('userType');
+                  let checkUserType = userType === 'true' ? true : false;
+                  if(checkUserType){
+                    this._router.navigate(['/admin/home']);
+                  }else {
+                    this._router.navigate(['/chef/home']);
+                  }
+                  
                   
               },
               error => {

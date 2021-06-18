@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminModule } from './main/admin/admin.module';
+import { ChefsModule } from './main/chefs/chefs.module';
 import { FrontModule } from './main/front/front.module';
 import { PagesModule } from './main/pages/pages.module';
 
@@ -18,6 +19,10 @@ const routes: Routes = [
     path        : 'admin',
     loadChildren: () => import('./main/admin/admin.module').then(m => m.AdminModule)
   },
+  {
+    path        : 'chef',
+    loadChildren: () => import('./main/chefs/chefs.module').then(m => m.ChefsModule)
+  },
   // {
   //   path        : '**',
   //   redirectTo  : '/errors/error-404'
@@ -29,7 +34,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     FrontModule,
     PagesModule,
-    AdminModule
+    AdminModule,
+    ChefsModule
   ],
   exports: [
     RouterModule,

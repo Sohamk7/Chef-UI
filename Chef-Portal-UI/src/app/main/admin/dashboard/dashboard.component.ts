@@ -24,6 +24,6 @@ export class DashboardComponent implements OnInit {
 
     localStorage.removeItem('userType');
     this.router.navigate(['/']);
-}
+  }
 
 }
