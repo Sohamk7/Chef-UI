@@ -242,7 +242,7 @@
                 </div>       
                 <div *ngIf="data.type==='collection' || data.type==='delivery'">
                     <form fxLayot="column" [formGroup]="editCollectionForm">
-                        <div class="p-4" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+                        <!-- <div class="p-4" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
                             <mat-form-field appearance="outline" fxFlex="40">
                                 <mat-label>Start slot</mat-label>
                                 <mat-select formControlName="start" placeholder="start" (selectionChange)="startSlotsChange($event)">
@@ -259,14 +259,20 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <i class="material-icons icon-size" (click)="onAddSelectRow(0)" fxLayoutAlign="end end" matTooltip="Add New" fxFlex="10">
-                                add_circle_outline
-                            </i>
-
-                        </div>
-                        <mat-divider></mat-divider>
+                            <div fxFlex="10">
+                                <i class="material-icons icon-size" (click)="onAddSelectRow(0)"  matTooltip="Add New">
+                                    add_circle_outline
+                                </i>
+                                <i class="material-icons icon-size" 
+                                    *ngIf="slots.length > 0"
+                                    (click)="onRemoveRow(index)" matTooltip="Delete">
+                                delete_sweep
+                                </i>
+                            </div>
+                          
+                        </div> -->
                         <div class="p-4" *ngFor="let content of editCollectionForm.get('slots')?.controls;let index = index;" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
-                            <ng-container *ngIf="index<5; else endLimit">
+                            <ng-container *ngIf="index<4; else endLimit">
                                 <mat-form-field appearance="outline" fxFlex="40">
                                     <mat-label>Start slot</mat-label>
                                     <mat-select [formControl]="content.get('start')" placeholder="start" (selectionChange)="start2SlotsChange($event)">
@@ -288,14 +294,14 @@
                                         add_circle_outline
                                     </i>
                                     <i class="material-icons icon-size" 
-                                        *ngIf="index >= 0"
+                                        *ngIf="slots.length > 1"
                                         (click)="onRemoveRow(index)" matTooltip="Delete">
                                     delete_sweep
                                     </i>
                                 </div>
                             </ng-container>
                             <ng-template #endLimit>
-                                <div class="red" *ngIf="index===5">We can slot upto 5</div>
+                                <div class="red" *ngIf="index===4">We can slot upto 5</div>
                             </ng-template>
                         </div>
                         
