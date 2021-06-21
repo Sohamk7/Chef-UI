@@ -50,8 +50,8 @@ export class CustomersComponent implements OnInit {
             sortable: true
           },
           {
-            columnDef: 'Phone Number',
-            header: 'phone_no',
+            columnDef: 'phone_no',
+            header: 'Phone Number',
             sortable: true
           }
       ];
@@ -90,7 +90,7 @@ export class CustomersComponent implements OnInit {
         obj['id'] = element.id;
         obj['name'] = element.first_name + ' '+ element.second_name;
         obj['email'] = element.email;
-        obj['phone_no'] = element.phone_no;
+        obj['phone_no'] = element.phone_number;
 
         tempArr.push(obj);
     });

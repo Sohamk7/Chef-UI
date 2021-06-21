@@ -24,7 +24,7 @@ import { CalendarEventFormDialogComponent } from './schedules/event-form/event-f
 
 const routes = [
   {
-    path     : 'home',
+    path     : '',
     component: ChefsComponent,
       children : [
         {
