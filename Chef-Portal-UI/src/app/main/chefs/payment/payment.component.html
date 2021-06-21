@@ -5,6 +5,14 @@
         <div *ngIf="!payment_status.payouts_enabled"><mat-icon [ngStyle]="{'background-color':'red'}">close</mat-icon></div>
     </div>
     <div fxLayout="row" fxLayoutAlign="start start" class="p-5">
-        <button mat-raised-button type="submit" color="primary" (click)="paymentSignup()">Payment SignUp</button>
+        <button mat-raised-button type="submit" color="primary" (click)="paymentSignup()">
+            <ngx-spinner *ngIf = "loader"
+                bdOpacity = 0.2
+                bdColor = "rgba(255,255,255,0)"
+                size = "small"
+                color = "#ffff"
+                type = "ball-clip-rotate"
+                [fullScreen] = "false">
+              </ngx-spinner>payments Signup</button>
     </div>
 </div>

@@ -10,6 +10,7 @@ import { DataService } from 'src/app/_services/dataservice';
 export class PaymentComponent implements OnInit {
 
   public payment_status: any = {};
+  public loader: boolean = false;
 
 
   constructor(
@@ -31,14 +32,16 @@ export class PaymentComponent implements OnInit {
   }
 
   paymentSignup() {
-
+    this.loader = true;
     this._dataService.getAll({url:'chef/stripe/account_link', isLoader:true})
     .subscribe(res => {
       
       this.getNewWindow(res.url);
+      this.loader = false; 
     },
     error => {
        // Show the error message
+       this.loader = false;
         this._matSnackBar.open(error.message, 'RETRY', {
           verticalPosition: 'bottom',
           horizontalPosition:'center',

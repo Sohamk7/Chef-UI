@@ -31,6 +31,7 @@ export class CreateMenuComponent implements OnInit {
   
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
+  public loader : boolean = false;
 
   constructor(
     public dialogRef                      : MatDialogRef<CreateMenuComponent>,
@@ -132,6 +133,7 @@ export class CreateMenuComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if (this.createManuForm.valid) {
+      this.loader = true;
       this.isSubmit = true;
       let formValue = this.createManuForm.value;
       //Define formdata
@@ -153,6 +155,8 @@ export class CreateMenuComponent implements OnInit {
       },
       error => {
         // Show the error message
+          this.isSubmit = false;
+          this.loader = false;
           this._matSnackBar.open(error.error.message, 'RETRY', {
             verticalPosition: 'bottom',
             horizontalPosition:'center',
