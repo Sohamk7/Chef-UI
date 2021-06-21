@@ -1,4 +1,4 @@
-<app-loader></app-loader>
+<!-- <app-loader></app-loader> -->
 <div id="login" fxLayout="column">
 
     <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
@@ -33,6 +33,7 @@
 
                 <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
                 (click)="onLogin($event)" [disabled]="isSubmit">
+                <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
                     LOGIN
                 </button>
 
