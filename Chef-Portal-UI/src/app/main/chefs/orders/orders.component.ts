@@ -20,7 +20,6 @@ export class OrdersComponent implements OnInit {
   public statusList: any = [];
   public config_info: any;
   public dataSource: MatTableDataSource<any>;
-  // public edisplayedColumns = ['EventName', 'EventLocation', 'EventDate', 'EventReq'];
 
   // MatPaginator Inputs
   length: number = 0;

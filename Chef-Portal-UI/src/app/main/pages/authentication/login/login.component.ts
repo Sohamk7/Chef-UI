@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm:FormGroup;
   pwdhide = true;
   public isSubmit: boolean = false;
+  public loading: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -50,6 +51,7 @@ export class LoginComponent implements OnInit {
       if (this.loginForm.valid)
       {
           this.isSubmit = true; 
+          this.loading = true;
           let formValue = this.loginForm.value
 
         this.authenticationService.login(formValue.email, formValue.password,)
@@ -57,6 +59,7 @@ export class LoginComponent implements OnInit {
           .subscribe(
               data => {
                   this.isSubmit = false;
+                  this.loading = false;
                   // Show the success message
                   this._matSnackBar.open('Login successfully', 'CLOSE', {
                       verticalPosition: 'bottom',
@@ -74,6 +77,8 @@ export class LoginComponent implements OnInit {
                   
               },
               error => {
+                  this.isSubmit = false;
+                  this.loading = false;
                   // Show the error message
                   this._matSnackBar.open('Incorrect username or password', 'Retry', {
                       verticalPosition: 'bottom',
