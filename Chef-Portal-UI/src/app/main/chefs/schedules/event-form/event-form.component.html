@@ -1,5 +1,5 @@
 
- <app-loader></app-loader>
+ <!-- <app-loader></app-loader> -->
 <div class="dialog-content-wrapper">
     <!-- <mat-toolbar class="mat-accent m-0">
         <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
@@ -66,10 +66,12 @@
         <button *ngIf="action !== 'edit'"
                 mat-button color="primary"
                 class="save-button"
+                color="primary"
                 (click)="onClickAdd($event)"
                 [disabled]="isSubmit"
                 aria-label="ADD">
-            ADD
+                <i class="fa fa-spinner fa-spin" *ngIf="loader"></i>
+           ADD
         </button>
 
         <button *ngIf="action === 'edit'"

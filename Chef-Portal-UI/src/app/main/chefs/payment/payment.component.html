@@ -6,13 +6,6 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="start start" class="p-5">
         <button mat-raised-button type="submit" color="primary" (click)="paymentSignup()">
-            <ngx-spinner *ngIf = "loader"
-                bdOpacity = 0.2
-                bdColor = "rgba(255,255,255,0)"
-                size = "small"
-                color = "#ffff"
-                type = "ball-clip-rotate"
-                [fullScreen] = "false">
-              </ngx-spinner>payments Signup</button>
+            <i class="fa fa-spinner fa-spin" *ngIf="loader"></i>Payment Signup</button>
     </div>
-</div>
+</div>  

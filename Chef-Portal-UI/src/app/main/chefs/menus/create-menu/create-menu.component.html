@@ -64,14 +64,7 @@
     
                 <button mat-raised-button  type="submit" (click)="onSubmit($event)" [disabled]="isSubmit" 
                 color="primary" fxFlex="80px" > 
-                <ngx-spinner *ngIf = "loader"
-                bdOpacity = 0.2
-                bdColor = "rgba(255,255,255,0)"
-                size = "small"
-                color = "#1a1919"
-                type = "ball-clip-rotate"
-                [fullScreen] = "false">
-              </ngx-spinner>Save</button>
+                <i class="fa fa-spinner fa-spin" *ngIf="loader"></i>Save</button>
                 <button (click)="dialogRef.close('N');" mat-raised-button fxFlex="80px"> Cancel</button>
             </div>
         </div>
