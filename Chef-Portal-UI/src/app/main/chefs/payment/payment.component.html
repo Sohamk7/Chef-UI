@@ -5,6 +5,7 @@
         <div *ngIf="!payment_status.payouts_enabled"><mat-icon [ngStyle]="{'background-color':'red'}">close</mat-icon></div>
     </div>
     <div fxLayout="row" fxLayoutAlign="start start" class="p-5">
-        <button mat-raised-button type="submit" color="primary" (click)="paymentSignup()">Payment SignUp</button>
+        <button mat-raised-button type="submit" color="primary" (click)="paymentSignup()">
+            <i class="fa fa-spinner fa-spin" *ngIf="loader"></i>Payment Signup</button>
     </div>
-</div>
+</div>  

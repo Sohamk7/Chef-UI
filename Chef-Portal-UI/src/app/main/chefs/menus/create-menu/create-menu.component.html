@@ -1,4 +1,4 @@
-<app-loader></app-loader>
+<!-- <app-loader></app-loader> -->
 <div fxLayout="column">
     <div class="header-section" fxLayout="row" fxLayoutAlign="space-between">
         <div fxLayout="row" fxLayoutGap="15px">
@@ -63,7 +63,8 @@
             <div class="button-margin pl-4" fxLayout="row" fxLayoutGap="20px">
     
                 <button mat-raised-button  type="submit" (click)="onSubmit($event)" [disabled]="isSubmit" 
-                color="primary" fxFlex="80px" >Save </button>
+                color="primary" fxFlex="80px" > 
+                <i class="fa fa-spinner fa-spin" *ngIf="loader"></i>Save</button>
                 <button (click)="dialogRef.close('N');" mat-raised-button fxFlex="80px"> Cancel</button>
             </div>
         </div>

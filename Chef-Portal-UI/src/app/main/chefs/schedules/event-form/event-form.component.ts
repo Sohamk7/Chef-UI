@@ -24,6 +24,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   endDate =  new Date().setDate(new Date().getDate() + 28);
   menuList: any = [];
   public isSubmit: boolean = false;
+  public loader: boolean = false;
 
   /**
    * Constructor
@@ -109,6 +110,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
       
       let formValue = this.eventForm.value;
       this.isSubmit = true;
+      this.loader = true;
       //Define formdata
       let message = this._data!==null ? 'Schedule Edited successfully' : 'Schedule created successfully';
       let url = this._data!==null ? 'schedule/update' : 'schedule/create';
@@ -127,6 +129,8 @@ export class CalendarEventFormDialogComponent implements OnInit {
       },
       error => {
         // Show the error message
+          this.loader = false;
+          this.isSubmit = false;
           this._matSnackBar.open(error.error.message, 'RETRY', {
             verticalPosition: 'bottom',
             horizontalPosition:'center',

@@ -37,6 +37,7 @@ export class EditProfileComponent implements OnInit {
   public inputAccpets : string = ".jpeg, .jpg, .png";
   private file: string | null = null;
   public tmp_avatar_img;
+  public submit:boolean = true;
   // public cuisineNamesList: any = [];
 
   /** list of cuisine */
@@ -45,6 +46,7 @@ export class EditProfileComponent implements OnInit {
   public endSlotsList: any[] = [];
   public start2SlotsList: any[] = SLOTS;
   public end2SlotsList: any[] = [];
+  public loader : boolean = false;
 
   /** control for the MatSelect filter keyword multi-selection */
   public cuisineMultiFilterCtrl: FormControl = new FormControl();
@@ -60,7 +62,8 @@ export class EditProfileComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _fb: FormBuilder,
     private _matSnackBar:MatSnackBar,
-    private _dataService :DataService) {
+    private _dataService :DataService,
+     ) {
 
     this.slots = this._fb.array([]); 
     
@@ -334,7 +337,7 @@ export class EditProfileComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if(this.editEmailForm.valid) {
-
+      this.loader = true;
       this.isSubmit = true
       let message = 'Email Edited Successfully';
       this.postAPIResponse('chef/details/email',this.editEmailForm.value,message);
@@ -348,8 +351,9 @@ export class EditProfileComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if(this.editPasswordForm.valid) {
-
-      this.isSubmit = true
+      
+      this.loader = true;
+      this.isSubmit = true;
       let message = 'Password Edited Successfully';
       this.postAPIResponse('chef/details/password',this.editPasswordForm.value,message);
     }else{
@@ -362,7 +366,8 @@ export class EditProfileComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if(this.editPhoneNoForm.valid) {
-
+      
+      this.loader = true;
       this.isSubmit = true
       let message = 'Phone No Edited Successfully';
       this.postAPIResponse('chef/details/phone_number',this.editPhoneNoForm.value,message);
@@ -376,7 +381,7 @@ export class EditProfileComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if(this.editBiographyForm.valid) {
-
+      this.loader = true;
       this.isSubmit = true
       let message = 'Biography Edited Successfully';
       this.postAPIResponse('chef/chef_profile/bio',this.editBiographyForm.value,message);
@@ -390,7 +395,8 @@ export class EditProfileComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if(this.editStoreAddressForm.valid) {
-
+  
+      this.loader = true;
       this.isSubmit = true
       let message = 'Store Address Edited Successfully';
       this.postAPIResponse('chef/chef_store/address',this.editStoreAddressForm.value,message);
@@ -405,7 +411,8 @@ export class EditProfileComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if(this.editCuisineForm.valid) {
-
+      
+      this.loader = true;
       this.isSubmit = true
       let message = 'Cuisines Edited Successfully';
       this.postAPIResponse('chef/chef_store/cuisines',this.editCuisineForm.value,message);
@@ -420,7 +427,8 @@ export class EditProfileComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if(this.editCollectionDeliveryForm.valid) {
-
+      
+      this.loader = true;
       this.isSubmit = true
       let message = 'Collection/Delivery Edited Successfully';
       this.postAPIResponse('chef/chef_store/preference',this.editCollectionDeliveryForm.value,message);
@@ -434,7 +442,8 @@ export class EditProfileComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if(this.editCollectionForm.valid) {
-
+     
+      this.loader = true;
       this.isSubmit = true
       let message = this.data.type === 'collection' ? 'Collection slots Edited Successfully' : 'Delivery slots Edited Successfully';
       let url = this.data.type === 'collection' ? 'chef/chef_store/collection/slot' : 'chef/chef_store/delivery/slot';
@@ -474,6 +483,8 @@ export class EditProfileComponent implements OnInit {
             },
             error => {
                 // Show the error message
+                this.loader = false;
+                this.isSubmit = false;
                 this._matSnackBar.open(error.error.message, 'Retry', {
                     verticalPosition: 'bottom',
                     horizontalPosition:'center',
@@ -495,6 +506,8 @@ export class EditProfileComponent implements OnInit {
             },
             error => {
                 // Show the error message
+                this.isSubmit= false;
+                this.loader = false;
                 this._matSnackBar.open('please try again', 'Retry', {
                     verticalPosition: 'bottom',
                     horizontalPosition:'center',

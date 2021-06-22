@@ -19,6 +19,8 @@ export class CreateProductComponent implements OnInit {
   public tmp_avatar_img;
   public message:string = '';
   public isSubmit: boolean = false;
+  public save:boolean = true;
+  public loader = false;
 
   constructor(
     public dialogRef                      : MatDialogRef<CreateProductComponent>,
@@ -91,7 +93,8 @@ export class CreateProductComponent implements OnInit {
     event.stopPropagation();
 
     if (this.createProductForm.valid) {
-      
+      this.loader = true;
+      this.save = !this.save;
       let formValue = this.createProductForm.value;
       this.isSubmit = true;
       //Define formdata
@@ -128,6 +131,8 @@ export class CreateProductComponent implements OnInit {
       },
       error => {
         // Show the error message
+          this.loader = false;
+          this.isSubmit = false;
           this._matSnackBar.open(error.message, 'RETRY', {
             verticalPosition: 'bottom',
             horizontalPosition:'center',
