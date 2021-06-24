@@ -19,8 +19,9 @@ export class CreateProductComponent implements OnInit {
   public tmp_avatar_img;
   public message:string = '';
   public isSubmit: boolean = false;
-  public save:boolean = true;
   public loader = false;
+  public showLoader: boolean = true;
+  
 
   constructor(
     public dialogRef                      : MatDialogRef<CreateProductComponent>,
@@ -94,7 +95,6 @@ export class CreateProductComponent implements OnInit {
 
     if (this.createProductForm.valid) {
       this.loader = true;
-      this.save = !this.save;
       let formValue = this.createProductForm.value;
       this.isSubmit = true;
       //Define formdata

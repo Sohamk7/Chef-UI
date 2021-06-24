@@ -25,6 +25,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   menuList: any = [];
   public isSubmit: boolean = false;
   public loader: boolean = false;
+  public showLoader: boolean = true;
 
   /**
    * Constructor
@@ -67,6 +68,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
     this._dataService.getAll({url:'menu',isLoader:true})
       .subscribe(respose => {
         this.menuList = respose;
+        this.showLoader = false;
       })
   }
   // -----------------------------------------------------------------------------------------------------

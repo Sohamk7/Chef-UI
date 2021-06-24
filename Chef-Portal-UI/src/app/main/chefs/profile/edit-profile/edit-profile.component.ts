@@ -22,6 +22,7 @@ export class EditProfileComponent implements OnInit {
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
 
   public isSubmit: boolean = false;
+  
   message: string = '';
   editEmailForm: FormGroup;
   editPasswordForm: FormGroup;
@@ -37,7 +38,8 @@ export class EditProfileComponent implements OnInit {
   public inputAccpets : string = ".jpeg, .jpg, .png";
   private file: string | null = null;
   public tmp_avatar_img;
-  public submit:boolean = true;
+  public showLoader:boolean = true;
+  
   // public cuisineNamesList: any = [];
 
   /** list of cuisine */
@@ -326,6 +328,7 @@ export class EditProfileComponent implements OnInit {
   getCuisineList() {
     this._dataService.get({url:'cuisines/options', isLoader:true})
     .subscribe(response => {
+      this.showLoader= false;
       this.cuisineNamesList = response;
       this.filteredCuisinesMulti.next(this.cuisineNamesList.slice());
       console.log(response);

@@ -32,6 +32,7 @@ export class CreateMenuComponent implements OnInit {
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
   public loader : boolean = false;
+  public showLoader: boolean = true;
 
   constructor(
     public dialogRef                      : MatDialogRef<CreateMenuComponent>,
@@ -125,6 +126,7 @@ export class CreateMenuComponent implements OnInit {
     .subscribe(response =>{
       this.productsList = response;
       this.filteredProductsMulti.next(this.productsList.slice());
+      this.showLoader = false;
     });
   }
   
