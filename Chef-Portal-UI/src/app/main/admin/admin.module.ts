@@ -14,6 +14,7 @@ import { ChefsComponent } from './chefs/chefs.component';
 import { CustomersComponent } from './customers/customers.component';
 import { OrderComponent } from './order/order.component';
 import { AdminComponent } from './admin.component';
+import { ChefsProfileComponent } from './chefs-profile/chefs-profile.component';
 
 const routes = [
   {
@@ -35,6 +36,10 @@ const routes = [
         {
           path     : 'orders',
           component: OrderComponent
+        },
+        {
+          path     : 'profile/:id',
+          component: ChefsProfileComponent
         }
       ]
   }
@@ -48,6 +53,7 @@ const routes = [
     HomeComponent,
     OrderComponent,
     ChefsComponent,
+    ChefsProfileComponent,
   ],
   imports: [
     CommonModule,
