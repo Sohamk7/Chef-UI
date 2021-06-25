@@ -151,7 +151,6 @@ getChefInfo(info: { url: string, isLoader?: boolean; }){
     })
   );
 }
-    }),
 
 getAll(info: { url: string; isLoader?: boolean; }): Observable<Response> {
     this.startLoader(info);
