@@ -11,7 +11,8 @@
                         {{element[column.columnDef]}}
                     </span>
                     <span *ngIf="column.columnDef==='name'">
-                      <a href="/">{{element[column.columnDef]}}</a>
+                        <!-- <button routerLink="'chefs/profile'">{{element[column.columnDef]}}</button> -->
+                      <a [routerLink]="['/profile', element.id]" routerLink="/profile">{{element[column.columnDef]}}</a>
                     </span>
                 </td>
 
