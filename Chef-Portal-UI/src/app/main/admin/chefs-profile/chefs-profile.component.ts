@@ -19,19 +19,18 @@ export class ChefsProfileComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // this.route.snapshot.subscribe(params => {
-      this.chef_id = this.route.snapshot.params.id;
-    // });
-    console.log(this.chef_id);
-    console.log(this.route);
 
-    this.getCurrentChefInfo();
-    this.getCusineList();
+    this.chef_id = this.route.snapshot.params.id;
+    if(this.chef_id) {
+
+      this.getCurrentChefInfo();
+      this.getCusineList();
+    }
   }
 
   getCurrentChefInfo() {
 
-    this._dataService.getChefInfo({url:'chef/chef_id=' + this.chef_id, isLoader:true})
+    this._dataService.getChefInfo({url:'chef?chef_id=' + this.chef_id, isLoader:true})
     .subscribe(response => {
       this.userInfo = response;
       this.showLoader = false;
