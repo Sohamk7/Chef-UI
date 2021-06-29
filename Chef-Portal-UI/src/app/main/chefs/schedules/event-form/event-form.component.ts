@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CalendarEvent } from 'angular-calendar';
@@ -23,6 +23,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   startDate = new Date().setDate(new Date().getDate() + 1);
   endDate =  new Date().setDate(new Date().getDate() + 28);
   menuList: any = [];
+  inventoriesList: any = [];
   public isSubmit: boolean = false;
   public loader: boolean = false;
 
@@ -60,6 +61,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   }
   ngOnInit() {
     this.getMenus();
+    this.getproducts()
   }
 
   getMenus(): void
@@ -67,7 +69,29 @@ export class CalendarEventFormDialogComponent implements OnInit {
     this._dataService.getAll({url:'menu',isLoader:true})
       .subscribe(respose => {
         this.menuList = respose;
+        // this.inventoriesList = this.menuList;
       })
+  }
+  getproducts(): void
+  {
+    this._dataService.getAll({url:'product',isLoader:true})
+      .subscribe(respose => {
+        // this.menuList = respose;
+        this.inventoriesList = this.getmappedList(respose);
+      })
+  }
+
+  getmappedList(data) {
+    let tempArr = [];
+    data.forEach(element => {
+        let obj = {};
+        obj['product_id'] = element.id;
+        obj['name'] = element._product_details?.name;
+        obj['limited'] = false;
+        obj['inventory_count'] = 1;
+        tempArr.push(obj);
+    });
+    return tempArr;
   }
   // -----------------------------------------------------------------------------------------------------
   // @ Public methods
@@ -86,6 +110,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
         let available_date = this._data.available_date ? new Date(this._data.available_date) : new Date();
         let ispublic = this._data.public ? this._data.public : true;
         let availability_id = this._data.id ? this._data.id : 0;
+        this.inventoriesList = this._data.product_menu_inventories;
         return new FormGroup({
           chef_id : new FormControl(chef_id),
           menu_id : new FormControl(menu_id,[Validators.required]),
@@ -99,6 +124,9 @@ export class CalendarEventFormDialogComponent implements OnInit {
           menu_id : new FormControl(0,[Validators.required]),
           available_date   : new FormControl(new Date(),[Validators.required]),
           public : new FormControl(true,[Validators.required]),
+          // inventory: new FormArray([
+          //   product_id:new FormControl(0)
+          // ])
         });
       }
   }
@@ -109,6 +137,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
     if (this.eventForm.valid) {
       
       let formValue = this.eventForm.value;
+      formValue.inventory = this.inventoriesList;
       this.isSubmit = true;
       this.loader = true;
       //Define formdata
@@ -139,5 +168,22 @@ export class CalendarEventFormDialogComponent implements OnInit {
       });
     }
     
+  }
+
+  removeInventory(index) {
+    this.inventoriesList.splice(index,1);
+  }
+
+  changeLimited(event,index) {
+    this.inventoriesList[index].limited = event.checked;
+  }
+
+  changeCount(type,i) {
+    if(type==='add'){
+      this.inventoriesList[i].inventory_count = --(this.inventoriesList[i].inventory_count);
+    }
+    else{
+      this.inventoriesList[i].inventory_count = ++(this.inventoriesList[i].inventory_count);
+    }
   }
 }
