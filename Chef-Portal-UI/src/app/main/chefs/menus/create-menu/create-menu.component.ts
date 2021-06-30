@@ -32,6 +32,7 @@ export class CreateMenuComponent implements OnInit {
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
   public loader : boolean = false;
+  public showLoader: boolean = true;
 
   constructor(
     public dialogRef                      : MatDialogRef<CreateMenuComponent>,
@@ -58,7 +59,7 @@ export class CreateMenuComponent implements OnInit {
       });
 
       let productNameToDispaly: any = []; 
-      menu_details._products.forEach(product => {
+      menu_details._products.forEach(product => { 
         productNameToDispaly.push(product.product_id);
       });
       this.createManuForm.controls['products'].setValue(productNameToDispaly)
@@ -125,6 +126,7 @@ export class CreateMenuComponent implements OnInit {
     .subscribe(response =>{
       this.productsList = response;
       this.filteredProductsMulti.next(this.productsList.slice());
+      this.showLoader = false;
     });
   }
   

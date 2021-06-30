@@ -1,4 +1,4 @@
-<!-- <app-loader></app-loader> -->
+
 <div fxLayout="column">
     <div class="header-section" fxLayout="row" fxLayoutAlign="space-between">
         <div fxLayout="row" fxLayoutGap="15px">
@@ -10,7 +10,7 @@
 
         <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center start">
     
-            <div id="login-form" >
+            <div id="login-form">
                 <div *ngIf="data.type==='email'">
                     <form fxLayot="column" [formGroup]="editEmailForm">
 
@@ -176,7 +176,7 @@
         
                         <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
                         (click)="biographySubmit($event)" [disabled]="isSubmit"> <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-                        <i class="fa fa-spinner fa-spin" *ngIf="loader"></i>SUBMIT
+                        <i class="fa fa-spinner fa-spin"  *ngIf="loader"></i>SUBMIT
                         </button>
 
                     </form>
@@ -198,8 +198,10 @@
                         <img style="width: 50%;" [src]="tmp_avatar_img" *ngIf="tmp_avatar_img !== '' && tmp_avatar_img" />
                     </div>
                 </div>
+                
                 <div *ngIf="data.type==='cuisine'">
-                    <form fxLayot="column" [formGroup]="editCuisineForm">
+                    <app-loader *ngIf="showLoader"></app-loader>
+                    <form fxLayot="column" [formGroup]="editCuisineForm" *ngIf="!showLoader">
 
                         <mat-form-field appearance="outline">
                             <mat-label>List of CUISINE NAMES</mat-label>
@@ -242,6 +244,7 @@
                     </form>
                 </div>       
                 <div *ngIf="data.type==='collection' || data.type==='delivery'">
+                    <app-loader *ngIf="showLoader"></app-loader>
                     <form fxLayot="column" [formGroup]="editCollectionForm">
                         <!-- <div class="p-4" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
                             <mat-form-field appearance="outline" fxFlex="40">

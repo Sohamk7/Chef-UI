@@ -26,6 +26,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   inventoriesList: any = [];
   public isSubmit: boolean = false;
   public loader: boolean = false;
+  public showLoader: boolean = true;
 
   /**
    * Constructor
