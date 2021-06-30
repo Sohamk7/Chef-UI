@@ -1,14 +1,6 @@
 
- <app-loader *ngIf="showLoader"></app-loader>
+<app-loader *ngIf="showLoader"></app-loader>
 <div class="dialog-content-wrapper">
-    <!-- <mat-toolbar class="mat-accent m-0">
-        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-            <span class="title dialog-title">{{dialogTitle}}</span>
-            <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar-row>
-    </mat-toolbar> -->
 
     <div fxLayout="row" fxLayoutAlign="space-between center">
         <span class="title dialog-title"><h2>{{dialogTitle}}</h2></span>
@@ -17,7 +9,7 @@
         </button>
     </div>
 
-    <div mat-dialog-content class="p-16 pb-0 m-0" fusePerfectScrollbar *ngIf="!showLoader">
+    <div class="p-16 pb-0 m-0">
 
         <form name="eventForm" [formGroup]="eventForm" class="event-form w-100-p" fxLayout="column" fxFlex>
 
@@ -28,9 +20,9 @@
                     {{menu?.name}}
                     </mat-option>
                 </mat-select>
-                <!-- <mat-error *ngIf="eventForm.get('menu').hasError('required')">
+                <mat-error *ngIf="eventForm.get('menu_id').hasError('required')">
                     Please, select menu
-                </mat-error> -->
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="pr-sm-8" fxFlex="100">
@@ -39,15 +31,44 @@
                 [min]="startDate" [max]="endDate" formControlName="available_date" readonly="true">
                 <mat-datepicker-toggle matSuffix [for]="startDatePicker" ></mat-datepicker-toggle>
                 <mat-datepicker #startDatePicker [startAt]="startDate"></mat-datepicker>
-                <!-- <mat-error *ngIf="eventForm.get('available_date').hasError('required')">
+                <mat-error *ngIf="eventForm.get('available_date').hasError('required')">
                     Please, select date
-                </mat-error> -->
+                </mat-error>
             </mat-form-field>
 
             <mat-radio-group aria-label="Select an option" formControlName="public" color="primary">
-                <mat-radio-button [value]="true" class="pr-10">Public</mat-radio-button>
+                <mat-radio-button [value]="true" class="pl-10">Public</mat-radio-button>
                 <mat-radio-button [value]="false"> Non Public</mat-radio-button>
             </mat-radio-group>
+
+            <div>
+              <table class="w-100">
+                  <tr class="border-bottom"><td>PRODUCT INVENTORIES</td></tr>
+                  <mat-divider></mat-divider>
+                  <tr>
+                      <td>PRODUCT_NAME</td>
+                      <td>LIMITED</td>
+                      <td>COUNT</td>
+                      <td></td>
+                  </tr>
+                  <!-- <tr> <div class="hr"></div></tr> -->
+                  <mat-divider></mat-divider>
+                  <tr *ngFor="let inventory of inventoriesList;let i=index;">
+                      <td><mat-label>{{inventory.name}}</mat-label></td>
+                      <td><mat-slide-toggle color="primary" (change)="changeLimited($event,i)" checked="inventory.limited" name="enableWifi"></mat-slide-toggle></td>
+                      <td>
+                        <!-- *ngIf="inventory.limited" -->
+                          <div *ngIf="inventory.limited">
+                            <span class="material-icons icon" (click)="changeCount('add',i)">remove_circle_outline</span>{{inventory.inventory_count}}
+                            <span class="material-icons icon" (click)="changeCount('remove',i)">add_circle_outline</span>
+                          </div>
+                      </td>
+                      <td><mat-icon color="warn" (click)="removeInventory(i)">delete</mat-icon></td>
+                      <div class="hr"></div>
+                  </tr>
+                  
+              </table>  
+            </div>
         </form>
 
     </div>
