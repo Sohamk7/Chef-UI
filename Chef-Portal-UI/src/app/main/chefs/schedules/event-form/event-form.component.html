@@ -1,6 +1,6 @@
 
 <app-loader *ngIf="showLoader"></app-loader>
-<div class="dialog-content-wrapper">
+<div class="dialog-content-wrapper"  *ngIf="!showLoader">
 
     <div fxLayout="row" fxLayoutAlign="space-between center">
         <span class="title dialog-title"><h2>{{dialogTitle}}</h2></span>
