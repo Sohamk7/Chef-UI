@@ -59,7 +59,7 @@ export class CreateMenuComponent implements OnInit {
       });
 
       let productNameToDispaly: any = []; 
-      menu_details._products.forEach(product => {
+      menu_details._products.forEach(product => { 
         productNameToDispaly.push(product.product_id);
       });
       this.createManuForm.controls['products'].setValue(productNameToDispaly)

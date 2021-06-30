@@ -42,12 +42,49 @@
                             Description is required
                         </mat-error>
                     </mat-form-field>
-    
-                    <mat-radio-group aria-label="Select an option" formControlName="vegetarian" color="primary">
-                        <mat-radio-button [value]="false" class="pr-10">Vegetarian</mat-radio-button>
-                        <mat-radio-button [value]="true"> Non Vegetarian</mat-radio-button>
-                    </mat-radio-group>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Allergens info</mat-label>
+                        <mat-select formControlName="allergense" placeholder="Allergense" [multiple]="true" #multiSelect>
+                            <mat-option>
+                                <ngx-mat-select-search placeholderLabel="Search" noEntriesFoundLabel="No allergy Found" 
+                                [formControl]="AllergyMultiFilterCtrl"></ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let allergen of filteredAllergyMulti | async " [value]="allergen.id" >
+                                {{allergen?.allergen_name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="createProductForm.get('allergense').hasError('required')">
+                            Please select allergense
+                        </mat-error>
+                      </mat-form-field>
 
+                      <mat-form-field appearance="outline">
+                        <mat-label>Dietary info</mat-label>
+                        <mat-select formControlName="dietaries" placeholder="Dietary-info" [multiple]="true" #multiSelect>
+                            <mat-option>
+                                <ngx-mat-select-search placeholderLabel="Search" noEntriesFoundLabel="No allergy Found" 
+                                [formControl]="DietaryMultiFilterCtrl"></ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let diet of filteredDietaryMulti | async " [value]="diet.id" >
+                                {{diet?.dietary_name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="createProductForm.get('dietaries').hasError('required')">
+                            Please select Dietaries 
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Product Varient</mat-label>
+                        <input matInput formControlName="varient" placeholder="Product Varient" > 
+                       
+                        <mat-error>
+                            Product varient is required 
+                        </mat-error>
+                    </mat-form-field>
+                    
+
+                     
+    
                     <h3 class="pt-10">Upload Product Image:</h3>
                     <input  hidden 
                             #inputfile

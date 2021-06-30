@@ -1,7 +1,9 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
+import { ReplaySubject, Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonUtils } from 'src/app/_helpers/common.utils';
 import { DataService } from 'src/app/_services/dataservice';
@@ -12,15 +14,25 @@ import { DataService } from 'src/app/_services/dataservice';
   styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent implements OnInit {
-
+  @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect; 
   createProductForm:FormGroup;
   public inputAccpets : string = ".jpeg, .jpg, .png";
   private file: string | null = null;
   public tmp_avatar_img;
   public message:string = '';
+  protected _onDestroy = new Subject<void>();
   public isSubmit: boolean = false;
   public loader = false;
   public showLoader: boolean = true;
+  public allergenList: any = [];
+  public dietaryList: any = [];
+
+  public AllergyMultiFilterCtrl: FormControl = new FormControl();
+  public DietaryMultiFilterCtrl: FormControl = new FormControl();
+
+  public filteredAllergyMulti: ReplaySubject<[]> = new ReplaySubject<[]>(1);
+  public filteredDietaryMulti: ReplaySubject<[]> = new ReplaySubject<[]>(1);
+
   
 
   constructor(
@@ -29,8 +41,11 @@ export class CreateProductComponent implements OnInit {
     private _fb: FormBuilder,
     private _matSnackBar:MatSnackBar,
     private dataService :DataService,
-    private currencyPipe : CurrencyPipe
-  ) { }
+    private currencyPipe : CurrencyPipe,
+  ) { 
+    this.getAllergen();
+    this.getDietaries();
+  }
 
   ngOnInit(): void {
 
@@ -45,9 +60,22 @@ export class CreateProductComponent implements OnInit {
         name: this._fb.control(product_details.name,[Validators.required]),
         price: this._fb.control(product_details.price,[Validators.required,Validators.pattern("^[0-9]*$")]),
         description: this._fb.control(product_details.description,[Validators.required]),
-        vegetarian: this._fb.control(product_details.vegetarian),
+        allergense: this._fb.control([], [Validators.required]),
+        dietaries: this._fb.control([], [Validators.required]),
+        varients: this._fb.control([], [Validators.required]),
         chef_id:this._fb.control(1),
         product_image: this._fb.control('')
+      });
+
+      let allergenNameToDispaly: any = []; 
+      product_details._allergens.forEach(allergen => {
+        allergenNameToDispaly.push(allergen.allergen_id);
+      });
+
+      
+      let dietaryNameToDispaly: any = []; 
+      product_details._dietaries.forEach(dietary => {
+        dietaryNameToDispaly.push(dietary.dietary_id);
       });
 
       this.tmp_avatar_img = product_details._product_media_of_product_details.media_url.url;
@@ -60,12 +88,15 @@ export class CreateProductComponent implements OnInit {
         name: this._fb.control('',[Validators.required]),
         price: this._fb.control('',[Validators.required,Validators.pattern("^[0-9]*$")]),
         description: this._fb.control('',[Validators.required]),
-        vegetarian: this._fb.control(false),
+        allergense: this._fb.control([], [Validators.required]),
+        dietaries: this._fb.control([], [Validators.required]),
+        varients: this._fb.control([], [Validators.required]),
         chef_id:this._fb.control(1),
         product_image: this._fb.control('',[Validators.required])
       });
     }
   }
+
 
   transformAmount(element){
     let formattedAmount = this.currencyPipe.transform(this.createProductForm.get('price').value, 'EUR');
@@ -78,6 +109,7 @@ export class CreateProductComponent implements OnInit {
     this.getBase64(event.target.files[0]);
   }
 
+
   getBase64(file) {
     var reader = new FileReader();
     reader.readAsDataURL(file); // read file as data url
@@ -86,6 +118,30 @@ export class CreateProductComponent implements OnInit {
       this.file = event.target.result;
       this.tmp_avatar_img = event.target.result;
     }
+  }
+
+  
+
+  getAllergen() {
+
+    this.dataService.getAllergensDietaries({url:'product/allergen_info',isLoader:true})
+    .subscribe(response =>{
+      this.allergenList = response;
+      this.filteredAllergyMulti.next(this.allergenList.slice());
+      this.showLoader = false;
+      console.log(this.allergenList);
+    });
+  }
+
+  getDietaries() {
+
+    this.dataService.getAllergensDietaries({url:'product/dietary_info',isLoader:true})
+    .subscribe(response =>{
+      this.dietaryList = response;
+      this.filteredDietaryMulti.next(this.dietaryList.slice());
+      this.showLoader = false;
+      console.log(this.dietaryList);
+    });
   }
 
   onSubmit(event) {
@@ -147,5 +203,6 @@ export class CreateProductComponent implements OnInit {
   RemovePicture() {
     this.tmp_avatar_img = '';
   }
+  
 
 }
