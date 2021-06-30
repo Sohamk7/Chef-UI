@@ -70,6 +70,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
     this._dataService.getAll({url:'menu',isLoader:true})
       .subscribe(respose => {
         this.menuList = respose;
+        this.showLoader = false;
         // this.inventoriesList = this.menuList;
       })
   }

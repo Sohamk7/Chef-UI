@@ -1,5 +1,5 @@
-
-<div fxLayout="column">
+<app-loader *ngIf = "showLoader"></app-loader>
+<div fxLayout="column" *ngIf="!showLoader">
     <div class="header-section" fxLayout="row" fxLayoutAlign="space-between">
         <div fxLayout="row" fxLayoutGap="15px">
             <span class="bold">{{message}}</span>
