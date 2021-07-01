@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { ReplaySubject, Subject } from 'rxjs';
+import { first, take, takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonUtils } from 'src/app/_helpers/common.utils';
 import { DataService } from 'src/app/_services/dataservice';
@@ -97,6 +98,84 @@ export class CreateProductComponent implements OnInit {
         product_image: this._fb.control('',[Validators.required])
       });
     }
+    this.AllergyMultiFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterAllergenMulti();
+      });
+
+      this.DietaryMultiFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filtereDietaryMulti();
+      });
+  }
+
+  protected setInitialValue() {
+    this.filteredAllergyMulti
+      .pipe(take(1), takeUntil(this._onDestroy))
+      .subscribe(() => {
+        // setting the compareWith property to a comparison function
+        // triggers initializing the selection according to the initial value of
+        // the form control (i.e. _initializeSelection())
+        // this needs to be done after the filteredBanks are loaded initially
+        // and after the mat-option elements are available
+        this.multiSelect.compareWith = (a, b) => a && b && a.id === b.id;
+      });
+  }
+
+  protected setInitialValue1() {
+    this.filteredDietaryMulti
+      .pipe(take(1), takeUntil(this._onDestroy))
+      .subscribe(() => {
+        // setting the compareWith property to a comparison function
+        // triggers initializing the selection according to the initial value of
+        // the form control (i.e. _initializeSelection())
+        // this needs to be done after the filteredBanks are loaded initially
+        // and after the mat-option elements are available
+        this.multiSelect.compareWith = (a, b) => a && b && a.id === b.id;
+      });
+  }
+
+  
+  protected filterAllergenMulti() {
+    if (!this.allergenList) {
+      return;
+    }
+    // get the search keyword
+    let search = this.AllergyMultiFilterCtrl.value;
+    if (!search) {
+      this.filteredAllergyMulti.next(this.allergenList.slice());
+      console.log(this.filteredAllergyMulti)
+      return;
+    } else { 
+      search = search.toLowerCase();
+    }
+    // filter the cuisine
+    this.filteredAllergyMulti.next(
+      this.allergenList.filter(allergense => allergense.allergen_name.toLowerCase().indexOf(search) > -1)
+    );
+    console.log(this.allergenList.filter(allergense =>allergense.allergen_name.toLowerCase().indexOf(search) > -1));
+  }
+
+  protected filtereDietaryMulti() {
+    if (!this.allergenList) {
+      return;
+    }
+    // get the search keyword
+    let search = this.DietaryMultiFilterCtrl.value;
+    if (!search) {
+      this.filteredDietaryMulti.next(this.dietaryList.slice());
+      console.log(this.filtereDietaryMulti)
+      return;
+    } else { 
+      search = search.toLowerCase();
+    }
+    // filter the cuisine
+    this.filteredDietaryMulti.next(
+      this.dietaryList.filter(dietary => dietary.dietary_name.toLowerCase().indexOf(search) > -1)
+    );
+    console.log(this.dietaryList.filter(dietary =>dietary.dietary_name.toLowerCase().indexOf(search) > -1));
   }
 
   getProducts() {
@@ -223,6 +302,11 @@ export class CreateProductComponent implements OnInit {
 
   RemovePicture() {
     this.tmp_avatar_img = '';
+  }
+
+  ngOnDestroy() {
+    this._onDestroy.next();
+    this._onDestroy.complete();
   }
   
 
