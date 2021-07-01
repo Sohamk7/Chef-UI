@@ -73,14 +73,50 @@
                             Please select Dietaries 
                         </mat-error>
                       </mat-form-field>
-                      <mat-form-field appearance="outline" >
-                        <mat-label>Product Varient</mat-label>
-                        <input matInput formControlName="varient" placeholder="Product Varient" > 
-                       
-                        <mat-error>
-                            Product varient is required 
-                        </mat-error>
-                    </mat-form-field>
+                      <div>
+                        <table class="w-100">
+                            <tr class="border-bottom">
+                                <td>Product Varients</td>
+                                <td><mat-icon class="material-icons icon">add_circle_outline</mat-icon></td>
+                            </tr>
+                            <mat-divider></mat-divider>
+                            <tr>
+                                <td>Varient_Category</td>
+                                <td>
+                                    <span class="material-icons icon">add_circle_outline</span>
+                                    <span class="material-icons icon">edit</span>
+                                    <span class="material-icons icon" color="warn">delete</span>
+                                </td>
+                            </tr>
+                            <mat-divider></mat-divider>
+                            <tr>
+                                <td>VARIENT_NAME</td>
+                                <td>DEFAULT</td>
+                                <td>PRICE</td>
+                                <td></td>
+                            </tr>
+                            <mat-divider></mat-divider>
+                            <tr *ngFor="let product of productVarientList;let i=index;">
+                                <td><mat-label>{{product.name}}</mat-label></td>
+                                <td><mat-slide-toggle color="primary" [checked]="product.limited" name="enableWifi"></mat-slide-toggle></td>
+                                <td>
+                                    {{product.price | currency:'EUR'}}
+                                </td>
+                                <td><mat-icon color="warn" (click)="removeInventory(i)">delete</mat-icon></td>
+                                <div class="hr"></div>
+                            </tr>
+
+                            <tr>
+                                <td>Varient_Category</td>
+                                <td>
+                                    <span class="material-icons icon">add_circle_outline</span>
+                                    <span class="material-icons icon">edit</span>
+                                    <span class="material-icons icon" color="warn">delete</span>
+                                </td>
+                            </tr>
+                            
+                        </table>  
+                      </div>
                     
 
                      

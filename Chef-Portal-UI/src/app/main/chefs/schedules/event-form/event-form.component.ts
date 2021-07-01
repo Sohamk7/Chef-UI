@@ -27,6 +27,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   public isSubmit: boolean = false;
   public loader: boolean = false;
   public showLoader: boolean = true;
+  public inventoriesListTemp: any = [];
 
   /**
    * Constructor
@@ -57,12 +58,11 @@ export class CalendarEventFormDialogComponent implements OnInit {
       {
           this.dialogTitle = 'New Event';
       }
-
-      this.eventForm = this.createEventForm();
   }
   ngOnInit() {
     this.getMenus();
     this.getproducts()
+   
   }
 
   getMenus(): void
@@ -80,6 +80,10 @@ export class CalendarEventFormDialogComponent implements OnInit {
       .subscribe(respose => {
         // this.menuList = respose;
         this.inventoriesList = this.getmappedList(respose);
+        this.inventoriesListTemp = this.getmappedList(respose);
+        this.showLoader = false;
+        this.eventForm = this.createEventForm(); 
+        console.log(this.inventoriesListTemp);
       })
   }
 
@@ -112,7 +116,9 @@ export class CalendarEventFormDialogComponent implements OnInit {
         let available_date = this._data.available_date ? new Date(this._data.available_date) : new Date();
         let ispublic = this._data.public ? this._data.public : true;
         let availability_id = this._data.id ? this._data.id : 0;
-        this.inventoriesList = this._data.product_menu_inventories;
+        let arr = this.getProductInventories(this._data.product_menu_inventories) ;
+        this.inventoriesList = arr;
+        console.log(this.inventoriesList);
         return new FormGroup({
           chef_id : new FormControl(chef_id),
           menu_id : new FormControl(menu_id,[Validators.required]),
@@ -131,6 +137,23 @@ export class CalendarEventFormDialogComponent implements OnInit {
           // ])
         });
       }
+  }
+
+  getProductInventories(data){
+    let tempArr = [];
+    console.log(this.inventoriesListTemp);
+    console.log(data);
+    this.inventoriesListTemp.forEach(element => {
+        data.forEach(element1 => {
+            if(element.product_id===element1.product_id){
+              
+              element.limited = element1.limited;
+              console.log(element);
+              tempArr.push(element);
+            }
+        });
+    });
+    return tempArr;
   }
 
   onClickAdd(event) {
