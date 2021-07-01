@@ -27,6 +27,7 @@ export class CreateProductComponent implements OnInit {
   public showLoader: boolean = true;
   public allergenList: any = [];
   public dietaryList: any = [];
+  public productVarientList: any = [];
 
   public AllergyMultiFilterCtrl: FormControl = new FormControl();
   public DietaryMultiFilterCtrl: FormControl = new FormControl();
@@ -51,6 +52,7 @@ export class CreateProductComponent implements OnInit {
   ngOnInit(): void {
 
     console.log(this.data);
+    this.getProducts();
 
     if(this.data!==null){
 
@@ -176,6 +178,25 @@ export class CreateProductComponent implements OnInit {
     console.log(this.dietaryList.filter(dietary =>dietary.dietary_name.toLowerCase().indexOf(search) > -1));
   }
 
+  getProducts() {
+
+    this.dataService.getAll({url:'product',isLoader:true})
+    .subscribe(response =>{
+      this.productVarientList = response;
+    });
+  }
+
+  getmappedList(data) {
+    let tempArr = [];
+    data.forEach(element => {
+        let obj = {};
+        obj['product_id'] = element.id;
+        obj['name'] = element._product_details?.name;
+        obj['price'] = element._product_details?.price;
+        tempArr.push(obj);
+    });
+    return tempArr;
+  }
 
   transformAmount(element){
     let formattedAmount = this.currencyPipe.transform(this.createProductForm.get('price').value, 'EUR');

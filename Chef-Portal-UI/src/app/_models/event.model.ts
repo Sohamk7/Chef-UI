@@ -26,6 +26,7 @@ export class CalendarEventModel
     public: boolean;
     _product_menu: {}
     available_date: any;
+    product_menu_inventories:any[];
 
     /**
      * Constructor
@@ -61,6 +62,7 @@ export class CalendarEventModel
         this.public = data.public && data.public || true;
         this._product_menu = data._product_menu && data._product_menu ||{};
         this.available_date = data.available_date && data.available_date;
+        this.product_menu_inventories = data.product_menu_inventories;
     }
    
 }
