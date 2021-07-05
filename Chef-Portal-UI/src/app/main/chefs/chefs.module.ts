@@ -21,6 +21,7 @@ import { CreateProductComponent } from './products/create-product/create-product
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { CreateMenuComponent } from './menus/create-menu/create-menu.component';
 import { CalendarEventFormDialogComponent } from './schedules/event-form/event-form.component';
+import { AddProductVarientsComponent } from './products/create-product/add-product-varients/add-product-varients.component';
 
 const routes = [
   {
@@ -83,6 +84,7 @@ const routes = [
     EditProfileComponent,
     CreateMenuComponent,
     CalendarEventFormDialogComponent,
+    AddProductVarientsComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,60 @@
+<!-- <app-loader *ngIf = "showLoader"></app-loader> -->
+<div fxLayout="column">
+    <div class="header-section" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutGap="15px">
+            <span class="bold">Add New Varient</span>
+        </div> 
+        <mat-icon class="icon bold" (click)="dialogRef.close('N');">close</mat-icon>
+     </div>
+     <div id="login" fxLayout="column">
+
+        <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center start" >
+    
+            <div id="login-form" >
+                <form [formGroup]="createProductVarientForm" fxLayot="column">
+
+                    <mat-form-field appearance="outline" >
+                        <mat-label>Varient Name</mat-label>
+                        <input matInput formControlName="option_name" placeholder="Product Name">
+                        <mat-error>
+                            Varient Name is required
+                        </mat-error>
+                      
+                    </mat-form-field>
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                        <span>Default Selection</span>
+                        <mat-slide-toggle color="primary" formControlName="default"></mat-slide-toggle>
+                    </div>
+    
+                    <mat-form-field appearance="outline" class="pt-10">
+                        <mat-label>Price</mat-label>
+                        <input matInput formControlName="price" placeholder="Price" (blur)="transformAmount($event)">
+                        <mat-error *ngIf="createProductVarientForm.get('price').hasError('required')">
+                            Price is required
+                        </mat-error>
+                        <mat-error *ngIf="!createProductVarientForm.get('price').hasError('required') && 
+                        createProductVarientForm.get('price').hasError('pattern')">
+                            Only numbers allowed
+                        </mat-error>
+                      
+                    </mat-form-field>
+    
+                </form>
+
+            </div>
+            
+        </div>
+        <div class="button-section" fxLayout="row" fxLayoutAlign="end center" fxFlex="1 0 auto">
+
+            <div class="button-margin pl-4" fxLayout="row" fxLayoutGap="20px">
+    
+                <button mat-raised-button  type="submit" (click)="onSubmit($event)" [disabled]="isSubmit" 
+                color="primary" fxFlex="80px" > 
+                <i class="fa fa-spinner fa-spin" *ngIf="loader"></i>Save</button>
+                <button (click)="dialogRef.close('N');" mat-raised-button fxFlex="80px"> Cancel</button>
+            </div>
+        </div>
+    
+    </div>
+    </div>
+
