@@ -73,50 +73,54 @@
                             Please select Dietaries 
                         </mat-error>
                       </mat-form-field>
-                      <div>
-                        <table class="w-100">
-                            <tr class="border-bottom">
-                                <td>Product Varients</td>
-                                <td><mat-icon class="material-icons icon">add_circle_outline</mat-icon></td>
-                            </tr>
-                            <mat-divider></mat-divider>
-                            <tr>
-                                <td>Varient_Category</td>
-                                <td>
-                                    <span class="material-icons icon">add_circle_outline</span>
-                                    <span class="material-icons icon">edit</span>
-                                    <span class="material-icons icon" color="warn">delete</span>
-                                </td>
-                            </tr>
-                            <mat-divider></mat-divider>
-                            <tr>
-                                <td>VARIENT_NAME</td>
-                                <td>DEFAULT</td>
-                                <td>PRICE</td>
-                                <td></td>
-                            </tr>
-                            <mat-divider></mat-divider>
-                            <tr *ngFor="let product of productVarientList;let i=index;">
-                                <td><mat-label>{{product.name}}</mat-label></td>
-                                <td><mat-slide-toggle color="primary" [checked]="product.limited" name="enableWifi"></mat-slide-toggle></td>
-                                <td>
-                                    {{product.price | currency:'EUR'}}
-                                </td>
-                                <td><mat-icon color="warn" (click)="removeInventory(i)">delete</mat-icon></td>
-                                <div class="hr"></div>
-                            </tr>
+             
+                    <div class="w-100">
+                        <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div>Product Varients</div>
+                            <div><mat-icon>add_circle_outline</mat-icon></div>
+                        </div>
+                        <div class="hr1"></div>
+                        <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div>Varient_Category</div>
+                            <div>
+                                <mat-icon (click)="addEditVarient()">add_circle_outline</mat-icon>
+                                <mat-icon>edit</mat-icon>
+                                <mat-icon color="warn">delete</mat-icon>
+                            </div>
+                        </div>
+                        <mat-divider></mat-divider>
 
-                            <tr>
-                                <td>Varient_Category</td>
-                                <td>
-                                    <span class="material-icons icon">add_circle_outline</span>
-                                    <span class="material-icons icon">edit</span>
-                                    <span class="material-icons icon" color="warn">delete</span>
-                                </td>
-                            </tr>
-                            
-                        </table>  
-                      </div>                  
+                        <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div>Varient_name</div>
+                            <div>Default</div>
+                            <div>Price</div>
+                            <div>Action</div>
+                        </div>
+                        <div class="p" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let product of productVarientList;let i=index;">
+                            <div><mat-label>{{product.option_name}}</mat-label></div>
+                            <div><mat-slide-toggle color="primary" [checked]="product.default" (change)="toggleChangeValue($event,i)" name="enableWifi"></mat-slide-toggle></div>
+                            <div>{{product.price | currency:'EUR'}}</div>
+                            <div><mat-icon color="warn" (click)="deleteVarient(i)">delete</mat-icon></div>
+                        </div>
+                        <div class="hr"></div>
+                        <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div>SINGLE SELECTION</div>
+                            <div><mat-slide-toggle color="primary" [disabled]="true" [checked]="singleSelection" name="enableWifi"></mat-slide-toggle></div>
+                            <div>MAX SELECTION</div>
+                            <div *ngIf="maxSelection > 1">{{maxSelection}}</div>
+                        </div>
+
+                        <mat-divider></mat-divider>
+                        <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
+                            <div>Varient_Category 1</div>
+                            <div>
+                                <mat-icon>add_circle_outline</mat-icon>
+                                <mat-icon>edit</mat-icon>
+                                <mat-icon color="warn">delete</mat-icon>
+                            </div>
+                        </div>
+                        <mat-divider></mat-divider>
+                    </div>
     
                     <h3 class="pt-10">Upload Product Image:</h3>
                     <input  hidden 

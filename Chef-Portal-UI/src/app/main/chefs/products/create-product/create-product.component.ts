@@ -1,13 +1,14 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { ReplaySubject, Subject } from 'rxjs';
 import { first, take, takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonUtils } from 'src/app/_helpers/common.utils';
 import { DataService } from 'src/app/_services/dataservice';
+import { AddProductVarientsComponent } from './add-product-varients/add-product-varients.component';
 
 @Component({
   selector: 'app-create-product',
@@ -28,6 +29,8 @@ export class CreateProductComponent implements OnInit {
   public allergenList: any = [];
   public dietaryList: any = [];
   public productVarientList: any = [];
+  public maxSelection:number = 0;
+  public singleSelection: boolean = false;
 
   public AllergyMultiFilterCtrl: FormControl = new FormControl();
   public DietaryMultiFilterCtrl: FormControl = new FormControl();
@@ -35,10 +38,9 @@ export class CreateProductComponent implements OnInit {
   public filteredAllergyMulti: ReplaySubject<[]> = new ReplaySubject<[]>(1);
   public filteredDietaryMulti: ReplaySubject<[]> = new ReplaySubject<[]>(1);
 
-  
-
   constructor(
     public dialogRef                      : MatDialogRef<CreateProductComponent>,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data  : any,
     private _fb: FormBuilder,
     private _matSnackBar:MatSnackBar,
@@ -52,7 +54,7 @@ export class CreateProductComponent implements OnInit {
   ngOnInit(): void {
 
     console.log(this.data);
-    this.getProducts();
+    // this.getProducts();
 
     if(this.data!==null){
 
@@ -178,25 +180,25 @@ export class CreateProductComponent implements OnInit {
     console.log(this.dietaryList.filter(dietary =>dietary.dietary_name.toLowerCase().indexOf(search) > -1));
   }
 
-  getProducts() {
+  // getProducts() {
 
-    this.dataService.getAll({url:'product',isLoader:true})
-    .subscribe(response =>{
-      this.productVarientList = response;
-    });
-  }
+  //   this.dataService.getAll({url:'product',isLoader:true})
+  //   .subscribe(response =>{
+  //     this.productVarientList = response;
+  //   });
+  // }
 
-  getmappedList(data) {
-    let tempArr = [];
-    data.forEach(element => {
-        let obj = {};
-        obj['product_id'] = element.id;
-        obj['name'] = element._product_details?.name;
-        obj['price'] = element._product_details?.price;
-        tempArr.push(obj);
-    });
-    return tempArr;
-  }
+  // getmappedList(data) {
+  //   let tempArr = [];
+  //   data.forEach(element => {
+  //       let obj = {};
+  //       obj['product_id'] = element.id;
+  //       obj['name'] = element._product_details?.name;
+  //       obj['price'] = element._product_details?.price;
+  //       tempArr.push(obj);
+  //   });
+  //   return tempArr;
+  // }
 
   transformAmount(element){
     let formattedAmount = this.currencyPipe.transform(this.createProductForm.get('price').value, 'EUR');
@@ -309,5 +311,43 @@ export class CreateProductComponent implements OnInit {
     this._onDestroy.complete();
   }
   
+  addEditVarient(){
+    let dialogRef = this.dialog.open(AddProductVarientsComponent, {
+      data:null,
+      width: '600px',
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result!=='N'){
+        this.productVarientList.push(result);
+        this.checkSingleorMaxSelection();
+      }
+    });
+  }
+
+  deleteVarient(idx){
+    this.productVarientList.splice(idx, 1);
+  }
+
+  toggleChangeValue(event,i) {
+    console.log(event);
+    this.productVarientList[i].default = event.checked;
+    this.checkSingleorMaxSelection();
+  }
+  checkSingleorMaxSelection(){
+    this.maxSelection = 0;
+    if(this.productVarientList.length > 0){
+      this.productVarientList.forEach(element => {
+        if(element.default===true){
+          console.log(element.default);
+          this.maxSelection = this.maxSelection + 1;
+        }
+      });
+      console.log(this.maxSelection);
+      this.singleSelection = this.maxSelection === 1 ? true : false;
+      console.log(this.singleSelection);
+    }
+  }
 
 }
