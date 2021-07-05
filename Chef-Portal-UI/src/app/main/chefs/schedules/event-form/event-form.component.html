@@ -16,8 +16,8 @@
             <mat-form-field appearance="outline">
                 <mat-label>Menu</mat-label>
                 <mat-select formControlName="menu_id">
-                    <mat-option *ngFor="let menu of menuList" [value]="menu.id" >
-                    {{menu?.name}}
+                    <mat-option *ngFor="let menu of menuList" [value]="menu.id">
+                    {{menu.name}}                    
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="eventForm.get('menu_id').hasError('required')">
