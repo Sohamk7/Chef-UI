@@ -22,7 +22,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   // presetColors = MatColors.presets;
   startDate = new Date().setDate(new Date().getDate() + 1);
   endDate =  new Date().setDate(new Date().getDate() + 28);
-  menuList: any = [];
+  menuList: any[] = [];
   inventoriesList: any = [];
   public isSubmit: boolean = false;
   public loader: boolean = false;
@@ -47,12 +47,15 @@ export class CalendarEventFormDialogComponent implements OnInit {
   {
     // console.log(new Date().getDate()+28);
     console.log(this._data);
+    this.getMenus();
+    this.getproducts()
       // this.event = _data.event;
       // this.action = _data.action;
 
       if ( this._data)
       {
           this.dialogTitle = 'Edit Event';
+          
       }
       else
       {
@@ -60,16 +63,35 @@ export class CalendarEventFormDialogComponent implements OnInit {
       }
   }
   ngOnInit() {
-    this.getMenus();
-    this.getproducts()
-   
+    this.eventForm = this.createEventForm(); 
+  }
+
+  fillFormValues(){
+    
+    let chef_id = this._data._product_menu ? this._data._product_menu.chef_id : 0;
+    let menu_id = this._data._product_menu ? this._data._product_menu.id : 0;
+    let available_date = this._data.available_date ? new Date(this._data.available_date) : new Date();
+    let ispublic = this._data.public ? this._data.public : true;
+    let availability_id = this._data.id ? this._data.id : 0;
+    let arr = this.getProductInventories(this._data.product_menu_inventories) ;
+    this.inventoriesList = arr;
+    console.log(this.inventoriesList);
+    this.eventForm = new FormGroup({
+      chef_id : new FormControl(chef_id),
+      menu_id : new FormControl(menu_id,[Validators.required]),
+      available_date   : new FormControl(available_date,[Validators.required]),
+      public : new FormControl(ispublic,[Validators.required]),
+      availability_id: new FormControl(availability_id)
+    });
+
+    console.log(this.eventForm.value);
   }
 
   getMenus(): void
   {
     this._dataService.getAll({url:'menu',isLoader:true})
       .subscribe(respose => {
-        this.menuList = respose;
+        this.menuList = respose as any;
         this.showLoader = false;
         // this.inventoriesList = this.menuList;
       })
@@ -82,7 +104,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
         this.inventoriesList = this.getmappedList(respose);
         this.inventoriesListTemp = this.getmappedList(respose);
         this.showLoader = false;
-        this.eventForm = this.createEventForm(); 
+        this.fillFormValues();
         console.log(this.inventoriesListTemp);
       })
   }
@@ -110,33 +132,17 @@ export class CalendarEventFormDialogComponent implements OnInit {
    */
   createEventForm(): FormGroup
   {
-      if(this._data){
-        let chef_id = this._data._product_menu ? this._data._product_menu.chef_id : 0;
-        let menu_id = this._data._product_menu ? this._data._product_menu.id : 0;
-        let available_date = this._data.available_date ? new Date(this._data.available_date) : new Date();
-        let ispublic = this._data.public ? this._data.public : true;
-        let availability_id = this._data.id ? this._data.id : 0;
-        let arr = this.getProductInventories(this._data.product_menu_inventories) ;
-        this.inventoriesList = arr;
-        console.log(this.inventoriesList);
-        return new FormGroup({
-          chef_id : new FormControl(chef_id),
-          menu_id : new FormControl(menu_id,[Validators.required]),
-          available_date   : new FormControl(available_date,[Validators.required]),
-          public : new FormControl(ispublic,[Validators.required]),
-          availability_id: new FormControl(availability_id)
-        });
-      }else {
-        return new FormGroup({
-          chef_id : new FormControl(0),
-          menu_id : new FormControl(0,[Validators.required]),
-          available_date   : new FormControl(new Date(),[Validators.required]),
-          public : new FormControl(true,[Validators.required]),
-          // inventory: new FormArray([
-          //   product_id:new FormControl(0)
-          // ])
-        });
-      }
+    console.log(this._data);
+
+    return new FormGroup({
+      chef_id : new FormControl(0),
+      menu_id : new FormControl(0,[Validators.required]),
+      available_date   : new FormControl(new Date(),[Validators.required]),
+      public : new FormControl(true,[Validators.required]),
+      // inventory: new FormArray([
+      //   product_id:new FormControl(0)
+      // ])
+    });
   }
 
   getProductInventories(data){
@@ -162,6 +168,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
     if (this.eventForm.valid) {
       
       let formValue = this.eventForm.value;
+      console.log(formValue);
       formValue.inventory = this.inventoriesList;
       this.isSubmit = true;
       this.loader = true;

@@ -230,6 +230,8 @@ export class SchedulesComponent implements OnInit {
   editEvent(action: string, event: CalendarEvent): void
   {
       const eventIndex = this.events.indexOf(event);
+      console.log(this.events);
+      console.log(event);
 
       this.dialogRef = this._matDialog.open(CalendarEventFormDialogComponent, {
           panelClass: 'event-form-dialog',
