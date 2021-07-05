@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CalendarEvent } from 'angular-calendar';
+import { CommonUtils } from 'src/app/_helpers/common.utils';
 // import { MatColors } from 'src/app/mat-colors';
 import { CalendarEventModel } from 'src/app/_models/event.model';
 import { DataService } from 'src/app/_services/dataservice';
@@ -104,7 +105,8 @@ export class CalendarEventFormDialogComponent implements OnInit {
         this.inventoriesList = this.getmappedList(respose);
         this.inventoriesListTemp = this.getmappedList(respose);
         this.showLoader = false;
-        this.fillFormValues();
+        if(this._data){this.fillFormValues();}
+        
         console.log(this.inventoriesListTemp);
       })
   }
@@ -136,7 +138,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
 
     return new FormGroup({
       chef_id : new FormControl(0),
-      menu_id : new FormControl(0,[Validators.required]),
+      menu_id : new FormControl('',[Validators.required]),
       available_date   : new FormControl(new Date(),[Validators.required]),
       public : new FormControl(true,[Validators.required]),
       // inventory: new FormArray([
@@ -198,6 +200,8 @@ export class CalendarEventFormDialogComponent implements OnInit {
             duration        : 2000
         });
       });
+    }else{
+      CommonUtils.validateAllFormFields(this.eventForm);
     }
     
   }
