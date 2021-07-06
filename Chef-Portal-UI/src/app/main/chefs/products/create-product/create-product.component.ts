@@ -316,8 +316,9 @@ export class CreateProductComponent implements OnInit {
     this._onDestroy.next();
     this._onDestroy.complete();
   }
-  
-  addEditVarient(data,type){
+
+  addEditVarient(data,type, index){
+    
     let dialogRef = this.dialog.open(AddProductVarientsComponent, {
       data:{'type':type,rowdata:data},
       width: '600px',
@@ -330,12 +331,22 @@ export class CreateProductComponent implements OnInit {
         if(result.type === 'add'){
 
           result.rowdata.id = this.productVarientList.length + 1;
-          this.productVarientList.push(result.rowdata);
+          // this.productVarientList.push(result.rowdata);
+          // this.createProductForm.addControl('productVarientList',(this.varient_category.controls[index].value).productVarientList);
+          // (this.varient_category.addControl('productVarientList',(this.varient_category.controls[index].value).productVarientList);
+          (this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(result.rowdata));
+          console.log(this.varient_category.controls);
         }else if(result.type === 'edit'){
 
-          this.productVarientList.forEach((item, index) => {
-              if(item.id === result.rowdata.id){
-                this.productVarientList[index] = result.rowdata;
+          console.log(index);
+
+          console.log((this.varient_category.controls[index].value).productVarientList);
+          let productVarientListTemp = (this.varient_category.controls[index].value).productVarientList;
+
+          productVarientListTemp.forEach((item, idx) => {
+              if(item?.value?.id === result.rowdata.id){
+                (this.varient_category.controls[index].value).productVarientList[idx].setValue(result.rowdata);
+                // this.productVarientList[idx] = result.rowdata;
               }
             });
         }
@@ -353,8 +364,14 @@ export class CreateProductComponent implements OnInit {
     // this.checkSingleorMaxSelection();
   }
 
-  changeSingleSelection(event) {
-    this.singleSelection = event.checked;
+  changeSingleSelection(event, index) {
+
+    this.varient_category.controls[index].get('single_selection').setValue(event.checked)
+    // this.singleSelection = event.checked;
+    // console.log(this.varient_category);
+    // console.log(this.createProductForm);
+    // console.log(this.varient_category.controls[index].get('single_selection').setValue(event.checked));
+    // console.log((this.varient_category.controls[index].value).single_selection);
   }
 
   addNewVarientCategory() {
@@ -379,6 +396,20 @@ export class CreateProductComponent implements OnInit {
   createItemFormGroup(data): FormGroup {      
 		return this._fb.group({
 		   name : this._fb.control(data.name, Validators.required), 
+       single_selection: this._fb.control(false),
+       productVarientList: this._fb.array([]),
+       max_selection: this._fb.control(0),
+       options: this._fb.control([])
+		});
+	}
+
+  createVarientFormGroup(data): FormGroup {    
+      
+		return this._fb.group({
+      option_name : this._fb.control(data.option_name, Validators.required), 
+       id: this._fb.control(data.id),
+       price: this._fb.control(data.price,[Validators.required,Validators.pattern("^[0-9]*$")]),
+       default: this._fb.control(data.default),
 		});
 	}
 
