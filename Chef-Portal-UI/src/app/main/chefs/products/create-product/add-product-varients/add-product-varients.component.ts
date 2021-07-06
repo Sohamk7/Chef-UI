@@ -52,7 +52,7 @@ export class AddProductVarientsComponent implements OnInit {
       });
     }else if(this.type==='var_cat'){
       this.createProductVarientCategoryForm = this._fb.group({
-        name: this._fb.control('',[Validators.required]),
+        name: this._fb.control(this.data,[Validators.required]),
       });
     }
   }
