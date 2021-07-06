@@ -85,12 +85,12 @@
                             <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
                                 <div><mat-label>{{content.get('name').value}}</mat-label></div>
                                 <div>
-                                    <mat-icon (click)="addEditVarient(null,'add')">add_circle_outline</mat-icon>
+                                    <mat-icon (click)="addEditVarient(null,'add',index)">add_circle_outline</mat-icon>
 
                                     <mat-icon color="warn" (click)="onRemoveRow(index)">delete</mat-icon>
                                 </div>
                             </div>
-                            <mat-divider></mat-divider>
+                            <div class="hr"></div>
 
                             <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
                                 <div>Varient_name</div>
@@ -98,21 +98,21 @@
                                 <div>Price</div>
                                 <div>Action</div>
                             </div>
-                            <div class="p" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let product of productVarientList;let i=index;">
-                                <div><mat-label>{{product.option_name}}</mat-label></div>
-                                <div><mat-slide-toggle color="primary" [checked]="product.default" (change)="toggleChangeValue($event,i)" name="enableWifi"></mat-slide-toggle></div>
-                                <div>{{product.price | currency:'EUR'}}</div>
+                            <div class="p" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let product of content.get('productVarientList')?.value;let i=index;">
+                                <div><mat-label>{{product?.value?.option_name}}</mat-label></div>
+                                <div><mat-slide-toggle color="primary" [checked]="product?.value?.default" (change)="toggleChangeValue($event,i)" name="enableWifi"></mat-slide-toggle></div>
+                                <div>{{product?.value?.price | currency:'EUR'}}</div>
                                 <div>
-                                    <mat-icon (click)="addEditVarient(product,'edit')">edit</mat-icon>
+                                    <mat-icon (click)="addEditVarient(product?.value,'edit',index)">edit</mat-icon>
                                     <mat-icon color="warn" (click)="deleteVarient(i)">delete</mat-icon>
                                 </div>
                             </div>
-                            <div class="hr"></div>
+                            <mat-divider></mat-divider>
                             <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
                                 <div>SINGLE SELECTION</div>
-                                <div><mat-slide-toggle color="primary" (change)="changeSingleSelection($event)" [checked]="singleSelection" name="enableWifi"></mat-slide-toggle></div>
+                                <div><mat-slide-toggle color="primary" [formControl]="content.get('single_selection')" (change)="changeSingleSelection($event,index)" name="enableWifi"></mat-slide-toggle></div>
                                 <div>MAX SELECTION</div>
-                                <div *ngIf="!singleSelection">{{productVarientList.length}}</div>
+                                <div *ngIf="!content.get('single_selection').value">{{content.get('productVarientList')?.value?.length}}</div>
                             </div>
 
                             <mat-divider></mat-divider>

@@ -108,6 +108,6 @@ export class AddProductVarientsComponent implements OnInit {
       else{
         CommonUtils.validateAllFormFields(this.createProductVarientForm);
       }
-    }
+    }    
   }
 }
