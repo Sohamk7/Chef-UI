@@ -374,10 +374,10 @@ export class CreateProductComponent implements OnInit {
     // console.log((this.varient_category.controls[index].value).single_selection);
   }
 
-  addNewVarientCategory() {
+  addEditVarientCategory(data, type, index) {
 
     let dialogRef = this.dialog.open(AddProductVarientsComponent, {
-      data:{'type':'var_cat',rowdata:null},
+      data:{'type':'var_cat',rowdata:data},
       width: '600px',
       disableClose:true
     });
@@ -385,7 +385,12 @@ export class CreateProductComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result!=='N'){
         
-        this.varient_category.push(this.createItemFormGroup(result.rowdata));  
+        if(type==='add'){
+          this.varient_category.push(this.createItemFormGroup(result.rowdata));  
+        }else {
+          this.varient_category.controls[index].get('name').setValue(result.rowdata.name);
+        }
+        
         console.log(this.varient_category);
       }
     });
