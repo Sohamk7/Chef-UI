@@ -156,6 +156,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
             if(element.product_id===element1.product_id){
               
               element.limited = element1.limited;
+              element.count = element1.inventory_count;
               console.log(element);
               tempArr.push(element);
             }
@@ -217,12 +218,14 @@ export class CalendarEventFormDialogComponent implements OnInit {
     this.inventoriesList[index].limited = event.checked;
   }
 
-  changeCount(type,i) {
-    if(type==='add'){
-      this.inventoriesList[i].count = --(this.inventoriesList[i].count);
-    }
-    else{
-      this.inventoriesList[i].count = ++(this.inventoriesList[i].count);
-    }
+  changeCount(event,i) {
+    console.log(event.target.value);
+    console.log(i);
+    // if(type==='add'){
+      this.inventoriesList[i].count = event.target.value;
+    // }
+    // else{
+    //   this.inventoriesList[i].count = ++(this.inventoriesList[i].count);
+    // }
   }
 }

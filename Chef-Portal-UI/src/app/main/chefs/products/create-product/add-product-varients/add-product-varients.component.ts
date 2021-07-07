@@ -41,7 +41,7 @@ export class AddProductVarientsComponent implements OnInit {
 
       this.createProductVarientForm = this._fb.group({
         id: this._fb.control(this.data.id),
-        option_name: this._fb.control(this.data.option_name,[Validators.required]),
+        product_variant_name: this._fb.control(this.data.product_variant_name,[Validators.required]),
         price: this._fb.control(this.data.price,[Validators.required,Validators.pattern("^[0-9]*$")]),
         default: this._fb.control(this.data.default),
       });
@@ -52,7 +52,7 @@ export class AddProductVarientsComponent implements OnInit {
 
       this.createProductVarientForm = this._fb.group({
         id: this._fb.control(0),
-        option_name: this._fb.control('',[Validators.required]),
+        product_variant_name: this._fb.control('',[Validators.required]),
         price: this._fb.control('',[Validators.required,Validators.pattern("^[0-9]*$")]),
         default: this._fb.control(false),
       });
@@ -61,15 +61,16 @@ export class AddProductVarientsComponent implements OnInit {
       console.log(this.data);
       this.productVarientListLength = this.data ? this.data.productVarientList : [];
       this.message = this.data ? 'Edit Varient Category' : 'Add New Varient Category';
-      let name = this.data ? this.data.name : '';
+      let variant_name = this.data ? this.data.variant_name : '';
       let single_selection = this.data ? this.data.single_selection : false;
       let max_selection = this.data ? this.data.max_selection : 0;
 
 
       this.createProductVarientCategoryForm = this._fb.group({
-        name: this._fb.control(name,[Validators.required]),
+        variant_name: this._fb.control(variant_name,[Validators.required]),
         single_selection: this._fb.control(single_selection),
-        max_selection: this._fb.control(max_selection)
+        max_selection: this._fb.control(max_selection),
+        variant_options: this._fb.control([])
       });
     }
   }
