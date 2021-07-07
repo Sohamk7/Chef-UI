@@ -69,9 +69,9 @@ export class CreateProductComponent implements OnInit {
         name: this._fb.control(product_details.name,[Validators.required]),
         price: this._fb.control(product_details.price,[Validators.required,Validators.pattern("^[0-9]*$")]),
         description: this._fb.control(product_details.description,[Validators.required]),
-        allergense: this._fb.control([], [Validators.required]),
-        dietaries: this._fb.control([], [Validators.required]),
-        varients: this._fb.control([], [Validators.required]),
+        allergense: this._fb.control(product_details.allergen_selection, [Validators.required]),
+        dietaries: this._fb.control(product_details.dietary_selection, [Validators.required]),
+        varients: this._fb.control([]),
         chef_id:this._fb.control(1),
         product_image: this._fb.control('')
       });
@@ -99,7 +99,7 @@ export class CreateProductComponent implements OnInit {
         description: this._fb.control('',[Validators.required]),
         allergense: this._fb.control([], [Validators.required]),
         dietaries: this._fb.control([], [Validators.required]),
-        varients: this._fb.control([], [Validators.required]),
+        varients: this._fb.control([]),
         chef_id:this._fb.control(1),
         product_image: this._fb.control('',[Validators.required])
       });
@@ -256,6 +256,9 @@ export class CreateProductComponent implements OnInit {
 
     event.preventDefault();
     event.stopPropagation();
+    console.log('mediaInfo',this.createProductForm.value);
+    console.log(this.varient_category.value);
+      
 
     if (this.createProductForm.valid) {
       this.loader = true;
@@ -276,8 +279,13 @@ export class CreateProductComponent implements OnInit {
       mediaInfo.append('name',formValue.name);
       mediaInfo.append('price',formValue.price);
       mediaInfo.append('description',formValue.description);
-      mediaInfo.append('vegetarian',formValue.vegetarian);
       mediaInfo.append('chef_id',formValue.chef_id);
+      mediaInfo.append('dietary_selection','[' + formValue.dietaries + ']');
+      mediaInfo.append('allergen_selection','[' + formValue.allergense + ']');
+      // mediaInfo.append('variants',formValue.allergense);
+
+      console.log('mediaInfo',mediaInfo);
+      console.log(this.varient_category.value);
       
     
       this.dataService.saveMedia({url: url,data:mediaInfo, isLoader:true})
@@ -304,6 +312,7 @@ export class CreateProductComponent implements OnInit {
         });
       });
     }else{
+      console.log('gfgh');
       CommonUtils.validateAllFormFields(this.createProductForm);
     }
   }
@@ -355,8 +364,11 @@ export class CreateProductComponent implements OnInit {
     });
   }
 
-  deleteVarient(idx){
-    this.productVarientList.splice(idx, 1);
+  deleteVarient(idx, index){
+    
+    let productVarientListTemp = (this.varient_category.controls[index].value).productVarientList;
+    productVarientListTemp = productVarientListTemp.splice(idx, 1);
+    (this.varient_category.controls[index].value).get('productVarientList').setValue(productVarientListTemp);
   }
 
   toggleChangeValue(event,i) {
@@ -389,21 +401,21 @@ export class CreateProductComponent implements OnInit {
           this.varient_category.push(this.createItemFormGroup(result.rowdata));  
         }else {
           this.varient_category.controls[index].get('name').setValue(result.rowdata.name);
+          this.varient_category.controls[index].get('single_selection').setValue(result.rowdata.single_selection);
+          this.varient_category.controls[index].get('max_selection').setValue(result.rowdata.max_selection);
         }
         
         console.log(this.varient_category);
       }
     });
-
-
   }
 
   createItemFormGroup(data): FormGroup {      
 		return this._fb.group({
 		   name : this._fb.control(data.name, Validators.required), 
-       single_selection: this._fb.control(false),
+       single_selection: this._fb.control(data.single_selection),
        productVarientList: this._fb.array([]),
-       max_selection: this._fb.control(0),
+       max_selection: this._fb.control(data.max_selection),
        options: this._fb.control([])
 		});
 	}

@@ -18,6 +18,8 @@ export class AddProductVarientsComponent implements OnInit {
   public showLoader: boolean = true;
   public data;
   public type;
+  public message;
+  public productVarientListLength: any = [];
 
   constructor(
     public dialogRef                      : MatDialogRef<AddProductVarientsComponent>,
@@ -35,6 +37,8 @@ export class AddProductVarientsComponent implements OnInit {
 
     if(this.type === 'edit' && this.data!==null){
 
+      this.message = 'Edit Varient';
+
       this.createProductVarientForm = this._fb.group({
         id: this._fb.control(this.data.id),
         option_name: this._fb.control(this.data.option_name,[Validators.required]),
@@ -44,6 +48,8 @@ export class AddProductVarientsComponent implements OnInit {
 
     }else if(this.type==='add'){
 
+      this.message = 'Add New Varient';
+
       this.createProductVarientForm = this._fb.group({
         id: this._fb.control(0),
         option_name: this._fb.control('',[Validators.required]),
@@ -51,8 +57,19 @@ export class AddProductVarientsComponent implements OnInit {
         default: this._fb.control(false),
       });
     }else if(this.type==='var_cat'){
+
+      console.log(this.data);
+      this.productVarientListLength = this.data ? this.data.productVarientList : [];
+      this.message = this.data ? 'Edit Varient Category' : 'Add New Varient Category';
+      let name = this.data ? this.data.name : '';
+      let single_selection = this.data ? this.data.single_selection : false;
+      let max_selection = this.data ? this.data.max_selection : 0;
+
+
       this.createProductVarientCategoryForm = this._fb.group({
-        name: this._fb.control(this.data,[Validators.required]),
+        name: this._fb.control(name,[Validators.required]),
+        single_selection: this._fb.control(single_selection),
+        max_selection: this._fb.control(max_selection)
       });
     }
   }
