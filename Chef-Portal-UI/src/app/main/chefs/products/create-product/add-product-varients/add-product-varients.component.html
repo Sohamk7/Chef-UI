@@ -2,7 +2,7 @@
 <div fxLayout="column">
     <div class="header-section" fxLayout="row" fxLayoutAlign="space-between">
         <div fxLayout="row" fxLayoutGap="15px">
-            <span class="bold">Add New Varient</span>
+            <span class="bold">{{message}}</span>
         </div> 
         <mat-icon class="icon bold" (click)="dialogRef.close('N');">close</mat-icon>
      </div>
@@ -46,13 +46,26 @@
             <div id="login-form" *ngIf="type==='var_cat'">
                 <form [formGroup]="createProductVarientCategoryForm" fxLayot="column">
 
-                    <mat-form-field appearance="outline" >
+                    <mat-form-field appearance="outline">
                         <mat-label>Varient category Name</mat-label>
-                        <input matInput formControlName="name" placeholder="Varient Nategory Name">
+                        <input matInput formControlName="name" placeholder="Varient Category Name">
                         <mat-error>
                             Varient Category Name is required
                         </mat-error>
                       
+                    </mat-form-field>
+
+                    <div fxLayout="row" fxLayoutAlign="space-between center">
+                        <span>Single Selection</span>
+                        <mat-slide-toggle color="primary" formControlName="single_selection"></mat-slide-toggle>
+                    </div>
+    
+                    <mat-form-field appearance="outline" class="pt-10">
+                        <mat-label>Max Selection</mat-label>
+                        <mat-select [disabled]="createProductVarientCategoryForm.get('single_selection').value" formControlName="max_selection">
+                          <mat-option *ngFor="let product of productVarientListLength; let i=index" [value]="i+1">{{i+1}}</mat-option>
+                          <mat-option *ngIf="productVarientListLength.length===0" value="0">0</mat-option>
+                        </mat-select>
                     </mat-form-field>
     
                 </form>
