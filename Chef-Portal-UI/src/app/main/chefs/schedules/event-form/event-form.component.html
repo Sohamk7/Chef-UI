@@ -59,9 +59,13 @@
                       <td>
                         <!-- *ngIf="inventory.limited" -->
                           <div *ngIf="inventory.limited">
-                            <span class="material-icons icon" (click)="changeCount('add',i)">remove_circle_outline</span>
+                            <!-- <span class="material-icons icon" (click)="changeCount('add',i)">remove_circle_outline</span>
                             <span>{{inventory.count}}</span>
-                            <span class="material-icons icon" (click)="changeCount('remove',i)">add_circle_outline</span>
+                            <span class="material-icons icon" (click)="changeCount('remove',i)">add_circle_outline</span> -->
+                            <mat-form-field appearance="outline" class="w-50">
+                            <input matInput type="number" (input)="changeCount($event,i)" value="{{inventory.count}}" placeholder="">
+                           
+                    </mat-form-field>
                           </div>
                       </td>
                       <td><mat-icon color="warn" (click)="removeInventory(i)">delete</mat-icon></td>
