@@ -60,7 +60,7 @@
                         <!-- *ngIf="inventory.limited" -->
                           <div *ngIf="inventory.limited">
                             <span class="material-icons icon" (click)="changeCount('add',i)">remove_circle_outline</span>
-                            <span>{{inventory.inventory_count}}</span>
+                            <span>{{inventory.count}}</span>
                             <span class="material-icons icon" (click)="changeCount('remove',i)">add_circle_outline</span>
                           </div>
                       </td>

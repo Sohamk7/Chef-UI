@@ -118,7 +118,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
         obj['product_id'] = element.id;
         obj['name'] = element._product_details?.name;
         obj['limited'] = false;
-        obj['inventory_count'] = 1;
+        obj['count'] = 1;
         tempArr.push(obj);
     });
     return tempArr;
@@ -171,6 +171,9 @@ export class CalendarEventFormDialogComponent implements OnInit {
       
       let formValue = this.eventForm.value;
       console.log(formValue);
+      this.inventoriesList.forEach(element => {
+        delete element.name;
+      });
       formValue.inventory = this.inventoriesList;
       this.isSubmit = true;
       this.loader = true;
@@ -216,10 +219,10 @@ export class CalendarEventFormDialogComponent implements OnInit {
 
   changeCount(type,i) {
     if(type==='add'){
-      this.inventoriesList[i].inventory_count = --(this.inventoriesList[i].inventory_count);
+      this.inventoriesList[i].count = --(this.inventoriesList[i].count);
     }
     else{
-      this.inventoriesList[i].inventory_count = ++(this.inventoriesList[i].inventory_count);
+      this.inventoriesList[i].count = ++(this.inventoriesList[i].count);
     }
   }
 }
