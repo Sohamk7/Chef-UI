@@ -280,9 +280,20 @@ export class CreateProductComponent implements OnInit {
       mediaInfo.append('price',formValue.price);
       mediaInfo.append('description',formValue.description);
       mediaInfo.append('chef_id',formValue.chef_id);
-      mediaInfo.append('dietary_selection','[' + formValue.dietaries + ']');
-      mediaInfo.append('allergen_selection','[' + formValue.allergense + ']');
-      // mediaInfo.append('variants',formValue.allergense);
+      mediaInfo.append('dietary_selection',JSON.stringify(formValue.dietaries));
+      mediaInfo.append('allergen_selection',JSON.stringify(formValue.allergense));
+
+      let varientCategoryTemp = formValue.varient_category;
+      varientCategoryTemp.forEach(element => {
+        let options: any = [];
+        element.productVarientList.forEach(element1 => {
+          options.push(element1.value);
+        });
+        element.options = options;
+        delete element.productVarientList;
+      });
+      console.log('varientCategoryTemp', varientCategoryTemp);
+      mediaInfo.append('variants',JSON.stringify(varientCategoryTemp));
 
       console.log('mediaInfo',mediaInfo);
       console.log(this.varient_category.value);
