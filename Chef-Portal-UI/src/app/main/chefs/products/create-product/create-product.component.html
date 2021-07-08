@@ -53,9 +53,7 @@
                                 {{allergen?.allergen_name}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="createProductForm.get('allergense').hasError('required')">
-                            Please select allergense
-                        </mat-error>
+                       
                       </mat-form-field>
 
                       <mat-form-field appearance="outline">
@@ -69,9 +67,7 @@
                                 {{diet?.dietary_name}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="createProductForm.get('dietaries').hasError('required')">
-                            Please select Dietaries 
-                        </mat-error>
+                       
                       </mat-form-field>
              
                     <div class="w-100">
@@ -101,7 +97,7 @@
                                 </div>
                                 <div class="p" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let product of content.get('productVarientList')?.value;let i=index;">
                                     <div><mat-label>{{product?.value?.product_variant_name || product?.product_variant_name}}</mat-label></div>
-                                    <div><mat-slide-toggle color="primary" [checked]="product?.value?.default || product?.default" (change)="toggleChangeValue($event,i, index)" name="enableWifi"></mat-slide-toggle></div>
+                                    <div><mat-slide-toggle color="primary" [disabled]="true" [checked]="product?.value?.default || product?.default" (change)="toggleChangeValue($event,i, index)" name="enableWifi"></mat-slide-toggle></div>
                                     <div>{{product?.value?.price || product?.price | currency:'EUR'}}</div>
                                     <div>
                                         <mat-icon (click)="addEditVarient(product?.value || product,'edit',index)">edit</mat-icon>
@@ -111,7 +107,8 @@
                                 <mat-divider></mat-divider>
                                 <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
                                     <div>SINGLE SELECTION</div>
-                                    <div><mat-slide-toggle color="primary" [formControl]="content.get('single_selection')" (change)="changeSingleSelection($event,index)" name="enableWifi" [disabled]="true"></mat-slide-toggle></div>
+                                    <div><mat-slide-toggle color="primary" [formControl]="content.get('single_selection')" (change)="changeSingleSelection($event,index)"
+                                         name="enableWifi" [disabled]="true"></mat-slide-toggle></div>
                                     <div>MAX SELECTION</div>
                                     <div *ngIf="!content.get('single_selection').value" class="w-10">
                                         <mat-form-field appearance="outline">
