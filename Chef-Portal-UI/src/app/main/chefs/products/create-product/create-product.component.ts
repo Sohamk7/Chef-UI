@@ -69,9 +69,8 @@ export class CreateProductComponent implements OnInit {
         name: this._fb.control(product_details.name,[Validators.required]),
         price: this._fb.control(product_details.price,[Validators.required,Validators.pattern("^[0-9]*$")]),
         description: this._fb.control(product_details.description,[Validators.required]),
-        allergense: this._fb.control(product_details.allergens, [Validators.required]),
-        dietaries: this._fb.control(product_details.dietary, [Validators.required]),
-        variants: this._fb.control([]),
+        allergense: this._fb.control(product_details.allergens),
+        dietaries: this._fb.control(product_details.dietary),
         chef_id:this._fb.control(1),
         product_image: this._fb.control('')
       });
@@ -119,9 +118,8 @@ export class CreateProductComponent implements OnInit {
         name: this._fb.control('',[Validators.required]),
         price: this._fb.control('',[Validators.required,Validators.pattern("^[0-9]*$")]),
         description: this._fb.control('',[Validators.required]),
-        allergense: this._fb.control([], [Validators.required]),
-        dietaries: this._fb.control([], [Validators.required]),
-        variants: this._fb.control([]),
+        allergense: this._fb.control([]),
+        dietaries: this._fb.control([]),
         chef_id:this._fb.control(1),
         product_image: this._fb.control('')
       });
@@ -291,6 +289,7 @@ export class CreateProductComponent implements OnInit {
         mediaInfo.append('product_id',this.data.id);
       }
 
+      //Image is optional parameter if select send
       if(this.file!== null) {
         mediaInfo.append('product_media',this.file);
       }
@@ -299,9 +298,17 @@ export class CreateProductComponent implements OnInit {
       mediaInfo.append('price',formValue.price);
       mediaInfo.append('description',formValue.description);
       mediaInfo.append('chef_id',formValue.chef_id);
-      mediaInfo.append('dietary_selection',JSON.stringify(formValue.dietaries));
-      mediaInfo.append('allergen_selection',JSON.stringify(formValue.allergense));
 
+      //Allergens is optional parameter if select send
+      if(formValue.allergense.length > 0){
+        mediaInfo.append('allergen_selection',JSON.stringify(formValue.allergense));
+      }
+      //Dietaries is optional parameter if select send
+      if(formValue.dietaries.length > 0){
+        mediaInfo.append('dietary_selection',JSON.stringify(formValue.dietaries));
+      }
+
+      //Varients is optional parameter if select send
       let varientCategoryTemp = formValue.varient_category ? formValue.varient_category : [];
       varientCategoryTemp.forEach(element => {
         let options: any = [];
@@ -311,12 +318,12 @@ export class CreateProductComponent implements OnInit {
         element.variant_options = options;
         delete element.productVarientList;
       });
-      console.log('varientCategoryTemp', varientCategoryTemp);
-      mediaInfo.append('variants',JSON.stringify(varientCategoryTemp));
-
+      if(varientCategoryTemp.length > 0){
+        mediaInfo.append('variants',JSON.stringify(varientCategoryTemp));
+      }
+    
       console.log('mediaInfo',mediaInfo);
       console.log(this.varient_category.value);
-      
     
       this.dataService.saveMedia({url: url,data:mediaInfo, isLoader:true})
         .subscribe(uploadResponse=>{
