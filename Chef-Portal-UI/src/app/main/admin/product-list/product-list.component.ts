@@ -19,18 +19,21 @@ export class ProductListComponent implements OnInit {
   mode: ProgressSpinnerMode = 'indeterminate';
   value = 50;
   public showLoader:boolean = true;
+  chefList : any =[];
+  errorMsg : any;
+  chefid : any;
 
   constructor( private dialog: MatDialog,
     private _matSnackBar: MatSnackBar,
     private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.getProducts();
+    
   }
 
   getProducts() {
-
-    this.dataService.getAll({url:'product',isLoader:true})
+  alert(this.chefid)
+    this.dataService.getAll({url:'product/'+this.chefid,isLoader:true})
     .subscribe(response =>{
       this.productList = response;
       this.showLoader = false;
@@ -77,5 +80,18 @@ export class ProductListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.getProducts();
     });
+  }
+
+  getChefList() {
+   
+    this.dataService.getAll({url:'admin/chefs', isLoader:true})
+      .subscribe(response =>
+                  {
+                      this.showLoader = false;
+                      this.chefList = response;
+                      console.log(response);
+                      
+                  },
+      error => this.errorMsg = error);
   }
 }
