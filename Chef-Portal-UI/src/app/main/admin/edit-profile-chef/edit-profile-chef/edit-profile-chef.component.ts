@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/_services/dataservice';
-import { FormControl, NgForm } from '@angular/forms';
-
 declare var $ : any;
 
 @Component({
@@ -22,7 +20,7 @@ userData:any={};
     this.id = this.activateroute.snapshot.params.id;
     console.log("testttt",this.id)
     this.getchef();
-    this.updateProfile();
+    // this.updateProfile();
   }
 getchef(){
   this._dataService.post({url:'chef',data: this.id, isLoader:false} ).subscribe((res:any)=>{

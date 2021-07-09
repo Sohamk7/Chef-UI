@@ -13,9 +13,9 @@
                     <form #updateprofile="ngForm" (ngSubmit)="updateProfile()">
     
                         <div class="form-group">
-                            <label for="BIOGRAPHY">BIOGRAPHY(120 chars min) : </label>&nbsp;
-                            <input type="text" class="form-control" name="BIOGRAPHY" id="first_name" maxlength="120"
-                            required>
+                            <label for="biography">BIOGRAPHY(120 chars min) : </label>&nbsp;
+                            <input type="text" class="form-control" #biography="ngModel" name="biography" id="biography" maxlength="120"
+                            [(ngModel)]="userData.biography "  required>
                             <!-- <div *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)">
                                 <div *ngIf="first_name.errors?.required" class="validatiomsg">First Name required.</div>
                             </div> -->
