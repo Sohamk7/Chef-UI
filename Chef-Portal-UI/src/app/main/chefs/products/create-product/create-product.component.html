@@ -13,7 +13,7 @@
             <div id="login-form" >
                 <form [formGroup]="createProductForm" fxLayot="column">
 
-                    <mat-form-field appearance="outline" >
+                    <mat-form-field appearance="outline" *ngIf="userType">
                         <mat-label>Chef</mat-label>
                         <mat-select [(value)]="selected">
                             <mat-option>None</mat-option>

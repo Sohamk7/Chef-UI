@@ -3,6 +3,7 @@ import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/_services/dataservice';
 import { CreateProductComponent } from '../../chefs/products/create-product/create-product.component';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
@@ -22,18 +23,28 @@ export class ProductListComponent implements OnInit {
   chefList : any =[];
   errorMsg : any;
   chefid : any;
-
+  token:any;
+  userType : boolean;
   constructor( private dialog: MatDialog,
     private _matSnackBar: MatSnackBar,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private activatedRoute : ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.chefid = this.activatedRoute.snapshot.params.id;
+    this.getProducts();
+    this.token =JSON.parse(localStorage.getItem('token'))
+
+    // this.userType =JSON.parse(localStorage.getItem('userType'));
+    // console.log("UserType  =>",this.userType)
     
   }
 
   getProducts() {
-  alert(this.chefid)
-    this.dataService.getAll({url:'product/'+this.chefid,isLoader:true})
+    let deta ={
+      chef_id : this.chefid
+    }
+    this.dataService.getWithBody({url:'product?chef_id='+this.chefid,isLoader:true})
     .subscribe(response =>{
       this.productList = response;
       this.showLoader = false;

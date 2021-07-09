@@ -17,6 +17,12 @@
                                     {{status.status}}
                                 </mat-option>
                             </mat-select>
+                            <!-- Above IS Original Code -->
+                            <!-- <mat-select  [(ngModel)]="element.status" (selectionChange)="statusChange($event,element.id)">
+                                <mat-option *ngFor="let status of statusList" [value]="status.id" >
+                                    {{status.status}}
+                                </mat-option>
+                            </mat-select> -->
                           </mat-form-field>
                     </span>
                 </td>

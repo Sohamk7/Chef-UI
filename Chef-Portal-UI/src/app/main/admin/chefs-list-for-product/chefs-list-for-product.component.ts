@@ -1,17 +1,17 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
-  selector: 'app-chefs',
-  templateUrl: './chefs.component.html',
-  styleUrls: ['./chefs.component.scss']
+  selector: 'app-chefs-list-for-product',
+  templateUrl: './chefs-list-for-product.component.html',
+  styleUrls: ['./chefs-list-for-product.component.scss']
 })
-export class ChefsComponent implements OnInit {
-  
+export class ChefsListForProductComponent implements OnInit {
+
   public errorMsg: any;
   public tableContents: any = [];
   public displayedColumns: any = [];  
@@ -120,4 +120,5 @@ export class ChefsComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.getList();
   }
+
 }

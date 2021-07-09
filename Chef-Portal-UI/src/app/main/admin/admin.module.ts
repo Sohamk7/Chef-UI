@@ -14,6 +14,8 @@ import { ChefsProfileComponent } from './chefs-profile/chefs-profile.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { MenuComponent } from './menu/menu.component';
 import { EditProfileChefComponent } from './edit-profile-chef/edit-profile-chef/edit-profile-chef.component';
+import { ChefsListForProductComponent } from './chefs-list-for-product/chefs-list-for-product.component';
+import { ChefListForMenuComponent } from './chef-list-for-menu/chef-list-for-menu.component';
 
 const routes = [
   {
@@ -38,10 +40,18 @@ const routes = [
         },
         {
           path : 'product',
-          component : ProductListComponent
+          component : ChefsListForProductComponent
         },
         {
           path: 'menu',
+          component : ChefListForMenuComponent
+        },
+        {
+          path : 'productBychefId/:id',
+          component : ProductListComponent
+        },
+        {
+          path: 'menuByChefid/:id',
           component : MenuComponent
         },
         {
@@ -68,6 +78,8 @@ const routes = [
     ProductListComponent,
     MenuComponent,
     EditProfileChefComponent,
+    ChefsListForProductComponent,
+    ChefListForMenuComponent,
   ],
   imports: [
     CommonModule,
