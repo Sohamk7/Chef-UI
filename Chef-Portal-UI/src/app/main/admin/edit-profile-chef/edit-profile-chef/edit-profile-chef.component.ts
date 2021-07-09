@@ -10,33 +10,96 @@ declare var $ : any;
 })
 export class EditProfileChefComponent implements OnInit {
 id:any;
-userData:any={};
-
+userData:any=[];
+  // cuisineNamesList: Response;
   constructor(  private _dataService :DataService,private activateroute:ActivatedRoute
     ) { }
 
   ngOnInit(): void {
     
     this.id = this.activateroute.snapshot.params.id;
-    console.log("testttt",this.id)
-    this.getchef();
-    // this.updateProfile();
-  }
+    console.log("chefID==>",this.id)
+    // this.getchef();
+    this.getchefProfile();
+    this.getAdress();
+     this.updateProfile();
+  } 
 getchef(){
-  this._dataService.post({url:'chef',data: this.id, isLoader:false} ).subscribe((res:any)=>{
+  let detr = {
+    chef_id :  this.id
+  }
+  this._dataService.post({url:'chef',data: detr, isLoader:false} ).subscribe((res:any)=>{
     console.log("checking",res);
   })
 }
-updateProfile(){
+getchefProfile(){
+  let detr = {
+    chef_id :  this.id
+  }
   // this.postAPIResponse('chef/chef_store/cuisines');
+  this._dataService.getWithBody({url:'chef/chef_store/cuisines?chef_id='+this.id, isLoader:false} ).subscribe((res:any)=>{
+    this.userData.push(res[0])
+    console.log("checking",this.userData);
 
-  this._dataService.post({url:'chef/chef_store/cuisines',data: this.id, isLoader:false} ).subscribe((res:any)=>{
-    console.log("checking",res);
   });
+}
+
+getAdress(){
+  // let add = {
+  //   chef_id :  this.id
+  // }
+  // this.postAPIResponse('chef/chef_store/cuisines');
+  this._dataService.getWithBody({url:'chef/chef_store/address?chef_id='+this.id, isLoader:false} ).subscribe((res:any)=>{
+    this.userData.push(res[0])
+    console.log("address===>",this.userData);
+
+  });
+}
+
+
+updateProfile(){
+  console.log("update method=>",this.userData)
+
+  let em={
+    chef_id :this.id,
+    email:this.userData[0].email,
+  }
+  this._dataService.post({url:'chef/details/email',data:em, isLoader:false}).subscribe((res:any)=>{
+    console.log("email=>",res)
+  });
+  let em1={
+    chef_id :this.id,
+    phone_number:this.userData[0].phone_number,
+  }
+  this._dataService.post({url:'chef/details/phone_number',data:em1, isLoader:false}).subscribe((res:any)=>{
+      console.log("phone_number=>",res)
+    });
+  // this._dataService.post({url:'chef/details/email',data:em1, isLoader:false}).subscribe((res:any)=>{
+  //   console.log("first_name=>",res)
+  // });
+  // this._dataService.post({url:'chef/details/email',data:em, isLoader:false}).subscribe((res:any)=>{
+  //   console.log("second_name=>",res)
+  // });
+
+  // this._dataService.post({url:'chef/details/phone_number',data:em, isLoader:false}).subscribe((res:any)=>{
+  //   console.log("phone_number=>",res)
+  // });
 
 }
-// $(document){
 
+
+// getCuisineList() {
+//   this._dataService.get({url:'cuisines/options', isLoader:true})
+//   .subscribe(response => {
+//     this.showLoader= false;
+//     this.cuisineNamesList = response;
+//     this.filteredCuisinesMulti.next(this.cuisineNamesList.slice());
+//     console.log(response);
+//   });
+// }
+
+//for time
+//  $(document){
 // $('.add').click(function(){
 // $(".list").append(
 // '<div class="mb-2 row justify-content-between px-3">' +
