@@ -21,8 +21,8 @@ export class CalendarEventFormDialogComponent implements OnInit {
   eventForm: FormGroup;
   dialogTitle: string = 'New Event';
   // presetColors = MatColors.presets;
-  startDate = new Date().setDate(new Date().getDate() + 1);
-  endDate =  new Date().setDate(new Date().getDate() + 28);
+  startDate = new Date();
+  endDate = new Date();
   menuList: any[] = [];
   inventoriesList: any = [];
   public isSubmit: boolean = false;
@@ -46,6 +46,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
       private _dataService: DataService
   )
   {
+    this.endDate.setDate(this.endDate.getDate() + 28)
     // console.log(new Date().getDate()+28);
     console.log(this._data);
     this.getMenus();
