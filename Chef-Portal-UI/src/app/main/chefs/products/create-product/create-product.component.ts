@@ -31,6 +31,8 @@ export class CreateProductComponent implements OnInit {
   public productVarientList: any = [];
   public maxSelection:number = 0;
   public singleSelection: boolean = false;
+  public chefList : any ;
+  errorMsg: any;
 
   public AllergyMultiFilterCtrl: FormControl = new FormControl();
   public DietaryMultiFilterCtrl: FormControl = new FormControl();
@@ -55,7 +57,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.getChefList();
     console.log(this.data);
   
     // this.getProducts();
@@ -465,6 +467,19 @@ export class CreateProductComponent implements OnInit {
   onRemoveRow(idx) {    
 		this.varient_category.removeAt(idx);
 	}
+
+  getChefList() {
+   
+    this.dataService.getAll({url:'admin/chefs', isLoader:true})
+      .subscribe(response =>
+                  {
+                      this.showLoader = false;
+                      this.chefList = response;
+                      console.log(response);
+                      
+                  },
+      error => this.errorMsg = error);
+  }
   
   // checkSingleorMaxSelection(){
   //   this.maxSelection = 0;
