@@ -11,6 +11,7 @@ import { CustomersComponent } from './customers/customers.component';
 import { OrderComponent } from './order/order.component';
 import { AdminComponent } from './admin.component';
 import { ChefsProfileComponent } from './chefs-profile/chefs-profile.component';
+import { EditProfileChefComponent } from './edit-profile-chef/edit-profile-chef/edit-profile-chef.component';
 
 const routes = [
   {
@@ -36,6 +37,10 @@ const routes = [
         {
           path     : 'profile/:id',
           component: ChefsProfileComponent
+        },
+        {
+          path     : 'edit-profile-chef/:id',
+          component: EditProfileChefComponent
         }
       ]
   }
@@ -50,6 +55,7 @@ const routes = [
     OrderComponent,
     ChefsComponent,
     ChefsProfileComponent,
+    EditProfileChefComponent,
   ],
   imports: [
     CommonModule,
