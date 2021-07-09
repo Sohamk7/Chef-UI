@@ -170,6 +170,7 @@ export class EditProfileComponent implements OnInit {
 		else {
       this.EditCollectionFormGroup(null);
       this.editCollectionForm.addControl('slots', this.slots);
+      this.slots.push(this.createItemFormGroup(null));
     }
 	}
   createItemFormGroup(data): FormGroup {

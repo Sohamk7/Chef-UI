@@ -237,44 +237,15 @@
                         </div>
         
                         <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
-                        (click)="collectionDeliverySubmit()" [disabled]="isSubmit">
+                        (click)="collectionDeliverySubmit($event)" [disabled]="isSubmit">
                         <i class="fa fa-spinner fa-spin" *ngIf="loader"></i>SUBMIT
                         </button>
 
                     </form>
                 </div>       
                 <div *ngIf="data.type==='collection' || data.type==='delivery'">
-                    <app-loader *ngIf="showLoader"></app-loader>
                     <form fxLayot="column" [formGroup]="editCollectionForm">
-                        <!-- <div class="p-4" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
-                            <mat-form-field appearance="outline" fxFlex="40">
-                                <mat-label>Start slot</mat-label>
-                                <mat-select formControlName="start" placeholder="start" (selectionChange)="startSlotsChange($event)">
-                                    <mat-option *ngFor="let slot of startSlotsList" [value]="slot" >
-                                        {{slot}} : 00
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="40">
-                                <mat-label>End slot</mat-label>
-                                <mat-select formControlName="end" placeholder="end">
-                                    <mat-option *ngFor="let slot of endSlotsList " [value]="slot" >
-                                        {{slot}} : 00
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <div fxFlex="10">
-                                <i class="material-icons icon-size" (click)="onAddSelectRow(0)"  matTooltip="Add New">
-                                    add_circle_outline
-                                </i>
-                                <i class="material-icons icon-size" 
-                                    *ngIf="slots.length > 0"
-                                    (click)="onRemoveRow(index)" matTooltip="Delete">
-                                delete_sweep
-                                </i>
-                            </div>
-                          
-                        </div> -->
+                      
                         <div class="p-4" *ngFor="let content of editCollectionForm.get('slots')?.controls;let index = index;" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
                             <ng-container *ngIf="index<4; else endLimit">
                                 <mat-form-field appearance="outline" fxFlex="40">
