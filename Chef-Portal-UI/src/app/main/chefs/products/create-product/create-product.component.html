@@ -14,6 +14,18 @@
                 <form [formGroup]="createProductForm" fxLayot="column">
 
                     <mat-form-field appearance="outline" >
+                        <mat-label>Chef</mat-label>
+                        <mat-select [(value)]="selected">
+                            <mat-option>None</mat-option>
+                            <mat-option *ngFor="let topping of chefList" [value]="topping.id" >{{topping.first_name}}</mat-option>
+                        </mat-select>
+                        <mat-error>
+                            Chef Name is required
+                        </mat-error>
+                      
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" >
                         <mat-label>Product Name</mat-label>
                         <input matInput formControlName="name" placeholder="Product Name">
                         <mat-error>

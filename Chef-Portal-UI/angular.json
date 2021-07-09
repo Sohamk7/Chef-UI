@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "Chef-Portal-UI"
+  "defaultProject": "Chef-Portal-UI",
+  "cli": {
+    "analytics": "92797f2d-006f-4c7c-a00e-16423f13ad8e"
+  }
 }
