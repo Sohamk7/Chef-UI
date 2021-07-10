@@ -13,6 +13,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { LoaderComponent } from './main/shared/components/loader/loader.component';
 import { LoaderService } from './_services/loaderservice';
 import { SharedModule } from './main/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 // import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -26,6 +27,8 @@ import { SharedModule } from './main/shared/shared.module';
     HttpClientModule,
     MaterialModule,
     SharedModule,
+    FormsModule
+
     // TranslateModule.forRoot({
     //   loader: {
     //     provide: TranslateLoader,

@@ -4,8 +4,12 @@
         <h1 class="p-4"><b>Hi {{userInfo.first_name}} {{userInfo.second_name}}</b></h1>
     </div>
     <div fxLayout="row" fxLayoutAlign="start start" class="p-4">
-        <button mat-raised-button type="submit" color="primary" routerLink="/edit-profile-chef/:id">Edit Profile</button>
+        <button mat-raised-button type="submit" color="primary" routerLink="/edit-profile-chef/{{userInfo.id}}">Edit Profile</button> &nbsp;
+        <button [routerLink]="['/productBychefId', userInfo.id]" routerLink="/productBychefId" type="button" mat-raised-button color="primary">Product</button>&nbsp;
+        <button [routerLink]="['/menuByChefid', userInfo.id]" routerLink="/menuByChefid" type="button" mat-raised-button color="primary">Menu</button>
     </div>
+    
+
 
     <div fxLayout="column" fxLayoutAlign="start start" class="p-2">
 

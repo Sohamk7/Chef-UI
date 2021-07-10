@@ -14,10 +14,15 @@
                         <!-- <button routerLink="'chefs/profile'">{{element[column.columnDef]}}</button> -->
                       <a [routerLink]="['/profile', element.id]" routerLink="/profile">{{element[column.columnDef]}}</a>
                     </span>
+                    
+                    <span *ngIf="column.columnDef==='action'">
+                      <button [routerLink]="['/productBychefId', element.id]" routerLink="/productBychefId" type="button" mat-raised-button color="primary">Product</button>&nbsp;
+                      <button [routerLink]="['/menuByChefid', element.id]" routerLink="/menuByChefid" type="button" mat-raised-button color="primary">Menu</button>
+                    </span>
                 </td>
-
+               <!-- [routerLink]="['/menuByChefid', element.id]" routerLink="/menuByChefid" -->
         </ng-container>
-
+       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
