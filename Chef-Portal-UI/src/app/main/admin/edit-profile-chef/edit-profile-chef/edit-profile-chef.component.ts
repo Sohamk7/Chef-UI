@@ -10,7 +10,8 @@ declare var $ : any;
 })
 export class EditProfileChefComponent implements OnInit {
 id:any;
-userData:any=[];
+userData:any={};
+userData1:any;
   // cuisineNamesList: Response;
   constructor(  private _dataService :DataService,private activateroute:ActivatedRoute
     ) { }
@@ -20,41 +21,23 @@ userData:any=[];
     this.id = this.activateroute.snapshot.params.id;
     console.log("chefID==>",this.id)
     // this.getchef();
-    this.getchefProfile();
-    this.getAdress();
-     this.updateProfile();
+    // this.getchefProfile();
+    this.getCurrentChefInfo();
+    // this.addressProfile()
+    //  this.updateProfile();
   } 
-getchef(){
-  let detr = {
-    chef_id :  this.id
-  }
-  this._dataService.post({url:'chef',data: detr, isLoader:false} ).subscribe((res:any)=>{
-    console.log("checking",res);
-  })
-}
-getchefProfile(){
-  let detr = {
-    chef_id :  this.id
-  }
-  // this.postAPIResponse('chef/chef_store/cuisines');
-  this._dataService.getWithBody({url:'chef/chef_store/cuisines?chef_id='+this.id, isLoader:false} ).subscribe((res:any)=>{
-    this.userData.push(res[0])
-    console.log("checking",this.userData);
 
+getCurrentChefInfo() {
+  this._dataService.getChefInfo({url:'chef?chef_id=' + this.id, isLoader:false})
+  .subscribe(response => {
+    this.userData = response;
+    console.log("Cgef Reponce ====>",this.userData);
+    
+    // console.log("all data of current chef===>",this.userData);
+    // this.showLoader = false;
   });
 }
 
-getAdress(){
-  // let add = {
-  //   chef_id :  this.id
-  // }
-  // this.postAPIResponse('chef/chef_store/cuisines');
-  this._dataService.getWithBody({url:'chef/chef_store/address?chef_id='+this.id, isLoader:false} ).subscribe((res:any)=>{
-    this.userData.push(res[0])
-    console.log("address===>",this.userData);
-
-  });
-}
 
 
 updateProfile(){
@@ -74,6 +57,28 @@ updateProfile(){
   this._dataService.post({url:'chef/details/phone_number',data:em1, isLoader:false}).subscribe((res:any)=>{
       console.log("phone_number=>",res)
     });
+  }
+    // let em3={
+    //   chef_id :this.id,
+    //   phone_number:this.userData[0].phone_number,
+    // }
+    addressProfile(){
+
+    this._dataService.get({url:'chef/chef_store/address'+this.id, isLoader:false} ).subscribe((res:any)=>{
+      // this.userData.push(res[0])
+      console.log("hhhhhhhhh=",res)
+    //  res= res._chef_profile._chef_store_address;
+    //   console.log("hhhhhhhhhaaaaaaaaaaaaaaa=",res)
+    });
+        }      // res=res._chef_profile._chef_store_address;
+      // console.log("address===>",res);
+  
+    
+  
+  
+
+
+
   // this._dataService.post({url:'chef/details/email',data:em1, isLoader:false}).subscribe((res:any)=>{
   //   console.log("first_name=>",res)
   // });
@@ -85,7 +90,6 @@ updateProfile(){
   //   console.log("phone_number=>",res)
   // });
 
-}
 
 
 // getCuisineList() {
