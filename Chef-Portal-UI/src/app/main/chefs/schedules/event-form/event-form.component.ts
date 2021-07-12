@@ -212,7 +212,8 @@ export class CalendarEventFormDialogComponent implements OnInit {
   }
 
   removeInventory(index) {
-    this.inventoriesList.splice(index,1);
+    this.inventoriesList[index].count = 0;
+    this.inventoriesList[index].limited = false;
   }
 
   changeLimited(event,index) {
