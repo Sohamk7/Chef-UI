@@ -14,8 +14,8 @@
         <form name="eventForm" [formGroup]="eventForm" class="event-form w-100-p" fxLayout="column" fxFlex>
 
             <mat-form-field appearance="outline">
-                <mat-label>Menu</mat-label>
-                <mat-select formControlName="menu_id" required  (selectionChange)="changeMenuSelection($event.value)">
+                <mat-label>Select Menu</mat-label>
+                <mat-select formControlName="menu_id"  (selectionChange)="changeMenuSelection($event.value)">
                     <mat-option *ngFor="let menu of menuList" [value]="menu.id">
                     {{menu.name}}                    
                     </mat-option>
@@ -67,7 +67,7 @@
                             </mat-form-field>
                           </div>
                       </td>
-                      <td><mat-icon color="warn" (click)="removeInventory(i)">delete</mat-icon></td>
+                      <td><mat-icon  (click)="removeInventory(i)">restore</mat-icon></td>
                       <div class="hr"></div>
                   </tr>
                   <tr *ngIf="inventoriesList.length === 0">No Product is assigned to selected menu.</tr>
