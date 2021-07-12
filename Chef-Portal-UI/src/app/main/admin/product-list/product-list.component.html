@@ -4,8 +4,8 @@
     <div fxLayout="row" fxLayoutAlign="start start" class="p-5">
         <button mat-raised-button type="submit" color="primary" (click)="openCreateProductDialog()">Create Product </button>
     </div>
+    
     <div>
-        <mat-form-field  >
             <mat-label>Chef</mat-label>
             <mat-select [(value)]="chefid" (change)="getProducts()">
                 <mat-option>None</mat-option>
@@ -14,8 +14,6 @@
             <mat-error>
                 Chef Name is required
             </mat-error>
-          
-        </mat-form-field>
     </div>
     <!-- CONTENT -->
     <div class="content">
@@ -71,4 +69,4 @@
     </div>
     <!-- / CONTENT -->
 
-</div> 
+</div>

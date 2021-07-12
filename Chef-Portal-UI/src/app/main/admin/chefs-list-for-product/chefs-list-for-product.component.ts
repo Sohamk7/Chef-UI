@@ -1,17 +1,17 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
-  selector: 'app-chefs',
-  templateUrl: './chefs.component.html',
-  styleUrls: ['./chefs.component.scss']
+  selector: 'app-chefs-list-for-product',
+  templateUrl: './chefs-list-for-product.component.html',
+  styleUrls: ['./chefs-list-for-product.component.scss']
 })
-export class ChefsComponent implements OnInit {
-  
+export class ChefsListForProductComponent implements OnInit {
+
   public errorMsg: any;
   public tableContents: any = [];
   public displayedColumns: any = [];  
@@ -64,11 +64,6 @@ export class ChefsComponent implements OnInit {
             columnDef: 'enabled',
             header: 'Enabled',
             sortable: true
-          },
-          {
-            columnDef: 'action',
-            header: 'Action',
-            sortable: true
           }
       ];
 
@@ -108,16 +103,9 @@ export class ChefsComponent implements OnInit {
         obj['email'] = element.email;
         obj['address'] = (element._chef_store_address.address_1 && element._chef_store_address.address_1) + (element._chef_store_address.address_2!=='' ? ','+ element._chef_store_address.address_2 :'')+ (element._chef_store_address.address_3!=='' ? ','+element._chef_store_address.address_3:'' )+(element._chef_store_address.city!=='' ? ','+element._chef_store_address.city: '')+(element._chef_store_address.country!=='' ? ','+element._chef_store_address.country:'')+(element._chef_store_address.postcode!=='' ? ','+element._chef_store_address.postcode:'');
         obj['phone_no'] = element.phone_number;
-        // obj['enabled'] = element.enabled;
-        if(element.enabled == true){
-          obj['enabled'] = 'Yes';
-        }
-        else{
-          obj['enabled'] = 'No';
-        }
+        obj['enabled'] = element.enabled;
+
         tempArr.push(obj);
-       
-        
     });
   	return tempArr;
   }
@@ -132,4 +120,5 @@ export class ChefsComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.getList();
   }
+
 }

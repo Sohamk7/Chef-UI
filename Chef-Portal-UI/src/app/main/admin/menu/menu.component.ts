@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DataService } from 'src/app/_services/dataservice';
 import { MenuService } from 'src/app/_services/menu.service';
@@ -16,13 +17,17 @@ export class MenuComponent implements OnInit {
   refresh: Subject<any> = new Subject();
   menuList:any = [];
   public showLoader: boolean = true
+  chefID:any;
 
   constructor(  private dialog: MatDialog,
     private _matSnackBar: MatSnackBar,
     private _manuService: MenuService,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private activatedRoute : ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.chefID = this.activatedRoute.snapshot.params.id
+    
     /**
        * Watch re-render-refresh for updating db
        */
@@ -43,7 +48,8 @@ export class MenuComponent implements OnInit {
 
   getMenus(): void
   {
-    this.dataService.getAll({url:'menu',isLoader:true})
+    
+    this.dataService.getWithBody({url:'menu?chef_id='+this.chefID,isLoader:true})
     .subscribe(response =>{
       this.menuList = response;
       this.showLoader = false;

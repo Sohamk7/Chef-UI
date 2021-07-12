@@ -42,6 +42,8 @@ export class CreateProductComponent implements OnInit {
   public filteredAllergyMulti: ReplaySubject<[]> = new ReplaySubject<[]>(1);
   public filteredDietaryMulti: ReplaySubject<[]> = new ReplaySubject<[]>(1);
 
+  userType : boolean;
+
   constructor(
     public dialogRef                      : MatDialogRef<CreateProductComponent>,
     private dialog: MatDialog,
@@ -57,6 +59,11 @@ export class CreateProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+       this.userType =JSON.parse(localStorage.getItem('userType'));
+       console.log("UserType  =>",this.userType)
+
+
+
     this.getChefList();
     console.log(this.data);
   
