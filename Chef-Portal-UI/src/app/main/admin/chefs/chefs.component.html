@@ -16,11 +16,22 @@
                     </span>
                     
                     <span *ngIf="column.columnDef==='action'">
-                      <button [routerLink]="['/productBychefId', element.id]" routerLink="/productBychefId" type="button" mat-raised-button color="primary">Product</button>&nbsp;
-                      <button [routerLink]="['/menuByChefid', element.id]" routerLink="/menuByChefid" type="button" mat-raised-button color="primary">Menu</button>
+                      <!-- <button [routerLink]="['/productBychefId', element.id]" routerLink="/productBychefId" type="button" mat-raised-button color="primary">Product</button>&nbsp;
+                      <button [routerLink]="['/menuByChefid', element.id]" routerLink="/menuByChefid" type="button" mat-raised-button color="primary">Menu</button> -->
+                   
+                      <button mat-button [matMenuTriggerFor]="menu">
+                        <img src="/assets/images/menuicon/419-4190179_menu-vertical-icon-android-menu-icon-png.png" class="menustyle" alt="">
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item [routerLink]="['/productBychefId', element.id]" routerLink="/productBychefId">Product</button>
+                        <button mat-menu-item [routerLink]="['/menuByChefid', element.id]" routerLink="/menuByChefid">Menu</button>
+                        <button mat-menu-item routerLink="/OrderOfChef">Order</button>
+                        <button mat-menu-item routerLink="/schedules">Schedule</button>
+                        <button mat-menu-item routerLink="/ChefPayment">Payments</button>
+                      </mat-menu>
                     </span>
                 </td>
-               <!-- [routerLink]="['/menuByChefid', element.id]" routerLink="/menuByChefid" -->
+               <!-- [routerLink]="['/menuByChefid', element.id]" routerLink="/menuByChefid"  ChefPayment-->
         </ng-container>
        
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
