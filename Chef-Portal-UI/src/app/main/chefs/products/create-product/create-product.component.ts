@@ -116,8 +116,6 @@ export class CreateProductComponent implements OnInit {
 
       this.message = 'Create New Product';
 
-      this.createProductForm.addControl('varient_category', this.varient_category); 
-
       this.createProductForm = this._fb.group({
         name: this._fb.control('',[Validators.required]),
         price: this._fb.control('',[Validators.required,Validators.pattern("^[0-9]*$")]),
@@ -127,6 +125,8 @@ export class CreateProductComponent implements OnInit {
         chef_id:this._fb.control(1),
         product_image: this._fb.control('')
       });
+
+      this.createProductForm.addControl('varient_category', this.varient_category); 
     }
     this.AllergyMultiFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
