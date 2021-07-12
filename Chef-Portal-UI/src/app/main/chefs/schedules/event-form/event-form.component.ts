@@ -19,7 +19,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
   action: string;
   event: CalendarEvent;
   eventForm: FormGroup;
-  dialogTitle: string = 'New Event';
+  dialogTitle: string = '';
   // presetColors = MatColors.presets;
   startDate = new Date();
   endDate = new Date();
@@ -47,25 +47,11 @@ export class CalendarEventFormDialogComponent implements OnInit {
   )
   {
     this.endDate.setDate(this.endDate.getDate() + 28)
-    // console.log(new Date().getDate()+28);
     console.log(this._data);
-    this.getMenus();
-    this.getproducts()
-      // this.event = _data.event;
-      // this.action = _data.action;
-
-      if ( this._data)
-      {
-          this.dialogTitle = 'Edit Event';
-          
-      }
-      else
-      {
-          this.dialogTitle = 'New Event';
-      }
+    
   }
   ngOnInit() {
-    this.eventForm = this.createEventForm(); 
+    this.getMenus();
   }
 
   fillFormValues(){
@@ -75,6 +61,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
     let available_date = this._data.available_date ? new Date(this._data.available_date) : new Date();
     let ispublic = this._data.public ? this._data.public : true;
     let availability_id = this._data.id ? this._data.id : 0;
+    this.changeMenuSelection(menu_id);
     let arr = this.getProductInventories(this._data.product_menu_inventories) ;
     this.inventoriesList = arr;
     console.log(this.inventoriesList);
@@ -95,29 +82,42 @@ export class CalendarEventFormDialogComponent implements OnInit {
       .subscribe(respose => {
         this.menuList = respose as any;
         this.showLoader = false;
-        // this.inventoriesList = this.menuList;
+
+        if ( this._data)
+        {
+            this.fillFormValues();
+            this.dialogTitle = 'Edit Event';
+            
+        }
+        else
+        {
+          this.eventForm = this.createEventForm(); 
+          this.dialogTitle = 'New Event';
+        }
       })
   }
-  getproducts(): void
-  {
-    this._dataService.getAll({url:'product',isLoader:true})
-      .subscribe(respose => {
-        // this.menuList = respose;
-        this.inventoriesList = this.getmappedList(respose);
-        this.inventoriesListTemp = this.getmappedList(respose);
-        this.showLoader = false;
-        if(this._data){this.fillFormValues();}
-        
-        console.log(this.inventoriesListTemp);
-      })
+  
+  changeMenuSelection(id) {
+    console.log(id);
+    let menu_id = id;
+    let menuIdSelectedDropdown = this.menuList.find((menu) => (menu.id === menu_id));
+    console.log(menuIdSelectedDropdown);
+    console.log(this.menuList);
+
+    if(menuIdSelectedDropdown) {
+      this.inventoriesList = this.getmappedList(menuIdSelectedDropdown._products);
+      this.inventoriesListTemp = this.inventoriesList;
+    }
+
+    console.log(this.inventoriesList);
   }
 
   getmappedList(data) {
     let tempArr = [];
     data.forEach(element => {
         let obj = {};
-        obj['product_id'] = element.id;
-        obj['name'] = element._product_details?.name;
+        obj['product_id'] = element.product_id;
+        obj['name'] = element.name;
         obj['limited'] = false;
         obj['count'] = 1;
         tempArr.push(obj);
