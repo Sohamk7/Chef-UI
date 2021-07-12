@@ -75,6 +75,8 @@ export class CreateProductComponent implements OnInit {
         product_image: this._fb.control('')
       });
 
+      this.createProductForm.addControl('varient_category', this.varient_category); 
+
       //Prepopulate allergense on edit page
       let allergenNameToDispaly: any = []; 
       product_details.allergens.forEach(allergen => {
@@ -114,6 +116,8 @@ export class CreateProductComponent implements OnInit {
 
       this.message = 'Create New Product';
 
+      this.createProductForm.addControl('varient_category', this.varient_category); 
+
       this.createProductForm = this._fb.group({
         name: this._fb.control('',[Validators.required]),
         price: this._fb.control('',[Validators.required,Validators.pattern("^[0-9]*$")]),
@@ -136,7 +140,6 @@ export class CreateProductComponent implements OnInit {
         this.filtereDietaryMulti();
       });
     
-    this.createProductForm.addControl('varient_category', this.varient_category); 
   }
 
   protected setInitialValue() {
@@ -377,7 +380,8 @@ export class CreateProductComponent implements OnInit {
         if(result.type === 'add'){
 
           result.rowdata.id = this.productVarientList.length + 1;
-          // this.productVarientList.push(result.rowdata);
+          console.log('result.rowdata.id',result.rowdata.id);
+          this.productVarientList.push(result.rowdata);
           // this.createProductForm.addControl('productVarientList',(this.varient_category.controls[index].value).productVarientList);
           // (this.varient_category.addControl('productVarientList',(this.varient_category.controls[index].value).productVarientList);
           (this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(result.rowdata));
