@@ -92,7 +92,7 @@
                             
                                 <div class="hr1"></div>
                                 <div class="p" fxLayout="row" fxLayoutAlign="space-between center">
-                                    <div><mat-label>{{content.get('variant_name').value}}</mat-label></div>
+                                    <div><mat-label>{{content.get('name').value}}</mat-label></div>
                                     <div>
                                         <mat-icon (click)="addEditVarient(null,'add',index)">add_circle_outline</mat-icon>
                                         <mat-icon (click)="addEditVarientCategory(content.value,'edit',index)">edit</mat-icon>
@@ -108,7 +108,7 @@
                                     <div>Action</div>
                                 </div>
                                 <div class="p" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let product of content.get('productVarientList')?.value;let i=index;">
-                                    <div><mat-label>{{product?.value?.product_variant_name || product?.product_variant_name}}</mat-label></div>
+                                    <div><mat-label>{{product?.value?.option_name || product?.option_name}}</mat-label></div>
                                     <div><mat-slide-toggle color="primary" [disabled]="true" [checked]="product?.value?.default || product?.default" (change)="toggleChangeValue($event,i, index)" name="enableWifi"></mat-slide-toggle></div>
                                     <div>{{product?.value?.price || product?.price | currency:'EUR'}}</div>
                                     <div>

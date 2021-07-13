@@ -64,7 +64,7 @@
                         <mat-label>Max Selection</mat-label>
                         <mat-select [disabled]="createProductVarientCategoryForm.get('single_selection').value" formControlName="max_selection">
                           <mat-option *ngFor="let product of productVarientListLength; let i=index" [value]="i+1">{{i+1}}</mat-option>
-                          <mat-option *ngIf="productVarientListLength.length===0" value="0">0</mat-option>
+                          <mat-option *ngIf="productVarientListLength.length===0" value="1">1</mat-option>
                         </mat-select>
                     </mat-form-field>
     

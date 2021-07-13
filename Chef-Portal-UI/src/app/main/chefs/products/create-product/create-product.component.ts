@@ -327,7 +327,7 @@ export class CreateProductComponent implements OnInit {
         element.productVarientList.forEach(element1 => {
           options.push(element1.value || element1);
         });
-        element.variant_options = options;
+        element.options = options;
         delete element.productVarientList;
       });
       if(varientCategoryTemp.length > 0){
@@ -452,7 +452,7 @@ export class CreateProductComponent implements OnInit {
         if(type==='add'){
           this.varient_category.push(this.createItemFormGroup(result.rowdata));  
         }else {
-          this.varient_category.controls[index].get('variant_name').setValue(result.rowdata.variant_name);
+          this.varient_category.controls[index].get('name').setValue(result.rowdata.variant_name);
           this.varient_category.controls[index].get('single_selection').setValue(result.rowdata.single_selection);
           this.varient_category.controls[index].get('max_selection').setValue(result.rowdata.max_selection);
         }
@@ -464,18 +464,18 @@ export class CreateProductComponent implements OnInit {
 
   createItemFormGroup(data): FormGroup {      
 		return this._fb.group({
-      variant_name : this._fb.control(data.variant_name, Validators.required), 
+       name : this._fb.control(data.variant_name, Validators.required), 
        single_selection: this._fb.control(data.single_selection),
        productVarientList: this._fb.array(data.variant_options),
        max_selection: this._fb.control(data.max_selection),
-       variant_options: this._fb.control(data.variant_options)
+       options: this._fb.control(data.variant_options)
 		});
 	}
 
   createVarientFormGroup(data): FormGroup {    
       console.log(data);
 		return this._fb.group({
-       product_variant_name : this._fb.control(data.product_variant_name, Validators.required), 
+       option_name : this._fb.control(data.product_variant_name, Validators.required), 
        id: this._fb.control(data.id),
        price: this._fb.control(data.price,[Validators.required,Validators.pattern("^[0-9]*$")]),
        default: this._fb.control(data.default),
