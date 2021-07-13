@@ -63,7 +63,7 @@ export class AddProductVarientsComponent implements OnInit {
       this.message = this.data ? 'Edit Varient Category' : 'Add New Varient Category';
       let variant_name = this.data ? this.data.variant_name : '';
       let single_selection = this.data ? this.data.single_selection : false;
-      let max_selection = this.data ? this.data.max_selection : 0;
+      let max_selection = this.data ? this.data.max_selection : 1;
 
 
       this.createProductVarientCategoryForm = this._fb.group({
