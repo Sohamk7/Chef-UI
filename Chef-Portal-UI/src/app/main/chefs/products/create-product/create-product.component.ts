@@ -99,13 +99,13 @@ export class CreateProductComponent implements OnInit {
           this.varient_category.push(this.createItemFormGroup(element));  
           console.log(this.varient_category);
           console.log(element.variant_options);
-          element.variant_options.forEach(element1 => {
-            console.log(element1);
-            console.log(this.varient_category.controls[index].value);
-            (this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(element1));
-            console.log(this.varient_category);
-            console.log((this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(element1)))
-          });
+          // element.variant_options.forEach(element1 => {
+          //   console.log(element1);
+          //   console.log(this.varient_category.controls[index].value);
+          //   // (this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(element1));
+          //   console.log(this.varient_category);
+          //   // console.log((this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(element1)))
+          // });
         });
       }
  
@@ -457,11 +457,21 @@ export class CreateProductComponent implements OnInit {
 		return this._fb.group({
        name : this._fb.control(data.variant_name, Validators.required), 
        single_selection: this._fb.control(data.single_selection),
-       productVarientList: this._fb.array(data.variant_options),
+       productVarientList: this._fb.array(this.createProductVarientControls(data.variant_options)),
        max_selection: this._fb.control(data.max_selection),
        options: this._fb.control(data.variant_options)
 		});
 	}
+
+  createProductVarientControls(data) {
+    let tempArr = [];
+    data.forEach(element => {
+      tempArr.push(this.createVarientFormGroup(element));
+    });
+    return tempArr;
+    
+  }
+
 
   createVarientFormGroup(data): FormGroup {    
       console.log(data);
