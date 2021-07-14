@@ -134,8 +134,5 @@ export class ChefsComponent implements OnInit {
     this.getList();
   }
 
-  passIdToHome(id){
-    alert(id);
-    this._dataService.homeId.next(id);
-  }
+ 
 }
