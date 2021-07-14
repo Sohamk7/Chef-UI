@@ -16,6 +16,10 @@ import { MenuComponent } from './menu/menu.component';
 import { EditProfileChefComponent } from './edit-profile-chef/edit-profile-chef/edit-profile-chef.component';
 import { ChefsListForProductComponent } from './chefs-list-for-product/chefs-list-for-product.component';
 import { ChefListForMenuComponent } from './chef-list-for-menu/chef-list-for-menu.component';
+import { OrderOfChefComponent } from './order-of-chef/order-of-chef.component';
+import { SchedulesComponent } from './schedules/schedules.component';
+import { CalendarService } from 'src/app/_services/calender.service';
+import { ChefPaymentComponent } from './chef-payment/chef-payment.component';
 
 const routes = [
   {
@@ -45,6 +49,21 @@ const routes = [
         {
           path: 'menu',
           component : ChefListForMenuComponent
+        },
+        {
+          path : 'OrderOfChef',
+          component : OrderOfChefComponent
+        },
+        {
+          path : 'schedules',
+          component: SchedulesComponent,
+          resolve  : {
+            events: CalendarService,
+          }
+        },
+        {
+          path: 'ChefPayment',
+          component : ChefPaymentComponent
         },
         {
           path : 'productBychefId/:id',
@@ -80,6 +99,9 @@ const routes = [
     EditProfileChefComponent,
     ChefsListForProductComponent,
     ChefListForMenuComponent,
+    OrderOfChefComponent,
+    SchedulesComponent,
+    ChefPaymentComponent,
   ],
   imports: [
     CommonModule,
