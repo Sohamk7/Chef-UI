@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
 import { DataService } from 'src/app/_services/dataservice';
 
 @Component({
@@ -11,7 +12,7 @@ import { DataService } from 'src/app/_services/dataservice';
   styleUrls: ['./chefs.component.scss']
 })
 export class ChefsComponent implements OnInit {
-  
+   
   public errorMsg: any;
   public tableContents: any = [];
   public displayedColumns: any = [];  
@@ -131,5 +132,10 @@ export class ChefsComponent implements OnInit {
     this.page = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     this.getList();
+  }
+
+  passIdToHome(id){
+    alert(id);
+    this._dataService.homeId.next(id);
   }
 }

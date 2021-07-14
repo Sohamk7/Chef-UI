@@ -105,4 +105,18 @@ export class ProductListComponent implements OnInit {
                   },
       error => this.errorMsg = error);
   }
+
+  openEditDialog(data){
+
+    let dialogRef = this.dialog.open(CreateProductComponent, {
+      data:data,
+      height: '700px',
+      width: '600px',
+      disableClose:true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getProducts();
+    });
+  }
 }

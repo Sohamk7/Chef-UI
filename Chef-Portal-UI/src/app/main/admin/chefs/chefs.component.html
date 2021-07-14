@@ -23,10 +23,12 @@
                         <img src="/assets/images/menuicon/419-4190179_menu-vertical-icon-android-menu-icon-png.png" class="menustyle" alt="">
                       </button>
                       <mat-menu #menu="matMenu">
+                        <button mat-menu-item [routerLink]="['/profile', element.id]" routerLink="/profile">Profile</button>
+                        <button mat-menu-item routerLink="/admin/home" [queryParams]="{ chef_id: element.id}">Home</button>
                         <button mat-menu-item [routerLink]="['/productBychefId', element.id]" routerLink="/productBychefId">Product</button>
                         <button mat-menu-item [routerLink]="['/menuByChefid', element.id]" routerLink="/menuByChefid">Menu</button>
                         <button mat-menu-item routerLink="/OrderOfChef">Order</button>
-                        <button mat-menu-item routerLink="/schedules">Schedule</button>
+                        <button mat-menu-item  [routerLink]="['/schedules', element.id]" routerLink="/schedules">Schedule</button>
                         <button mat-menu-item routerLink="/ChefPayment">Payments</button>
                       </mat-menu>
                     </span>

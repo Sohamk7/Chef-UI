@@ -11,6 +11,7 @@ export class CalendarService implements Resolve<any>
     events: any;
     onEventsUpdated: Subject<any>;
     token;
+    url:any;
 
     /**
      * Constructor
@@ -19,13 +20,12 @@ export class CalendarService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient,
-        private loader:LoaderService
-    )
-    {
+        private loader: LoaderService
+    ) {
         // Set the defaults
         this.onEventsUpdated = new Subject();
-        let t = localStorage.getItem('token').replace('"','');
-        this.token = t.replace('"','')
+        let t = localStorage.getItem('token').replace('"', '');
+        this.token = t.replace('"', '')
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -39,8 +39,7 @@ export class CalendarService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         return new Promise<void>((resolve, reject) => {
             Promise.all([
                 this.getEvents()
@@ -58,16 +57,22 @@ export class CalendarService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getEvents(): Promise<any>
-    {
+    getEvents(): Promise<any> {
         return new Promise((resolve, reject) => {
 
             //UPLOAD FILE DATA OPTION HEADERS
             const HttpUploadOptions = {
-                headers: new HttpHeaders({  'Accept':'application/json','Authorization': 'Bearer ' + this.token })
+                headers: new HttpHeaders({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.token })
             }
             this.loader.start();
-            this._httpClient.get(ServerURL.SERVER_URL_ENDPOINT + 'schedule',HttpUploadOptions)
+            let userType = localStorage.getItem('userType');
+            let checkUserType = userType === 'true' ? true : false;
+            if (checkUserType) {
+                this.url = "?chef_id="+sessionStorage.getItem("chef_Id");
+            }else{
+                this.url ="";
+            }
+            this._httpClient.get(ServerURL.SERVER_URL_ENDPOINT + 'schedule'+this.url, HttpUploadOptions)
                 .subscribe((response: any) => {
                     this.events = response;
                     this.loader.stop();
@@ -83,14 +88,13 @@ export class CalendarService implements Resolve<any>
      * @param events
      * @returns {Promise<any>}
      */
-    updateEvents(events): Promise<any>
-    {
+    updateEvents(events): Promise<any> {
         return new Promise((resolve, reject) => {
             //UPLOAD FILE DATA OPTION HEADERS
             const HttpUploadOptions = {
-                headers: new HttpHeaders({  'Accept':'application/json','Authorization': 'Bearer ' + this.token })
+                headers: new HttpHeaders({ 'Accept': 'application/json', 'Authorization': 'Bearer ' + this.token })
             }
-            this._httpClient.post(ServerURL.SERVER_URL_ENDPOINT + 'schedule',HttpUploadOptions
+            this._httpClient.post(ServerURL.SERVER_URL_ENDPOINT + 'schedule', HttpUploadOptions
             )
                 .subscribe((response: any) => {
                     this.getEvents();

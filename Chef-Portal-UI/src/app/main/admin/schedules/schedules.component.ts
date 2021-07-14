@@ -12,6 +12,8 @@ import { DataService } from 'src/app/_services/dataservice';
 import { ConfirmDialogComponent } from 'src/app/main/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CalendarEventFormDialogComponent } from '../../chefs/schedules/event-form/event-form.component';
+import { ActivatedRoute } from '@angular/router';
+import { id } from 'date-fns/locale';
 
 
 @Component({
@@ -32,13 +34,15 @@ export class SchedulesComponent implements OnInit {
   selectedDay: any;
   view: string;
   viewDate: Date;
+  id:any;
   public showLoader: boolean = true;
 
   constructor(
       private _matDialog: MatDialog,
       private _calendarService: CalendarService,
       private _dataService: DataService,
-      private _matSnackBar: MatSnackBar
+      private _matSnackBar: MatSnackBar,
+      private route:ActivatedRoute
   )
   {
       // Set the defaults
@@ -80,6 +84,9 @@ export class SchedulesComponent implements OnInit {
       /**
        * Watch re-render-refresh for updating db
        */
+      this.id = this.route.snapshot.params.id;
+    //   sessionStorage.removeItem("chef_Id");
+      sessionStorage.setItem("chef_Id",this.id);
       this.refresh.subscribe(updateDB => {
           if ( updateDB )
           {

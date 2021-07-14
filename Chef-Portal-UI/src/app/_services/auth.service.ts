@@ -42,7 +42,6 @@ export class AuthService {
                 localStorage.setItem('token', JSON.stringify(loginResponse.auth_token));
                 localStorage.setItem('userType', JSON.stringify(loginResponse.auth_admin));
                 this.currentUserSubject.next(loginResponse);
-
                 return loginResponse;
             }),catchError(err => { return throwError("Error thrown from Server");}));
     }

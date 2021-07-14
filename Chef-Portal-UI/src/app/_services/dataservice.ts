@@ -9,7 +9,7 @@ import { ServerURL } from '../_helpers';
 
 @Injectable()
 export class DataService {
-
+  homeId =new Subject<any>(); 
   constructor(
       private http: HttpClient,
       private loader: LoaderService,

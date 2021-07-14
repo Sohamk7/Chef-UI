@@ -70,6 +70,7 @@ export class LoginComponent implements OnInit {
                   let checkUserType = userType === 'true' ? true : false;
                   if(checkUserType){
                     this._router.navigate(['/admin/home']);
+                    
                   }else {
                     this._router.navigate(['/chef/home']);
                   }
