@@ -30,6 +30,8 @@ export class CalendarEventFormDialogComponent implements OnInit {
   public showLoader: boolean = true;
   public inventoriesListTemp: any = [];
 
+  url :any;
+
   /**
    * Constructor
    *
@@ -78,7 +80,17 @@ export class CalendarEventFormDialogComponent implements OnInit {
 
   getMenus(): void
   {
-    this._dataService.getAll({url:'menu',isLoader:true})
+    let userType = localStorage.getItem('userType');
+            let checkUserType = userType === 'true' ? true : false;
+            if (checkUserType) {
+                this.url = "?chef_id="+sessionStorage.getItem("chef_Id");
+            }else{
+                this.url ="";
+            }
+
+
+
+    this._dataService.getAll({url:'menu'+this.url,isLoader:true})
       .subscribe(respose => {
         this.menuList = respose as any;
         this.showLoader = false;
@@ -167,6 +179,15 @@ export class CalendarEventFormDialogComponent implements OnInit {
   }
 
   onClickAdd(event) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+sessionStorage.getItem("chef_Id");
+    }else{
+        this.url ="";
+    }
+
+
     event.preventDefault();
     event.stopPropagation();
     if (this.eventForm.valid) {
@@ -183,7 +204,7 @@ export class CalendarEventFormDialogComponent implements OnInit {
       let message = this._data!==null ? 'Schedule Edited successfully' : 'Schedule created successfully';
       let url = this._data!==null ? 'schedule/update' : 'schedule/create';
       
-      this._dataService.save({url: url, data:formValue,isLoader:true})
+      this._dataService.save({url: url+this.url, data:formValue,isLoader:true})
         .subscribe(uploadResponse=>{
           console.log(uploadResponse);
           this.matDialogRef.close();

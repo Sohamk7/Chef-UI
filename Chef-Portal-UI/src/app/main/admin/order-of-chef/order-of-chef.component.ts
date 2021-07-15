@@ -112,6 +112,8 @@ export class OrderOfChefComponent implements OnInit {
         this.chefID = res['chef_id'];
       }
     )
+
+    sessionStorage.setItem("chef_Id",this.chefID);
     this.displayedColumns = this.columns.map(c => c.columnDef);
     this.getList();
     this.getAllStatus();
