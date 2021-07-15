@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { first } from 'rxjs/operators';
 import { DataService } from 'src/app/_services/dataservice';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -31,6 +32,8 @@ export class OrderOfChefComponent implements OnInit {
   sortDirection: string;
   public showLoader: boolean = true;
 
+  userInfo : any ={};
+  chefID :any ={};
   // MatPaginator Output
   pageEvent: PageEvent;
 
@@ -41,7 +44,8 @@ export class OrderOfChefComponent implements OnInit {
       private _dataService: DataService,
       public datepipe: DatePipe,
       private _matSnackBar: MatSnackBar,
-      private currencyPipe : CurrencyPipe) {
+      private currencyPipe : CurrencyPipe,
+      private _activatedRoute:ActivatedRoute) {
         this.columns = [
           {
             columnDef: 'id',
@@ -103,12 +107,29 @@ export class OrderOfChefComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._activatedRoute.queryParams.subscribe(
+      (res:any)=>{
+        this.chefID = res['chef_id'];
+      }
+    )
     this.displayedColumns = this.columns.map(c => c.columnDef);
     this.getList();
     this.getAllStatus();
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.tableContents);
+
+    this.getCurrentChefInfo();
   }
+
+  getCurrentChefInfo() {
+
+    this._dataService.getChefInfo({url:'chef?chef_id=' + this.chefID , isLoader:true})
+    .subscribe(response => {
+      this.userInfo = response;
+      this.showLoader = false;
+    });
+  }
+
 
   ngAfterViewInit() {
   	this.dataSource.paginator = this.paginator;

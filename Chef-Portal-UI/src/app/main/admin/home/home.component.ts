@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
   public profile_data: any = {};
   public showLoader: boolean = true;
   id:any='';
-
+  userInfo :any = {};
 
   constructor(
     private _dataService : DataService,
@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit {
    })
     console.log("CHEF ID FROM HOME ==>",this.id);
     
-    this.getProfileCompleteData()
+    this.getProfileCompleteData();
+    this.getCurrentChefInfo();
   }
 
   getProfileCompleteData() {
@@ -36,6 +37,14 @@ export class HomeComponent implements OnInit {
         this.showLoader = false;
       })
   }
+  getCurrentChefInfo() {
 
+    this._dataService.getChefInfo({url:'chef?chef_id=' + this.id, isLoader:true})
+    .subscribe(response => {
+      this.userInfo = response;
+      console.log("User Info==>", this.userInfo)
+      this.showLoader = false;
+    });
+  }
 
 }

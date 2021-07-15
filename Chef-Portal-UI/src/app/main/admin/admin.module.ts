@@ -52,7 +52,7 @@ const routes = [
           component : ChefListForMenuComponent
         },
         {
-          path : 'OrderOfChef',
+          path : 'chefs/OrderOfChef',
           component : OrderOfChefComponent
         },
         {
@@ -63,22 +63,22 @@ const routes = [
           }
         },
         {
-          path: 'ChefPayment',
+          path: 'chefs/ChefPayment',
           component : ChefPaymentComponent
         },
         {
-          path : 'productBychefId/:id',
+          path : 'chefs/productBychefId/:id',
           component : ProductListComponent
         },
         {
-          path: 'menuByChefid/:id',
+          path: 'chefs/menuByChefid/:id',
           component : MenuComponent,
           // resolve  : {
           //   chat: MenuService
           // }
         },
         {
-          path     : 'profile/:id',
+          path     : 'chefs/profile/:id',
           component: ChefsProfileComponent
         },
         {

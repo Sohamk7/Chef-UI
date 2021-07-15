@@ -25,6 +25,7 @@ export class ProductListComponent implements OnInit {
   chefid : any;
   token:any;
   userType : boolean;
+  userInfo :any ={};
   constructor( private dialog: MatDialog,
     private _matSnackBar: MatSnackBar,
     private dataService: DataService,
@@ -36,9 +37,18 @@ export class ProductListComponent implements OnInit {
     this.getProducts();
     this.token =JSON.parse(localStorage.getItem('token'))
 
+    this.getCurrentChefInfo();
     // this.userType =JSON.parse(localStorage.getItem('userType'));
     // console.log("UserType  =>",this.userType)
     
+  }
+  getCurrentChefInfo() {
+
+    this.dataService.getChefInfo({url:'chef?chef_id=' + this.chefid, isLoader:true})
+    .subscribe(response => {
+      this.userInfo = response;
+      this.showLoader = false;
+    });
   }
 
   getProducts() {
