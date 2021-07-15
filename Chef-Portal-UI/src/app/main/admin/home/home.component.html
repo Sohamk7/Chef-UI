@@ -1,4 +1,21 @@
 <app-loader *ngIf="showLoader"></app-loader>
+<div class="userTitleMainDiv">
+    <h1 class="userTitle">Viewing {{userInfo.first_name}} {{userInfo.second_name}}</h1>
+    
+        <button mat-button [matMenuTriggerFor]="menu">
+            <img src="/assets/images/menuicon/419-4190179_menu-vertical-icon-android-menu-icon-png.png" class="menustyle" alt="">
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/chefs/profile', userInfo.id]" routerLink="/chefs/profile">Profile</button>
+            <button mat-menu-item routerLink="/admin/home" [queryParams]="{ chef_id: userInfo.id}">Home</button>
+            <button mat-menu-item [routerLink]="['/chefs/productBychefId', userInfo.id]" routerLink="/chefs/productBychefId">Product</button>
+            <button mat-menu-item [routerLink]="['/chefs/menuByChefid', userInfo.id]" routerLink="/chefs/menuByChefid">Menu</button>
+            <button mat-menu-item routerLink="/chefs/OrderOfChef" [queryParams]="{ chef_id: userInfo.id }">Order</button>
+            <button mat-menu-item  [routerLink]="['/schedules', userInfo.id ]" routerLink="/schedules">Schedule</button>
+            <button mat-menu-item routerLink="/chefs/ChefPayment" [queryParams]="{ chef_id: userInfo.id }">Payments</button>
+          </mat-menu>
+   
+</div>
 <div fxLayout="column" class="p-4" *ngIf="!showLoader">
   <div fxLayout="column" fxLayoutAlign="start start" fxFlex="50">
     <h1>Welcome to your marketplace</h1>

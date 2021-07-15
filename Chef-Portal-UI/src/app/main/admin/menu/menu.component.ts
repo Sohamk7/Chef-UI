@@ -18,6 +18,8 @@ export class MenuComponent implements OnInit {
   menuList:any = [];
   public showLoader: boolean = true
   chefID:any;
+  userInfo :any={};
+
 
   constructor(  private dialog: MatDialog,
     private _matSnackBar: MatSnackBar,
@@ -44,6 +46,16 @@ export class MenuComponent implements OnInit {
         this.refresh.next();
     });
     this.getMenus();
+    this.getCurrentChefInfo();
+  }
+
+  getCurrentChefInfo() {
+
+    this.dataService.getChefInfo({url:'chef?chef_id=' + this.chefID , isLoader:true})
+    .subscribe(response => {
+      this.userInfo = response;
+      this.showLoader = false;
+    });
   }
 
   getMenus(): void

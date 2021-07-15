@@ -12,6 +12,8 @@ export class ChefPaymentComponent implements OnInit {
   id:any;
   payment_status :any = {};
   public loader: boolean = false;
+  showLoader : boolean;
+  userInfo : any ={};
   
   constructor(private dataservice:DataService,private _activatedRoute:ActivatedRoute,
     private _matSnackBar: MatSnackBar) { }
@@ -23,8 +25,17 @@ export class ChefPaymentComponent implements OnInit {
       }
     );
     this.getPaymentStatus();
+    this.getCurrentChefInfo();
   }
 
+  getCurrentChefInfo() {
+
+    this.dataservice.getChefInfo({url:'chef?chef_id=' + this.id , isLoader:true})
+    .subscribe(response => {
+      this.userInfo = response;
+      this.showLoader = false;
+    });
+  }
 
   getPaymentStatus(){
       this.dataservice.getAll({url:'chef/stripe/account?chef_id='+this.id,isLoader:true}).subscribe(

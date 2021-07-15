@@ -58,6 +58,9 @@ export class EditProfileComponent implements OnInit {
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
 
+  url :any;
+
+
   constructor(
     public dialogRef: MatDialogRef<EditProfileComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -239,6 +242,16 @@ export class EditProfileComponent implements OnInit {
   }
 
   getBase64(file) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+this.data.profile_data.id;
+    }else{
+        this.url ="";
+    }
+
+
+
     var reader = new FileReader();
     reader.readAsDataURL(file); // read file as data url
 
@@ -250,11 +263,11 @@ export class EditProfileComponent implements OnInit {
       if(this.data.type === 'profile'){
         let message = 'Profile Picture Edited Successfully';
         mediaInfo.append('profile_picture',this.file);
-        this.postAPIResponse('chef/chef_profile/profile_picture',mediaInfo,message);
+        this.postAPIResponse('chef/chef_profile/profile_picture'+this.url,mediaInfo,message);
       }else if(this.data.type === 'banner'){
         let message = 'Banner Picture Edited Successfully';
         mediaInfo.append('banner_picture',this.file);
-        this.postAPIResponse('chef/chef_profile/banner_picture',mediaInfo,message);
+        this.postAPIResponse('chef/chef_profile/banner_picture'+this.url,mediaInfo,message);
       }
     }
   }
@@ -345,6 +358,13 @@ export class EditProfileComponent implements OnInit {
   }
 
   emailSubmit(event) {
+    let userType = localStorage.getItem('userType');
+            let checkUserType = userType === 'true' ? true : false;
+            if (checkUserType) {
+                this.url = "?chef_id="+this.data.profile_data.id;
+            }else{
+                this.url ="";
+            }
 
     event.preventDefault();
     event.stopPropagation();
@@ -352,13 +372,21 @@ export class EditProfileComponent implements OnInit {
       this.loader = true;
       this.isSubmit = true
       let message = 'Email Edited Successfully';
-      this.postAPIResponse('chef/details/email',this.editEmailForm.value,message);
+      this.postAPIResponse('chef/details/email'+this.url,this.editEmailForm.value,message);
     }else{
       CommonUtils.validateAllFormFields(this.editEmailForm);
     }
   }
 
   passwordSubmit(event) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+this.data.profile_data.id;
+    }else{
+        this.url ="";
+    }
+
 
     event.preventDefault();
     event.stopPropagation();
@@ -367,13 +395,20 @@ export class EditProfileComponent implements OnInit {
       this.loader = true;
       this.isSubmit = true;
       let message = 'Password Edited Successfully';
-      this.postAPIResponse('chef/details/password',this.editPasswordForm.value,message);
+      this.postAPIResponse('chef/details/password'+this.url,this.editPasswordForm.value,message);
     }else{
       CommonUtils.validateAllFormFields(this.editPasswordForm);
     }
   }
 
   phoneNoSubmit(event) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+this.data.profile_data.id;
+    }else{
+        this.url ="";
+    }
 
     event.preventDefault();
     event.stopPropagation();
@@ -382,13 +417,20 @@ export class EditProfileComponent implements OnInit {
       this.loader = true;
       this.isSubmit = true
       let message = 'Phone No Edited Successfully';
-      this.postAPIResponse('chef/details/phone_number',this.editPhoneNoForm.value,message);
+      this.postAPIResponse('chef/details/phone_number'+this.url,this.editPhoneNoForm.value,message);
     }else{
       CommonUtils.validateAllFormFields(this.editPhoneNoForm);
     }
   }
 
   biographySubmit(event) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+this.data.profile_data.id;
+    }else{
+        this.url ="";
+    }
 
     event.preventDefault();
     event.stopPropagation();
@@ -396,13 +438,20 @@ export class EditProfileComponent implements OnInit {
       this.loader = true;
       this.isSubmit = true
       let message = 'Biography Edited Successfully';
-      this.postAPIResponse('chef/chef_profile/bio',this.editBiographyForm.value,message);
+      this.postAPIResponse('chef/chef_profile/bio'+this.url,this.editBiographyForm.value,message);
     }else{
       CommonUtils.validateAllFormFields(this.editBiographyForm);
     }
   }
 
   storeAddressSubmit(event) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+this.data.profile_data.id;
+    }else{
+        this.url ="";
+    }
 
     event.preventDefault();
     event.stopPropagation();
@@ -411,7 +460,7 @@ export class EditProfileComponent implements OnInit {
       this.loader = true;
       this.isSubmit = true
       let message = 'Store Address Edited Successfully';
-      this.postAPIResponse('chef/chef_store/address',this.editStoreAddressForm.value,message);
+      this.postAPIResponse('chef/chef_store/address'+this.url,this.editStoreAddressForm.value,message);
     }else{
       CommonUtils.validateAllFormFields(this.editStoreAddressForm);
     }
@@ -419,6 +468,13 @@ export class EditProfileComponent implements OnInit {
   }
 
   CuisineSubmit(event) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+this.data.profile_data.id;
+    }else{
+        this.url ="";
+    }
 
     event.preventDefault();
     event.stopPropagation();
@@ -427,7 +483,7 @@ export class EditProfileComponent implements OnInit {
       this.loader = true;
       this.isSubmit = true
       let message = 'Cuisines Edited Successfully';
-      this.postAPIResponse('chef/chef_store/cuisines',this.editCuisineForm.value,message);
+      this.postAPIResponse('chef/chef_store/cuisines'+this.url,this.editCuisineForm.value,message);
     }else{
       CommonUtils.validateAllFormFields(this.editCuisineForm);
     }
@@ -435,6 +491,14 @@ export class EditProfileComponent implements OnInit {
   }
 
   collectionDeliverySubmit(event) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+this.data.profile_data.id;
+    }else{
+        this.url ="";
+    }
+
 
     event.preventDefault();
     event.stopPropagation();
@@ -443,7 +507,7 @@ export class EditProfileComponent implements OnInit {
       this.loader = true;
       this.isSubmit = true
       let message = 'Collection/Delivery Edited Successfully';
-      this.postAPIResponse('chef/chef_store/preference',this.editCollectionDeliveryForm.value,message);
+      this.postAPIResponse('chef/chef_store/preference'+this.url,this.editCollectionDeliveryForm.value,message);
     }else{
       CommonUtils.validateAllFormFields(this.editCollectionDeliveryForm);
     }
