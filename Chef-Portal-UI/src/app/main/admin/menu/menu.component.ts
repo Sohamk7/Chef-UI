@@ -27,7 +27,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.chefID = this.activatedRoute.snapshot.params.id
-    
+    sessionStorage.setItem("chef_Id",this.chefID);
     /**
        * Watch re-render-refresh for updating db
        */

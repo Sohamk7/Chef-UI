@@ -44,6 +44,8 @@ export class CreateProductComponent implements OnInit {
 
   userType : boolean;
 
+  url :any ;
+
   constructor(
     public dialogRef                      : MatDialogRef<CreateProductComponent>,
     private dialog: MatDialog,
@@ -281,6 +283,13 @@ export class CreateProductComponent implements OnInit {
   }
 
   onSubmit(event) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+sessionStorage.getItem("chef_Id");
+    }else{
+        this.url ="";
+    }
 
     event.preventDefault();
     event.stopPropagation();
@@ -307,7 +316,11 @@ export class CreateProductComponent implements OnInit {
       mediaInfo.append('name',formValue.name);
       mediaInfo.append('price',formValue.price);
       mediaInfo.append('description',formValue.description);
-      mediaInfo.append('chef_id',formValue.chef_id);
+      if(checkUserType){
+        mediaInfo.append('chef_id',sessionStorage.getItem("chef_Id"));
+      }else{
+        mediaInfo.append('chef_id',formValue.chef_id);
+      }
       mediaInfo.append('dietary_selection',JSON.stringify(formValue.dietaries));
       mediaInfo.append('allergen_selection',JSON.stringify(formValue.allergense));
 
@@ -327,7 +340,7 @@ export class CreateProductComponent implements OnInit {
       console.log(this.varient_category.value);
       
     
-      this.dataService.saveMedia({url: url,data:mediaInfo, isLoader:true})
+      this.dataService.saveMedia({url: url+this.url,data:mediaInfo, isLoader:true})
         .subscribe(uploadResponse=>{
           console.log(uploadResponse);
           
