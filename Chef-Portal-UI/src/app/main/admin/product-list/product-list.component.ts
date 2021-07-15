@@ -32,6 +32,7 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.chefid = this.activatedRoute.snapshot.params.id;
+    sessionStorage.setItem("chef_Id", this.chefid);
     this.getProducts();
     this.token =JSON.parse(localStorage.getItem('token'))
 

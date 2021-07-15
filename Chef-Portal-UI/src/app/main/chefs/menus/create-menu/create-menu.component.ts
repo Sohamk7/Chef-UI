@@ -34,6 +34,8 @@ export class CreateMenuComponent implements OnInit {
   public loader : boolean = false;
   public showLoader: boolean = true;
 
+  url:any;
+
   constructor(
     public dialogRef                      : MatDialogRef<CreateMenuComponent>,
     @Inject(MAT_DIALOG_DATA) public data  : any,
@@ -121,8 +123,14 @@ export class CreateMenuComponent implements OnInit {
 
 
   getProducts() {
-
-    this.dataService.getAll({url:'product',isLoader:true})
+    let userType = localStorage.getItem('userType');
+            let checkUserType = userType === 'true' ? true : false;
+            if (checkUserType) {
+                this.url = "?chef_id="+sessionStorage.getItem("chef_Id");
+            }else{
+                this.url ="";
+            }
+    this.dataService.getAll({url:'product'+this.url,isLoader:true})
     .subscribe(response =>{
       this.productsList = response;
       this.filteredProductsMulti.next(this.productsList.slice());
@@ -131,6 +139,13 @@ export class CreateMenuComponent implements OnInit {
   }
   
   onSubmit(event) {
+    let userType = localStorage.getItem('userType');
+            let checkUserType = userType === 'true' ? true : false;
+            if (checkUserType) {
+                this.url = "?chef_id="+sessionStorage.getItem("chef_Id");
+            }else{
+                this.url ="";
+            }
 
     event.preventDefault();
     event.stopPropagation();
@@ -138,11 +153,17 @@ export class CreateMenuComponent implements OnInit {
       this.loader = true;
       this.isSubmit = true;
       let formValue = this.createManuForm.value;
+      if(checkUserType){
+        formValue.chef_id = sessionStorage.getItem("chef_Id");
+      }
+      
       //Define formdata
       let message = this.data!==null ? 'Menu Edited successfully' : 'Menu created successfully';
       let url = this.data!==null ? 'menu/update' : 'menu/create';
       
-      this.dataService.save({url: url, data:formValue, isLoader:true})
+     
+      
+      this.dataService.save({url: url+this.url, data:formValue, isLoader:true})
         .subscribe(uploadResponse=>{
           console.log(uploadResponse);
           
