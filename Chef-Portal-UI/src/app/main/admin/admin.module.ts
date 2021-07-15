@@ -20,6 +20,7 @@ import { OrderOfChefComponent } from './order-of-chef/order-of-chef.component';
 import { SchedulesComponent } from './schedules/schedules.component';
 import { CalendarService } from 'src/app/_services/calender.service';
 import { ChefPaymentComponent } from './chef-payment/chef-payment.component';
+import { MenuService } from 'src/app/_services/menu.service';
 
 const routes = [
   {
@@ -55,7 +56,7 @@ const routes = [
           component : OrderOfChefComponent
         },
         {
-          path : 'schedules',
+          path : 'schedules/:id',
           component: SchedulesComponent,
           resolve  : {
             events: CalendarService,
@@ -71,7 +72,10 @@ const routes = [
         },
         {
           path: 'menuByChefid/:id',
-          component : MenuComponent
+          component : MenuComponent,
+          // resolve  : {
+          //   chat: MenuService
+          // }
         },
         {
           path     : 'profile/:id',
