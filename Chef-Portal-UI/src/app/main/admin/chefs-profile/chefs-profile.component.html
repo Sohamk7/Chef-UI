@@ -32,6 +32,7 @@
             <tr fxLayoutAlign="start start"><th><h2><b>Personal Profile</b></h2></th></tr>
             <tr>
                 <td><b>BIOGRAPHY(120 chars min)</b> : {{userInfo._chef_profile?.biography}}</td>
+                <td><mat-icon (click)="editChefBiography('biography')">edit</mat-icon></td>
             </tr>
             <tr>
                 <td><b>Profile picture image : </b>
@@ -40,6 +41,7 @@
                          *ngIf="userInfo._chef_profile?._chef_profile_image?.media_url?.url !== '' && userInfo._chef_profile?._chef_profile_image?.media_url?.url" />
                     </div>
                 </td>
+                <td><mat-icon (click)="editChefProfile('profile')">edit</mat-icon></td>
             </tr>
             <tr>
                 <td><b>Banner picture image : </b>
@@ -48,6 +50,7 @@
                             *ngIf="userInfo._chef_profile?._chef_banner_image?.media_url?.url !== '' && userInfo._chef_profile?._chef_banner_image?.media_url?.url" />
                     </div>
                 </td>
+                <td><mat-icon (click)="editChefBiography('banner')">edit</mat-icon></td>
             </tr>
             <tr fxLayoutAlign="start start"><th><h2><b>Chef store Information</b></h2></th></tr>
 
@@ -55,6 +58,7 @@
                 <td><b>CUISINE NAMES : </b>
                     <div *ngFor="let cuisine of cuisineNames;let i=index">{{i+1}}. {{cuisine?._cuisine?.name}}</div>
                 </td>
+                <td><mat-icon (click)="editChefCuisine('cuisine')">edit</mat-icon></td>
             </tr>
 
             <tr>
@@ -67,6 +71,7 @@
                     <p><b>PostCode:</b> {{userInfo._chef_store?._chef_store_address.postcode}}</p>
             
                 </td>
+                <td><mat-icon (click)="editChefStoreAddress('address')">edit</mat-icon></td>
             </tr>
 
             <tr>
@@ -76,25 +81,31 @@
                        <b> Delivery </b><mat-icon *ngIf="userInfo._chef_store?.delivery" class="check">check</mat-icon> <mat-icon *ngIf="!userInfo._chef_store?.delivery" class="ncheck">close</mat-icon>
                     </div>
                 </td>
+                <td><mat-icon (click)="editCollectionDelivery('collectionDelivery')">edit</mat-icon></td>
             </tr>
 
             <tr>
                 <td><b>Edit Collection Slots</b></td>
+                <td><mat-icon (click)="editCollectionSlots('collection')">edit</mat-icon></td>
             </tr>
 
             <tr>
                 <td><b>Edit Delivery Slots</b></td>
+                <td><mat-icon (click)="editDeliverySlots('delivery')">edit</mat-icon></td>
             </tr>
             
             <tr fxLayoutAlign="start start"><th><h2><b>Chef Information</b></h2></th></tr>
             <tr>
                 <td><b>Password :</b> ***********</td>
+                <td><mat-icon (click)="editChefPassword('password')">edit</mat-icon></td>
             </tr>
             <tr>
                 <td><p><b>Phone Number:</b> {{userInfo.phone_number}}</p></td>
+                <td><mat-icon (click)="editChefPhoneNo('phoneNo')">edit</mat-icon></td>
             </tr>
             <tr>
                 <td><p><b>Email:</b> {{userInfo.email}}</p></td>
+                <td><mat-icon (click)="editChefEmail('email')">edit</mat-icon></td>
             </tr>
 
         </table>
