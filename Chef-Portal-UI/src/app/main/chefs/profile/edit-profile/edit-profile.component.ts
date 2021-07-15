@@ -242,6 +242,16 @@ export class EditProfileComponent implements OnInit {
   }
 
   getBase64(file) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+this.data.profile_data.id;
+    }else{
+        this.url ="";
+    }
+
+
+
     var reader = new FileReader();
     reader.readAsDataURL(file); // read file as data url
 
@@ -253,11 +263,11 @@ export class EditProfileComponent implements OnInit {
       if(this.data.type === 'profile'){
         let message = 'Profile Picture Edited Successfully';
         mediaInfo.append('profile_picture',this.file);
-        this.postAPIResponse('chef/chef_profile/profile_picture',mediaInfo,message);
+        this.postAPIResponse('chef/chef_profile/profile_picture'+this.url,mediaInfo,message);
       }else if(this.data.type === 'banner'){
         let message = 'Banner Picture Edited Successfully';
         mediaInfo.append('banner_picture',this.file);
-        this.postAPIResponse('chef/chef_profile/banner_picture',mediaInfo,message);
+        this.postAPIResponse('chef/chef_profile/banner_picture'+this.url,mediaInfo,message);
       }
     }
   }
