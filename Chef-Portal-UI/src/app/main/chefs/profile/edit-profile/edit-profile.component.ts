@@ -46,8 +46,7 @@ export class EditProfileComponent implements OnInit {
   protected cuisineNamesList: any = [];
   public startSlotsList: any[] = SLOTS;
   public endSlotsList: any[] = [];
-  public start2SlotsList: any[] = SLOTS;
-  public end2SlotsList: any[] = [];
+ 
   public loader : boolean = false;
 
   /** control for the MatSelect filter keyword multi-selection */
@@ -145,13 +144,16 @@ export class EditProfileComponent implements OnInit {
     console.log('dhbjhsb')
     if(index<4){
       this.slots.push(this.createItemFormGroup(null));
+      console.log(this.slots);
     }   
   }
 
   onAddExistingRow(rowData) {
     if(rowData.length > 0) {
       for (var i = 0; i <= rowData.length - 1; i++) {
+        
         if(i===0){
+
           this.EditCollectionFormGroup(null);
           this.slots.push(this.createItemFormGroup(rowData[i]));
           
@@ -159,27 +161,34 @@ export class EditProfileComponent implements OnInit {
           this.slots.push(this.createItemFormGroup(rowData[i]));
           
         }
+        this.getStartSlots(rowData[i].start_hour, i);
         this.editCollectionForm.addControl('slots', this.slots);
       }
+
+      console.log(this.slots);
     }
 		else {
       this.EditCollectionFormGroup(null);
       this.editCollectionForm.addControl('slots', this.slots);
+      this.slots.push(this.createItemFormGroup(null));
     }
 	}
   createItemFormGroup(data): FormGroup {
     let start = '';
     let end = '';
+    let startSlotsList = this.startSlotsList.length > 0 ? this.startSlotsList : [];
     console.log('in form')
     
     if(data){
-      this.getStart2Slots(data.start_hour);
+      
       start = data.start_hour ? data.start_hour : '';
       end = data.end_hour ? data.end_hour : '';
     }
     return this._fb.group({
       start: this._fb.control(start),
       end: this._fb.control(end), 
+      startSlotsList: this._fb.control(startSlotsList),
+      endSlotsList : this._fb.control([])
     });
   }
 
@@ -309,7 +318,7 @@ export class EditProfileComponent implements OnInit {
   EditCollectionFormGroup(slot_data) {
     console.log(slot_data);
     if(slot_data) {
-      this.getStartSlots(slot_data.start_hour);
+      // this.getStartSlots(slot_data.start_hour);
       this.editCollectionForm = this._fb.group({
         chef_id: this._fb.control(slot_data.chef_store_id),
         // start: this._fb.control(slot_data.start_hour),
@@ -450,8 +459,8 @@ export class EditProfileComponent implements OnInit {
       this.isSubmit = true
       let message = this.data.type === 'collection' ? 'Collection slots Edited Successfully' : 'Delivery slots Edited Successfully';
       let url = this.data.type === 'collection' ? 'chef/chef_store/collection/slot' : 'chef/chef_store/delivery/slot';
-      let formValue = this.editCollectionForm.value;
-      let tmpArr: any = [{'start':formValue.start,'end':formValue.end}];
+      // let formValue = this.editCollectionForm.value;
+      let tmpArr: any = [];
       let slotArr = this.slots.value;
       slotArr.forEach(element => {
         let object: any = {};
@@ -524,26 +533,11 @@ export class EditProfileComponent implements OnInit {
     this.tmp_avatar_img = '';
   }
 
-  startSlotsChange(event) {
-      this.getStartSlots(event.value);
+  startSlotsChange(event, index) {
+    this.getStartSlots(event.value, index);
   }
 
-  getStartSlots(value) {
-    this.endSlotsList = [];
-    let index = this.startSlotsList.findIndex((x => x === value));
-
-    if(index!==-1){
-      for(let i=index + 1;i<this.startSlotsList.length;i++){
-        this.endSlotsList.push(this.startSlotsList[i]);
-      }
-    }
-  }
-
-  start2SlotsChange(event) {
-    this.getStart2Slots(event.value);
-  }
-
-  getStart2Slots(value) {
+  getStartSlots(value,idx) {
     let index = this.startSlotsList.findIndex((x => x === value));
 
     let tmpArr: any = [];
@@ -552,7 +546,9 @@ export class EditProfileComponent implements OnInit {
       for(let i=index + 1;i<this.startSlotsList.length;i++){
         tmpArr.push(this.startSlotsList[i]);
       }
-      this.end2SlotsList = tmpArr;
+
+      this.slots.controls[idx].get('endSlotsList').setValue(tmpArr);
+      this.endSlotsList = tmpArr;
     }
   }
 

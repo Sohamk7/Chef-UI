@@ -80,12 +80,13 @@ export class CreateProductComponent implements OnInit {
         name: this._fb.control(product_details.name,[Validators.required]),
         price: this._fb.control(product_details.price,[Validators.required,Validators.pattern("^[0-9]*$")]),
         description: this._fb.control(product_details.description,[Validators.required]),
-        allergense: this._fb.control(product_details.allergens, [Validators.required]),
-        dietaries: this._fb.control(product_details.dietary, [Validators.required]),
-        variants: this._fb.control([]),
+        allergense: this._fb.control(product_details.allergens),
+        dietaries: this._fb.control(product_details.dietary),
         chef_id:this._fb.control(1),
         product_image: this._fb.control('')
       });
+
+      this.createProductForm.addControl('varient_category', this.varient_category); 
 
       //Prepopulate allergense on edit page
       let allergenNameToDispaly: any = []; 
@@ -109,13 +110,13 @@ export class CreateProductComponent implements OnInit {
           this.varient_category.push(this.createItemFormGroup(element));  
           console.log(this.varient_category);
           console.log(element.variant_options);
-          element.variant_options.forEach(element1 => {
-            console.log(element1);
-            console.log(this.varient_category.controls[index].value);
-            (this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(element1));
-            console.log(this.varient_category);
-            console.log((this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(element1)))
-          });
+          // element.variant_options.forEach(element1 => {
+          //   console.log(element1);
+          //   console.log(this.varient_category.controls[index].value);
+          //   // (this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(element1));
+          //   console.log(this.varient_category);
+          //   // console.log((this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(element1)))
+          // });
         });
       }
  
@@ -130,12 +131,13 @@ export class CreateProductComponent implements OnInit {
         name: this._fb.control('',[Validators.required]),
         price: this._fb.control('',[Validators.required,Validators.pattern("^[0-9]*$")]),
         description: this._fb.control('',[Validators.required]),
-        allergense: this._fb.control([], [Validators.required]),
-        dietaries: this._fb.control([], [Validators.required]),
-        variants: this._fb.control([]),
+        allergense: this._fb.control([]),
+        dietaries: this._fb.control([]),
         chef_id:this._fb.control(1),
         product_image: this._fb.control('')
       });
+
+      this.createProductForm.addControl('varient_category', this.varient_category); 
     }
     this.AllergyMultiFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -149,7 +151,6 @@ export class CreateProductComponent implements OnInit {
         this.filtereDietaryMulti();
       });
     
-    this.createProductForm.addControl('varient_category', this.varient_category); 
   }
 
   protected setInitialValue() {
@@ -309,6 +310,7 @@ export class CreateProductComponent implements OnInit {
         mediaInfo.append('product_id',this.data.id);
       }
 
+      //Image is optional parameter if select send
       if(this.file!== null) {
         mediaInfo.append('product_media',this.file);
       }
@@ -316,6 +318,7 @@ export class CreateProductComponent implements OnInit {
       mediaInfo.append('name',formValue.name);
       mediaInfo.append('price',formValue.price);
       mediaInfo.append('description',formValue.description);
+
       if(checkUserType){
         mediaInfo.append('chef_id',sessionStorage.getItem("chef_Id"));
       }else{
@@ -324,21 +327,31 @@ export class CreateProductComponent implements OnInit {
       mediaInfo.append('dietary_selection',JSON.stringify(formValue.dietaries));
       mediaInfo.append('allergen_selection',JSON.stringify(formValue.allergense));
 
+      //Allergens is optional parameter if select send
+      if(formValue.allergense.length > 0){
+        mediaInfo.append('allergen_selection',JSON.stringify(formValue.allergense));
+      }
+      //Dietaries is optional parameter if select send
+      if(formValue.dietaries.length > 0){
+        mediaInfo.append('dietary_selection',JSON.stringify(formValue.dietaries));
+      }
+
+      //Varients is optional parameter if select send
       let varientCategoryTemp = formValue.varient_category ? formValue.varient_category : [];
       varientCategoryTemp.forEach(element => {
         let options: any = [];
         element.productVarientList.forEach(element1 => {
           options.push(element1.value || element1);
         });
-        element.variant_options = options;
+        element.options = options;
         delete element.productVarientList;
       });
-      console.log('varientCategoryTemp', varientCategoryTemp);
-      mediaInfo.append('variants',JSON.stringify(varientCategoryTemp));
-
+      if(varientCategoryTemp.length > 0){
+        mediaInfo.append('variants',JSON.stringify(varientCategoryTemp));
+      }
+    
       console.log('mediaInfo',mediaInfo);
       console.log(this.varient_category.value);
-      
     
       this.dataService.saveMedia({url: url+this.url,data:mediaInfo, isLoader:true})
         .subscribe(uploadResponse=>{
@@ -392,7 +405,8 @@ export class CreateProductComponent implements OnInit {
         if(result.type === 'add'){
 
           result.rowdata.id = this.productVarientList.length + 1;
-          // this.productVarientList.push(result.rowdata);
+          console.log('result.rowdata.id',result.rowdata.id);
+          this.productVarientList.push(result.rowdata);
           // this.createProductForm.addControl('productVarientList',(this.varient_category.controls[index].value).productVarientList);
           // (this.varient_category.addControl('productVarientList',(this.varient_category.controls[index].value).productVarientList);
           (this.varient_category.controls[index].value).productVarientList.push(this.createVarientFormGroup(result.rowdata));
@@ -454,7 +468,7 @@ export class CreateProductComponent implements OnInit {
         if(type==='add'){
           this.varient_category.push(this.createItemFormGroup(result.rowdata));  
         }else {
-          this.varient_category.controls[index].get('variant_name').setValue(result.rowdata.variant_name);
+          this.varient_category.controls[index].get('name').setValue(result.rowdata.variant_name);
           this.varient_category.controls[index].get('single_selection').setValue(result.rowdata.single_selection);
           this.varient_category.controls[index].get('max_selection').setValue(result.rowdata.max_selection);
         }
@@ -466,18 +480,28 @@ export class CreateProductComponent implements OnInit {
 
   createItemFormGroup(data): FormGroup {      
 		return this._fb.group({
-      variant_name : this._fb.control(data.variant_name, Validators.required), 
+       name : this._fb.control(data.variant_name, Validators.required), 
        single_selection: this._fb.control(data.single_selection),
-       productVarientList: this._fb.array(data.variant_options),
+       productVarientList: this._fb.array(this.createProductVarientControls(data.variant_options)),
        max_selection: this._fb.control(data.max_selection),
-       variant_options: this._fb.control(data.variant_options)
+       options: this._fb.control(data.variant_options)
 		});
 	}
+
+  createProductVarientControls(data) {
+    let tempArr = [];
+    data.forEach(element => {
+      tempArr.push(this.createVarientFormGroup(element));
+    });
+    return tempArr;
+    
+  }
+
 
   createVarientFormGroup(data): FormGroup {    
       console.log(data);
 		return this._fb.group({
-       product_variant_name : this._fb.control(data.product_variant_name, Validators.required), 
+       option_name : this._fb.control(data.product_variant_name, Validators.required), 
        id: this._fb.control(data.id),
        price: this._fb.control(data.price,[Validators.required,Validators.pattern("^[0-9]*$")]),
        default: this._fb.control(data.default),
