@@ -54,20 +54,20 @@ export class SchedulesComponent implements OnInit {
       this.activeDayIsOpen = true;
       this.selectedDay = {date: startOfDay(new Date())};
 
-      this.actions = [
-          {
-              label  : '<i class="material-icons s-16">edit</i>',
-              onClick: ({event}: { event: CalendarEvent }): void => {
-                  this.editEvent('edit', event);
-              }
-          },
-          {
-              label  : '<i class="material-icons s-16">delete</i>',
-              onClick: ({event}: { event: CalendarEvent }): void => {
-                  this.deleteEvent(event);
-              }
-          }
-      ];
+    //   this.actions = [
+    //       {
+    //           label  : '<i class="material-icons s-16">edit</i>',
+    //           onClick: ({event}: { event: CalendarEvent }): void => {
+    //               this.editEvent('edit', event);
+    //           }
+    //       },
+    //       {
+    //           label  : '<i class="material-icons s-16">delete</i>',
+    //           onClick: ({event}: { event: CalendarEvent }): void => {
+    //               this.deleteEvent(event);
+    //           }
+    //       }
+    //   ];
 
       /**
        * Get events from service/server
@@ -103,6 +103,27 @@ export class SchedulesComponent implements OnInit {
       });
       this.setEvents();
       
+
+    //   Schedule Delete
+      this.actions = [
+        {
+            label  : '<i class="material-icons s-16">edit</i>',
+            onClick: ({event}: { event: CalendarEvent }): void => {
+                this.editEvent('edit', this.id);
+            }
+        },
+        {
+            label  : '<i class="material-icons s-16">delete</i>',
+            onClick: ({event}: { event: CalendarEvent }): void => {
+                this.deleteEvent(this.id);
+            }
+        }
+    ];
+
+
+    this.getCurrentChefInfo();
+
+
   }
   getCurrentChefInfo() {
 
@@ -222,7 +243,7 @@ export class SchedulesComponent implements OnInit {
           if ( result !== 'N')
           {
               this.showLoader = true;
-              this.deleteData(event.id);
+              this.deleteData(event);
           }
           this.confirmDialogRef = null;
       });
@@ -231,7 +252,7 @@ export class SchedulesComponent implements OnInit {
 
   deleteData(id) {
 
-    this._dataService.delete({ url: 'schedule/delete?chef_id=' + id, isLoader: true })
+    this._dataService.delete({ url: 'schedule/delete/' + id, isLoader: true })
     .subscribe((response: any) => {
      //  if(response === {}){
          // Show the success message
