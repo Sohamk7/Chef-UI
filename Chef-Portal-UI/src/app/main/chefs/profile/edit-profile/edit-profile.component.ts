@@ -59,7 +59,7 @@ export class EditProfileComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
 
   url :any;
-
+  deliveryslotObj:any={};
 
   constructor(
     public dialogRef: MatDialogRef<EditProfileComponent>,
@@ -517,6 +517,14 @@ export class EditProfileComponent implements OnInit {
   }
 
   collectionSubmit(event) {
+    let userType = localStorage.getItem('userType');
+    let checkUserType = userType === 'true' ? true : false;
+    if (checkUserType) {
+        this.url = "?chef_id="+this.data.profile_data.id;
+       
+    }else{
+        this.url ="";
+    }
 
     event.preventDefault();
     event.stopPropagation();
@@ -535,7 +543,16 @@ export class EditProfileComponent implements OnInit {
         object['end'] = element.end;
         tmpArr.push(object);
       });0.
-      this.postAPIResponse(url,{chef_id:0,slots:tmpArr},message);
+      // deliveryslotObj
+      if(checkUserType){
+        this.deliveryslotObj.chef_id = this.data.profile_data.id;
+        this.deliveryslotObj.slots = tmpArr
+      }else{
+        this.deliveryslotObj.chef_id = 0;
+        this.deliveryslotObj.slots = tmpArr
+      }
+      // {chef_id:0,slots:tmpArr}
+      this.postAPIResponse(url+this.url,this.deliveryslotObj,message);
     }else{
       CommonUtils.validateAllFormFields(this.editCollectionForm);
     }

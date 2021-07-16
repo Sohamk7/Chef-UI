@@ -37,6 +37,8 @@ export class SchedulesComponent implements OnInit {
   viewDate: Date;
   id:any;
   public showLoader: boolean = true;
+  userInfo :any = {};
+
 
   constructor(
       private _matDialog: MatDialog,
@@ -102,6 +104,19 @@ export class SchedulesComponent implements OnInit {
       this.setEvents();
       
   }
+  getCurrentChefInfo() {
+
+    this._dataService.getChefInfo({url:'chef?chef_id=' + this.id , isLoader:true})
+    .subscribe(response => {
+      this.userInfo = response;
+      this.showLoader = false;
+    });
+  }
+
+
+
+
+
 
   // -----------------------------------------------------------------------------------------------------
   // @ Public methods
@@ -216,19 +231,33 @@ export class SchedulesComponent implements OnInit {
 
   deleteData(id) {
 
-    this._dataService.delete({ url: 'schedule/delete/' + id, isLoader: true })
-      .subscribe((response: any) => {
-       //  if(response === {}){
-           // Show the success message
-           this.showLoader = false;
-           this._matSnackBar.open('Schedule deleted successfully', 'CLOSE', {
-             verticalPosition: 'bottom',
-             horizontalPosition:'center',
-             duration        : 2000
-           });
-           this.refresh.next(true);
-       //  }
-     });
+    this._dataService.delete({ url: 'schedule/delete?chef_id=' + id, isLoader: true })
+    .subscribe((response: any) => {
+     //  if(response === {}){
+         // Show the success message
+         this.showLoader = false;
+         this._matSnackBar.open('Schedule deleted successfully', 'CLOSE', {
+           verticalPosition: 'bottom',
+           horizontalPosition:'center',
+           duration        : 2000
+         });
+         this.refresh.next(true);
+     //  }
+   });
+
+    // this._dataService.delete({ url: 'schedule/delete/' + id, isLoader: true })
+    //   .subscribe((response: any) => {
+    //    //  if(response === {}){
+    //        // Show the success message
+    //        this.showLoader = false;
+    //        this._matSnackBar.open('Schedule deleted successfully', 'CLOSE', {
+    //          verticalPosition: 'bottom',
+    //          horizontalPosition:'center',
+    //          duration        : 2000
+    //        });
+    //        this.refresh.next(true);
+    //    //  }
+    //  });
   }
 
   /**
