@@ -353,6 +353,7 @@ export class CreateProductComponent implements OnInit {
       console.log('mediaInfo',mediaInfo);
       console.log(this.varient_category.value);
     
+            
       this.dataService.saveMedia({url: url+this.url,data:mediaInfo, isLoader:true})
         .subscribe(uploadResponse=>{
           console.log(uploadResponse);
