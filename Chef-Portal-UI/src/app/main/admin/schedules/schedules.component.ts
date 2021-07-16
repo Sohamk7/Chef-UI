@@ -11,9 +11,10 @@ import { CalendarEventModel } from 'src/app/_models/event.model';
 import { DataService } from 'src/app/_services/dataservice';
 import { ConfirmDialogComponent } from 'src/app/main/shared/components/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CalendarEventFormDialogComponent } from '../../chefs/schedules/event-form/event-form.component';
+// import { CalendarEventFormDialogComponent } from '../../chefs/schedules/event-form/event-form.component';
 import { ActivatedRoute } from '@angular/router';
 import { id } from 'date-fns/locale';
+import { CalendarEventFormDialogComponent } from './event-form/event-form.component';
 
 
 @Component({
