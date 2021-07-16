@@ -21,6 +21,9 @@ import { SchedulesComponent } from './schedules/schedules.component';
 import { CalendarService } from 'src/app/_services/calender.service';
 import { ChefPaymentComponent } from './chef-payment/chef-payment.component';
 import { MenuService } from 'src/app/_services/menu.service';
+import { CalendarModule as AngularCalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarEventFormDialogComponent } from './schedules/event-form/event-form.component';
 
 const routes = [
   {
@@ -106,6 +109,7 @@ const routes = [
     OrderOfChefComponent,
     SchedulesComponent,
     ChefPaymentComponent,
+    CalendarEventFormDialogComponent
   ],
   imports: [
     CommonModule,
@@ -113,6 +117,10 @@ const routes = [
     RouterModule.forChild(routes),
     MaterialModule,
     SharedModule,
+    AngularCalendarModule.forRoot({
+      provide   : DateAdapter,
+      useFactory: adapterFactory
+  }),
   ],
   exports: [RouterModule],
   providers: [LoaderService],

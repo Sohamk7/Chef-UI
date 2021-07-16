@@ -24,6 +24,8 @@ export class ChefPaymentComponent implements OnInit {
         this.id = res['chef_id']
       }
     );
+
+    sessionStorage.setItem("chef_Id",this.id);
     this.getPaymentStatus();
     this.getCurrentChefInfo();
   }

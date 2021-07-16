@@ -14,7 +14,7 @@ export class ChefsProfileComponent implements OnInit {
   public userInfo: any = {};
   public cuisineNames: any = [];
   public showLoader:boolean = true;
-  public chef_id: number = 0;
+  public chef_id: any = 0;
 
   constructor(
     private dialog: MatDialog,
@@ -24,6 +24,8 @@ export class ChefsProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.chef_id = this.route.snapshot.params.id;
+    sessionStorage.setItem("chef_Id",this.chef_id);
+
     if(this.chef_id) {
 
       this.getCurrentChefInfo();

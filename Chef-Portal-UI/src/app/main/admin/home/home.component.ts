@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
      this.id =  params['chef_id']
    })
     console.log("CHEF ID FROM HOME ==>",this.id);
+    sessionStorage.setItem("chef_Id",this.id);
     
     this.getProfileCompleteData();
     this.getCurrentChefInfo();

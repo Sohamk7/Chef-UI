@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DataService } from 'src/app/_services/dataservice';
 
@@ -34,6 +35,7 @@ export class ChefsComponent implements OnInit {
 
   constructor(
       private _dataService: DataService,
+      private _router:Router,
       public datepipe: DatePipe) {
         this.columns = [
           {
@@ -134,5 +136,9 @@ export class ChefsComponent implements OnInit {
     this.getList();
   }
 
- 
+  changeRouteToSchedule(id){
+    // alert(id);
+    this._router.navigate(['/schedules',id]);
+    sessionStorage.setItem("chef_Id",id);
+  }
 }

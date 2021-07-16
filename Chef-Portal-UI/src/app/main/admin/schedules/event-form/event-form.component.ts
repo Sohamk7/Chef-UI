@@ -204,6 +204,10 @@ export class CalendarEventFormDialogComponent implements OnInit {
       let message = this._data!==null ? 'Schedule Edited successfully' : 'Schedule created successfully';
       let url = this._data!==null ? 'schedule/update' : 'schedule/create';
       
+      if(checkUserType){
+        formValue.chef_id = sessionStorage.getItem("chef_Id");
+      }
+
 
       this._dataService.save({url: url+this.url, data:formValue,isLoader:true})
         .subscribe(uploadResponse=>{

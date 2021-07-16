@@ -495,6 +495,7 @@ export class EditProfileComponent implements OnInit {
     let checkUserType = userType === 'true' ? true : false;
     if (checkUserType) {
         this.url = "?chef_id="+this.data.profile_data.id;
+         this.editCollectionDeliveryForm.value.chef_id = this.data.profile_data.id;
     }else{
         this.url ="";
     }
@@ -507,7 +508,9 @@ export class EditProfileComponent implements OnInit {
       this.loader = true;
       this.isSubmit = true
       let message = 'Collection/Delivery Edited Successfully';
-      this.postAPIResponse('chef/chef_store/preference'+this.url,this.editCollectionDeliveryForm.value,message);
+      console.log("collectionDeliverySubmit  =>",this.editCollectionDeliveryForm.value);
+      
+       this.postAPIResponse('chef/chef_store/preference'+this.url,this.editCollectionDeliveryForm.value,message);
     }else{
       CommonUtils.validateAllFormFields(this.editCollectionDeliveryForm);
     }
