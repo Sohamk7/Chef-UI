@@ -28,7 +28,8 @@
                         <button mat-menu-item [routerLink]="['productBychefId', element.id]" routerLink="productBychefId">Product</button>
                         <button mat-menu-item [routerLink]="['menuByChefid', element.id]" routerLink="menuByChefid">Menu</button>
                         <button mat-menu-item routerLink="OrderOfChef" [queryParams]="{ chef_id: element.id}">Order</button>
-                        <button mat-menu-item  [routerLink]="['/schedules', element.id]" routerLink="/schedules">Schedule</button>
+                        <!-- <button mat-menu-item  [routerLink]="['/schedules', element.id]" routerLink="/schedules">Schedule</button> -->
+                        <button mat-menu-item  (click)="changeRouteToSchedule(element.id)">Schedule</button>
                         <button mat-menu-item routerLink="ChefPayment" [queryParams]="{ chef_id: element.id}">Payments</button>
                       </mat-menu>
                     </span>

@@ -59,6 +59,7 @@ export class AuthService {
         //             // store loginResponse details and jwt token in local storage to keep loginResponse logged in between page refreshes
                     localStorage.removeItem('token');
                     localStorage.removeItem('userType');
+                    sessionStorage.removeItem('chef_Id')
         //             localStorage.removeItem('themesettings');
         //             localStorage.removeItem('userInfo');
                     this.currentUserSubject.next(null);
