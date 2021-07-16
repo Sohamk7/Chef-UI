@@ -1,5 +1,5 @@
 <app-loader *ngIf="showLoader"></app-loader>
-<div class="userTitleMainDiv">
+<div class="userTitleMainDiv" *ngIf="id">
     <h1 class="userTitle">Viewing {{userInfo.first_name}} {{userInfo.second_name}}</h1>
     
         <button mat-button [matMenuTriggerFor]="menu">
