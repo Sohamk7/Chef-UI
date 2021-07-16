@@ -112,7 +112,7 @@ export class MenuComponent implements OnInit {
 
    deleteData(id) {
 
-    this.dataService.delete({ url: 'menu/delete/' + id, isLoader: true })
+    this.dataService.delete({ url: 'menu/delete/' + id+"?chef_id="+this.chefID, isLoader: true })
       .subscribe((response: any) => {
        //  if(response === {}){
            // Show the success message

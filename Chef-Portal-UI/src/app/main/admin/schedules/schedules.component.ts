@@ -109,13 +109,13 @@ export class SchedulesComponent implements OnInit {
         {
             label  : '<i class="material-icons s-16">edit</i>',
             onClick: ({event}: { event: CalendarEvent }): void => {
-                this.editEvent('edit', this.id);
+                this.editEvent('edit', event);
             }
         },
         {
             label  : '<i class="material-icons s-16">delete</i>',
             onClick: ({event}: { event: CalendarEvent }): void => {
-                this.deleteEvent(this.id);
+                this.deleteEvent(event);
             }
         }
     ];
@@ -252,10 +252,11 @@ export class SchedulesComponent implements OnInit {
 
   deleteData(id) {
 
-    this._dataService.delete({ url: 'schedule/delete/' + id, isLoader: true })
+    console.log(id.id);
+    
+    this._dataService.delete({ url: 'schedule/delete/' + id.id+'?chef_id='+this.id, isLoader: true })
     .subscribe((response: any) => {
-     //  if(response === {}){
-         // Show the success message
+     
          this.showLoader = false;
          this._matSnackBar.open('Schedule deleted successfully', 'CLOSE', {
            verticalPosition: 'bottom',
@@ -263,7 +264,7 @@ export class SchedulesComponent implements OnInit {
            duration        : 2000
          });
          this.refresh.next(true);
-     //  }
+     
    });
 
     // this._dataService.delete({ url: 'schedule/delete/' + id, isLoader: true })
