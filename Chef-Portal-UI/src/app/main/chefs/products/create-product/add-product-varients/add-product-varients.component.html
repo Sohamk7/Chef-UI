@@ -23,7 +23,7 @@
                     </mat-form-field>
                     <div fxLayout="row" fxLayoutAlign="space-between center">
                         <span>Default Selection</span>
-                        <mat-slide-toggle color="primary" formControlName="default"></mat-slide-toggle>
+                        <mat-slide-toggle color="primary" [disabled]="isEnableDefaultSingleSelection" formControlName="default"></mat-slide-toggle>
                     </div>
     
                     <mat-form-field appearance="outline" class="pt-10">
