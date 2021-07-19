@@ -4,6 +4,7 @@ import { HomeModule } from './home/home.module';
 import { RouterModule } from '@angular/router';
 import { BecomeAChefsModule } from './become-achefs/become-achefs.module';
 import { SharedModule } from '../shared/shared.module';
+import { CutomerSignupModule } from './customer-signup/customer-signup.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { SharedModule } from '../shared/shared.module';
     HomeModule,
     RouterModule,
     BecomeAChefsModule,
-    SharedModule
+    SharedModule,
+    CutomerSignupModule
   ],
   exports: [RouterModule,SharedModule]
 })

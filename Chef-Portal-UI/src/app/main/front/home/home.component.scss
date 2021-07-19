@@ -3,6 +3,7 @@
     padding: 50px;
     margin: 20px;
     background-color: #FFF2E0;
+
  }
 .example-spacer {
     flex: 1 1 auto;
@@ -18,4 +19,28 @@
 .bg {
     background-color: #494949;
     color: white;
+}
+mat-sidenav-container{
+    background-color: transparent !important;
+    color:white;
+    height:100%;
+    padding:10px;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: white!important;
+    // opacity: 1!important;
+}
+::ng-deep .mat-input-element::placeholder{
+    color: white;
+}
+
+.home{
+    background-image: url(./../../../../assets/home_background.jpg)!important;
+    background-size: cover!important;
+}
+li{
+    list-style-type:none
+}
+p{
+    font-size: large;
 }
