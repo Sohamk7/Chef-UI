@@ -11,11 +11,13 @@ import { CommonUtils } from 'src/app/_helpers/common.utils';
   styleUrls: ['./add-product-varients.component.scss']
 })
 export class AddProductVarientsComponent implements OnInit {
+
   createProductVarientForm:FormGroup;
   createProductVarientCategoryForm: FormGroup;
   public isSubmit: boolean = false;
   public loader = false;
   public showLoader: boolean = true;
+  public isEnableDefaultSingleSelection: boolean = false;
   public data;
   public type;
   public message;
@@ -38,6 +40,7 @@ export class AddProductVarientsComponent implements OnInit {
     if(this.type === 'edit' && this.data!==null){
 
       this.message = 'Edit Varient';
+      this.checkDefaultValueIsTrue();
 
       this.createProductVarientForm = this._fb.group({
         id: this._fb.control(this.data.id),
@@ -49,6 +52,7 @@ export class AddProductVarientsComponent implements OnInit {
     }else if(this.type==='add'){
 
       this.message = 'Add New Varient';
+      this.checkDefaultValueIsTrue();
 
       this.createProductVarientForm = this._fb.group({
         id: this._fb.control(0),
@@ -75,6 +79,17 @@ export class AddProductVarientsComponent implements OnInit {
     }
   }
 
+  checkDefaultValueIsTrue() {
+
+    this._data.isEnableDefaultSingleSelection.forEach(element => {
+      if(element.default === true) {
+        this.isEnableDefaultSingleSelection = true;
+      }
+      else if(element?.value?.default === true){
+        this.isEnableDefaultSingleSelection = true;
+      }
+    });;
+  }
 
   transformAmount(element){
     let formattedAmount = this.currencyPipe.transform(this.createProductVarientForm.get('price').value, 'EUR');

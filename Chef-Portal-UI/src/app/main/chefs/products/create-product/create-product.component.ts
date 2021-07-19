@@ -121,7 +121,7 @@ export class CreateProductComponent implements OnInit {
       }
  
       //Prepopulate Image on edit page
-      this.tmp_avatar_img = product_details._product_media_of_product_details.media_url.url;
+      this.tmp_avatar_img = product_details._product_media_of_product_details ? product_details._product_media_of_product_details.media_url.url : '';
 
     }else{
 
@@ -378,7 +378,6 @@ export class CreateProductComponent implements OnInit {
         });
       });
     }else{
-      console.log('gfgh');
       CommonUtils.validateAllFormFields(this.createProductForm);
     }
   }
@@ -393,9 +392,11 @@ export class CreateProductComponent implements OnInit {
   }
 
   addEditVarient(data,type, index){
+
+    console.log((this.varient_category.controls[index].value).productVarientList);
     
     let dialogRef = this.dialog.open(AddProductVarientsComponent, {
-      data:{'type':type,rowdata:data},
+      data:{'type':type,rowdata:data , isEnableDefaultSingleSelection:(this.varient_category.controls[index].value).productVarientList},
       width: '600px',
       disableClose:true
     });
@@ -415,14 +416,27 @@ export class CreateProductComponent implements OnInit {
         }else if(result.type === 'edit'){
 
           console.log(index);
-
+          console.log('result.rowdata',result.rowdata);
           console.log((this.varient_category.controls[index].value).productVarientList);
           let productVarientListTemp = (this.varient_category.controls[index].value).productVarientList;
+          console.log('productVarientListTemp',productVarientListTemp);
 
           productVarientListTemp.forEach((item, idx) => {
-              if(item?.value?.id === result.rowdata.id){
-                (this.varient_category.controls[index].value).productVarientList[idx].setValue(result.rowdata);
+              if(item?.id === result.rowdata.id ){
+                console.log(idx);
+                // (this.varient_category.controls[index].value).productVarientList[idx].setValue(result.rowdata);
                 // this.productVarientList[idx] = result.rowdata;
+                (this.varient_category.controls[index].value).productVarientList[idx].option_name = result.rowdata.product_variant_name;
+                (this.varient_category.controls[index].value).productVarientList[idx].default = result.rowdata.default;
+                (this.varient_category.controls[index].value).productVarientList[idx].price = result.rowdata.price;
+                console.log((this.varient_category.controls[index].value).productVarientList[idx]);
+
+              }else if(item?.value?.id === result.rowdata.id) {
+
+                (this.varient_category.controls[index].value).productVarientList[idx].value.option_name = result.rowdata.product_variant_name;
+                (this.varient_category.controls[index].value).productVarientList[idx].value.default = result.rowdata.default;
+                (this.varient_category.controls[index].value).productVarientList[idx].value.price = result.rowdata.price;
+                
               }
             });
         }
