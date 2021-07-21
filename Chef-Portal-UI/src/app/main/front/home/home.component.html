@@ -1,5 +1,4 @@
 <div> 
-  <!-- FooterComponent -->
     <mat-toolbar color="primary">      
       <a mat-button  routerLink="/" style="text-align: start;">
         <span><img src="./assets/lmc_logo_white.png" class="image" style="width: 20%;"></span>
@@ -45,8 +44,6 @@
     </mat-sidenav>
     <mat-sidenav-content fxFlexFill>
 
-      <!-- <img src="./assets/zoomed_background.jfif" class="image" style="width: 100%;"> -->
-
       <div fxLayout="column" fxFlex="100">
         <div class="bg-image">
           <div fxLayout="row" fxLayoutAlign="start start">
@@ -61,7 +58,7 @@
                     <mat-form-field appearance="outline">
                       <input matInput type="text" placeholder="Enter Pastocode" >
                     </mat-form-field>
-                    <button mat-raised-button color="primary" class="submit-button" aria-label="Search">
+                    <button mat-raised-button color="primary"  routerLink="view-chefs" class="submit-button" aria-label="Search">
                         Search
                     </button>
                   </div>
