@@ -1,38 +1,42 @@
-
 <div style="height: 100vh;"> 
-    <mat-toolbar>      
+    <mat-toolbar color="primary">      
       <a mat-button  routerLink="/" style="text-align: start;">
-        <span><img src="./assets/lmc_logo_white.png" class="image" style="width: 32%;"></span>
+        <span><img src="./assets/logo.jpeg" class="image" style="width: 32%;"></span>
       </a>
-      <mat-form-field appearance="outline" style="width:150px;color:white; height:65px; font-size: 15px; outline-color:white">
-        <mat-label>Chefs</mat-label>
-        <mat-select disableRipple>
-          <mat-option  routerLink="auth/login">Login</mat-option>
-          <mat-option  routerLink="become-chefs">Become a chef</mat-option>
-        </mat-select>
-      </mat-form-field>
       
       <span class="example-spacer"></span>
-      <mat-form-field appearance="outline" style="width:150px; padding:2px; height:65px; color:white; font-size: 15px; outline-color:white">
-        <mat-label>Customer</mat-label>
-        <mat-select disableRipple>
-          <mat-option routerLink="auth/login">Login</mat-option>
-          <mat-option routerLink="customer-signup">SignUp</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div fxShow="true" fxHide.lt-md="true">
+        <!-- <a mat-button routerLink="auth/login">Login</a> -->
+        <button mat-button [matMenuTriggerFor]="menu">Login</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="become-chefs">Become a masterchef</button>
+          <button mat-menu-item routerLink="auth/login">MasterChef Login</button>
+        </mat-menu>
+      </div>
+     
     </mat-toolbar>
     <mat-sidenav-container fxFlexFill class="example-container">
+    <mat-sidenav color="primary" #sidenav fxLayout="column" mode="side" opened="true" fxHide.gt-sm="true">
+        <div fxLayout="column">
+          <button mat-button [matMenuTriggerFor]="menu">Login</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="become-chefs">Checfs Login</button>
+            <button mat-menu-item routerLink="auth/login">Admin Login</button>
+          </mat-menu>
+        </div>
+    </mat-sidenav>
     <mat-sidenav-content fxFlexFill>
-      <div class="home">
-      <div class="content"fxLayout="row" fxLayoutAlign="space-around start" fxLayoutGap="20px" >
-        <div fxLayout="column" fxLayoutAlign="space-around start" class="pl-10" fxFlex="50">
-          <p>Authentic Homecooked Food.</p>
-          <p>Delivered Straight To Your Door.</p>
-          <div>
+      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+        <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
+          <h2>Authentic Homecooked Food Delivered Straight To Your Door.</h2>
+          <div class="border">
             <div fxLayout="column" class="pl-20" fxLayoutAlign="space-around center">
+              <div fxLayout="row">
+                <h4><b>Enter postcode to find Local MasterChefs</b></h4>
+              </div>
               <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
                 <mat-form-field appearance="outline">
-                  <input matInput type="text" placeholder="Enter your address..." >
+                  <input matInput type="text" placeholder="Enter Pastocode" >
                 </mat-form-field>
                 <button mat-raised-button color="primary" class="submit-button" aria-label="Search">
                     Search
@@ -41,40 +45,37 @@
             </div>
           </div>
         </div>
+        <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
+          <div fxLayout="row">
+            <img src="./assets/niraj.jpg" class="image" style="width: 100%;">
+          </div>
+         
+        </div>
       </div>
-    </div>
-      <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" class="bg">
+      <div fxLayout="row" fxLayoutAlign="space-around start" fxLayoutGap="20px" class="bg">
         <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
           <!-- <h1><b>Local MasterChefs</b></h1> -->
-          <img src="../../../../assets/lmc_logo_white.png" class="image" style="width: 100%;">
+          <img src="./assets/logo.jpeg" class="image" style="width: 100%;">
         </div>
         <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
-          <ul>
-          <li><h2>Contact Us</h2></li>
-          <li>About Us</li>
-          <li>Phone: +447988188825</li>
-          <li>Email:ali@localmasterchefs.com</li>
-        </ul>
+          <h3>Contact Us</h3>
+          <p>Phone: +447988188825</p>
+          <p>Email:ali@localmasterchefs.com</p>
         </div>
         <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
-          <ul>
-          <li><h2>Customers</h2></li>
-          <li>Login</li>
-          <li>Signup</li>
-          
-        </ul>
-        </div>
-        <div fxLayout="column" fxLayoutAlign="space-around start" class="pl-20" fxFlex="50">
-         <ul>
-          <li><h2>Chefs</h2></li>
-          <li>Become a Chef</li>
-          <li>Chef Login</li>
-        </ul>
+          <p>Homepage</p>
+          <p>Order Now</p>
+          <p>About Us</p>
+          <p>Become a Chef</p>
+          <p>Chef Login</p>
+          <p>Contact Us</p>
+          <p>Download on the App Store</p>
+          <p>Download on the Google play</p>
         </div>
       </div>
       <router-outlet></router-outlet> 
     </mat-sidenav-content>
-    </mat-sidenav-container> 
-  </div>     
+    </mat-sidenav-container>      
 
+</div>
 

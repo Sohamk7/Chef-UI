@@ -309,7 +309,7 @@ export class EditProfileComponent implements OnInit {
       address_3: this._fb.control(address.address_3),
       city: this._fb.control(address.city, [Validators.required]),
       country: this._fb.control(address.country, [Validators.required]),
-      postcode: this._fb.control(address.postcode, [Validators.required,Validators.pattern('[a-zA-Z0-9]{6}$'), Validators.minLength(6),Validators.maxLength(6)]),
+      postcode: this._fb.control(address.postcode, [Validators.required, Validators.minLength(6),Validators.maxLength(6)]),
     });
   }
 
