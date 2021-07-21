@@ -1,1 +1,29 @@
-<p>view-chefs works!</p>
+<mat-toolbar color="primary">      
+    <div fxLayout="row" fxFlex="100">
+        <a mat-button  routerLink="/" style="text-align: start;">
+            <span><img src="./assets/lmc_logo_white.png" class="image" style="width: 20%;"></span>
+        </a>
+        <!-- <div  fxLayoutGap="20px" fxFlex="50">
+            <mat-form-field appearance="outline">
+              <input matInput type="text" placeholder="Enter Pastocode" >
+            </mat-form-field>
+            <button mat-raised-button color="primary"  routerLink="view-chefs" class="submit-button" aria-label="Search">
+                Search
+            </button>
+        </div> -->
+    </div>
+   
+    
+    <span class="example-spacer"></span>
+    <div fxShow="true" fxHide.lt-md="true" fxLayoutGap="20px">
+     
+      <button mat-stroked-button [matMenuTriggerFor]="menuCustomer">Customers <i class="fa fa-caret-down "></i>
+      </button>
+      <mat-menu #menuCustomer="matMenu">
+        <button mat-menu-item routerLink="auth/login">Login</button>
+        <button mat-menu-item routerLink="customer-signup">Sign up</button>
+      </mat-menu>
+    
+    </div>
+   
+</mat-toolbar>

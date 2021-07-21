@@ -6,12 +6,10 @@ import { BecomeAChefsModule } from './become-achefs/become-achefs.module';
 import { SharedModule } from '../shared/shared.module';
 import { FooterModule } from './footer/footer.module';
 import { CutomerSignupModule } from './customer-signup/customer-signup.module';
-import { ViewChefsComponent } from './view-chefs/view-chefs.component';
+import { ViewChefsModule } from './view-chefs/view-chefs.module';
 
 @NgModule({
   declarations: [
-  
-    ViewChefsComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +18,8 @@ import { ViewChefsComponent } from './view-chefs/view-chefs.component';
     BecomeAChefsModule,
     SharedModule,
     FooterModule,
-    CutomerSignupModule
+    CutomerSignupModule,
+    ViewChefsModule
   ],
   exports: [RouterModule,SharedModule]
 })
