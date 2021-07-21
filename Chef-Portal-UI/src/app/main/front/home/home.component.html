@@ -1,31 +1,29 @@
-<div class="home">
+
 <div style="height: 100vh;"> 
-    <mat-toolbar color="primary">      
+    <mat-toolbar>      
       <a mat-button  routerLink="/" style="text-align: start;">
-        <span><img src="./assets/logo.jpeg" class="image" style="width: 32%;"></span>
+        <span><img src="./assets/lmc_logo_white.png" class="image" style="width: 32%;"></span>
       </a>
+      <mat-form-field appearance="outline" style="width:150px;color:white; height:65px; font-size: 15px; outline-color:white">
+        <mat-label>Chefs</mat-label>
+        <mat-select disableRipple>
+          <mat-option  routerLink="auth/login">Login</mat-option>
+          <mat-option  routerLink="become-chefs">Become a chef</mat-option>
+        </mat-select>
+      </mat-form-field>
       
       <span class="example-spacer"></span>
-      <div fxShow="true" fxHide.lt-md="true">
-        <!-- <a mat-button routerLink="auth/login">Login</a> -->
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">chefs</button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="become-chefs">Become a masterchef</button>
-          <button mat-menu-item routerLink="auth/login">Login</button>
-        </mat-menu>
-      </div>
-      <span class="example-spacer"></span>
-      <div fxShow="true" fxHide.lt-md="true">
-        <!-- <a mat-button routerLink="auth/login">Login</a> -->
-        <button mat-button mat-raised-button color="primary" [matMenuTriggerFor]="menu">customers</button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="customer-signup">Signup</button>
-          <button mat-menu-item routerLink="auth/login">Login</button>
-        </mat-menu>
-      </div>
+      <mat-form-field appearance="outline" style="width:150px; padding:2px; height:65px; color:white; font-size: 15px; outline-color:white">
+        <mat-label>Customer</mat-label>
+        <mat-select disableRipple>
+          <mat-option routerLink="auth/login">Login</mat-option>
+          <mat-option routerLink="customer-signup">SignUp</mat-option>
+        </mat-select>
+      </mat-form-field>
     </mat-toolbar>
     <mat-sidenav-container fxFlexFill class="example-container">
     <mat-sidenav-content fxFlexFill>
+      <div class="home">
       <div class="content"fxLayout="row" fxLayoutAlign="space-around start" fxLayoutGap="20px" >
         <div fxLayout="column" fxLayoutAlign="space-around start" class="pl-10" fxFlex="50">
           <p>Authentic Homecooked Food.</p>
@@ -44,10 +42,11 @@
           </div>
         </div>
       </div>
+    </div>
       <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" class="bg">
         <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
           <!-- <h1><b>Local MasterChefs</b></h1> -->
-          <img src="./assets/logo.jpeg" class="image" style="width: 100%;">
+          <img src="../../../../assets/lmc_logo_white.png" class="image" style="width: 100%;">
         </div>
         <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
           <ul>
@@ -77,6 +76,5 @@
     </mat-sidenav-content>
     </mat-sidenav-container> 
   </div>     
-</div>
 
 

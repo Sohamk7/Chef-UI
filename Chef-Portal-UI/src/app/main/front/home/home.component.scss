@@ -23,8 +23,6 @@
 mat-sidenav-container{
     background-color: transparent !important;
     color:white;
-    height:100%;
-    padding:10px;
 }
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
     color: white!important;
@@ -36,7 +34,6 @@ mat-sidenav-container{
 
 .home{
     background-image: url(./../../../../assets/home_background.jpg)!important;
-    background-size: cover!important;
 }
 li{
     list-style-type:none
@@ -44,3 +41,7 @@ li{
 p{
     font-size: large;
 }
+mat-toolbar{
+    background-color:#6e41c8;
+}
+
