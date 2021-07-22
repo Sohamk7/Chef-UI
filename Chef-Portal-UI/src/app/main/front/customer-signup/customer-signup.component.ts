@@ -129,7 +129,7 @@ export class CustomerSignupComponent implements OnInit {
       this.isSubmit = true;
       let formValue = this.customersForm.value
 
-      this._dataService.post({url:'auth/create_customer',data:formValue,isLoader:true})
+      this._dataService.customerpost({url:'auth/create_customer',data:formValue,isLoader:true})
         .pipe(first())
         .subscribe(
             data => {
@@ -139,17 +139,17 @@ export class CustomerSignupComponent implements OnInit {
                     horizontalPosition:'center',
                     duration        : 2000
                 });
-                this._router.navigate(['/auth/login']);
+                this._router.navigate(['/customer-login']);
                  this.isSubmit = false;
+                 this.customersForm.reset();
             },
             error => {
                 // Show the error message
-                this._matSnackBar.open('please try', 'Retry', {
+                this._matSnackBar.open(error.error.message, 'Retry', {
                     verticalPosition: 'bottom',
                     horizontalPosition:'center',
-                    duration        : 2000
+                    duration        : 4000
                 });
-                this.customersForm.reset();
       });
     }else{
       CommonUtils.validateAllFormFields(this.customersForm);

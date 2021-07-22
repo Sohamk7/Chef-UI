@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home.component';
-import { MaterialModule } from '../../material.module';
+import { CustomerDashboardComponent } from './customer-dashboard.component';
 import { RouterModule } from '@angular/router';
-import { FooterModule } from '../footer/footer.module';
+import { MaterialModule } from '../../material.module';
 
 const routes = [
   {
-      path     : '',
-      component: HomeComponent
+    path     : '',
+    component: CustomerDashboardComponent,
+      children : [
+      ]
   }
 ];
 
 @NgModule({
   declarations: [
-    HomeComponent,
+    CustomerDashboardComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModule,
-    FooterModule
   ]
 })
-export class HomeModule { }
+export class CustomerDashboardModule { }
