@@ -1,78 +1,79 @@
-<div> 
-    <mat-toolbar color="primary">      
-      <a mat-button  routerLink="/" style="text-align: start;">
-        <span><img src="./assets/lmc_logo_white.png" class="image" style="width: 20%;"></span>
-      </a>
-      
-      <span class="example-spacer"></span>
-      <div fxShow="true" fxHide.lt-md="true" fxLayoutGap="20px">
-       
-        <button mat-stroked-button [matMenuTriggerFor]="menu">Chefs <i class="fa fa-caret-down pl-18"></i>
-          </button>
+<div>
+  <mat-toolbar>
+    <a mat-button routerLink="/" style="text-align: start;">
+      <span><img src="./assets/lmc_logo_white.png" class="image" style="width: 20%;"></span>
+    </a>
+
+    <span class="example-spacer"></span>
+    <div fxShow="true" fxHide.lt-md="true" fxLayoutGap="20px">
+
+      <button mat-stroked-button [matMenuTriggerFor]="menu">Chefs <i class="fa fa-caret-down pl-18"></i>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="auth/login">Login</button>
+        <button mat-menu-item routerLink="become-chefs">Become a chef</button>
+      </mat-menu>
+
+      <button mat-stroked-button [matMenuTriggerFor]="menuCustomer">Customers <i class="fa fa-caret-down "></i>
+      </button>
+      <mat-menu #menuCustomer="matMenu">
+        <button mat-menu-item routerLink="auth/login">Login</button>
+        <button mat-menu-item routerLink="customer-signup">Sign up</button>
+      </mat-menu>
+
+    </div>
+
+  </mat-toolbar>
+  <div fxFlexFill class="example-container">
+    <mat-toolbar #sidenav fxLayout="row" mode="side" opened="true" fxHide.gt-sm="true">
+      <div fxLayout="row">
+        <button class="btn" mat-stroked-button [matMenuTriggerFor]="menu">Chefs <i class="fa fa-caret-down pl-18"></i>
+        </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="auth/login">Login</button>
           <button mat-menu-item routerLink="become-chefs">Become a chef</button>
         </mat-menu>
 
-        <button mat-stroked-button [matMenuTriggerFor]="menuCustomer">Customers <i class="fa fa-caret-down "></i>
+        <button  class="btn" mat-stroked-button [matMenuTriggerFor]="menuCustomer">Customers <i class="fa fa-caret-down "></i>
         </button>
         <mat-menu #menuCustomer="matMenu">
           <button mat-menu-item routerLink="auth/login">Login</button>
           <button mat-menu-item routerLink="customer-signup">Sign up</button>
         </mat-menu>
-      
       </div>
-     
     </mat-toolbar>
-    <mat-sidenav-container fxFlexFill class="example-container">
-    <mat-sidenav color="primary" #sidenav fxLayout="column" mode="side" opened="true" fxHide.gt-sm="true">
-        <div fxLayout="column">
-          <button mat-stroked-button [matMenuTriggerFor]="menu">Chefs <i class="fa fa-caret-down pl-18"></i>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item routerLink="auth/login">Login</button>
-            <button mat-menu-item routerLink="become-chefs">Become a chef</button>
-          </mat-menu>
 
-          <button mat-stroked-button [matMenuTriggerFor]="menuCustomer">Customers <i class="fa fa-caret-down "></i>
-          </button>
-          <mat-menu #menuCustomer="matMenu">
-            <button mat-menu-item routerLink="auth/login">Login</button>
-            <button mat-menu-item routerLink="customer-signup">Sign up</button>
-          </mat-menu>
-        </div>
-    </mat-sidenav>
-    <mat-sidenav-content fxFlexFill>
+    <div fxFlexFill>
+      <div class="bg-image">
+        <div class="main">
+          <div fxLayout="column" fxFlex="100">
 
-      <div fxLayout="column" fxFlex="100">
-        <div class="bg-image">
-          <div fxLayout="row" fxLayoutAlign="start start">
-            <div fxLayout="column" fxLayoutAlign="start center" class="pl-20" fxFlex="50">
-              <h2>Authentic Homecooked Food Delivered Straight To Your Door.</h2>
-              <div class="border">
-                <div fxLayout="column" class="pl-20" fxLayoutAlign="start center">
-                  <div fxLayout="row">
-                    <h4><b>Enter postcode to find Local MasterChefs</b></h4>
-                  </div>
-                  <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
-                    <mat-form-field appearance="outline">
-                      <input matInput type="text" placeholder="Enter Pastocode" >
-                    </mat-form-field>
-                    <button mat-raised-button color="primary"  routerLink="view-chefs" class="submit-button" aria-label="Search">
-                        Search
-                    </button>
+            <div fxLayout="row" fxLayoutAlign="start start">
+              <div fxLayout="column" fxLayoutAlign="start start" class="pl-20" fxFlex="50">
+                <p>Authentic Homecooked Food.</p>
+                <p> Delivered Straight To Your Door.</p>
+                <div>
+                  <div fxLayout="column" fxLayoutAlign="start start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+                      <mat-form-field appearance="outline">
+                        <input matInput type="text" placeholder="Enter your address...">
+                      </mat-form-field>
+                      <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+                        <button  class="btn" mat-stroked-button routerLink="view-chefs" class="submit-button" aria-label="Search">
+                          SEARCH
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          
           </div>
+          <app-footer></app-footer>
         </div>
-        <app-footer></app-footer>
       </div>
-    </mat-sidenav-content>
-    
-    </mat-sidenav-container>      
- 
-</div>
+    </div>
 
+  </div>
+
+</div>

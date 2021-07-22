@@ -34,3 +34,30 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+p{
+    font-size: large;
+}
+.mat-stroked-button{
+    border-color: white!important;
+    background-color: #6e41c8;
+    color:white;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color:white!important;
+    // opacity: 1!important;
+}
+::ng-deep .mat-input-element{
+    caret-color: white!important;
+    color:white;
+}
+mat-toolbar{
+    background-color:#6e41c8;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color:white;
+  }
+  .main{
+      position:relative;
+      margin-top: 80px;
+  }
+  
