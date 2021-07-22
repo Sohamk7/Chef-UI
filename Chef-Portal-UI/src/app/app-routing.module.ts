@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminModule } from './main/admin/admin.module';
 import { ChefsModule } from './main/chefs/chefs.module';
+import { CustomerDashboardModule } from './main/customer/customer-dashboard/customer-dashboard.module';
 import { FrontModule } from './main/front/front.module';
 import { PagesModule } from './main/pages/pages.module';
 
@@ -23,6 +24,10 @@ const routes: Routes = [
     path        : 'chef',
     loadChildren: () => import('./main/chefs/chefs.module').then(m => m.ChefsModule)
   },
+  {
+    path        : 'customer',
+    loadChildren: () => import('./main/customer/customer-dashboard/customer-dashboard.module').then(m => m.CustomerDashboardModule)
+  },
   // {
   //   path        : '**',
   //   redirectTo  : '/errors/error-404'
@@ -35,7 +40,8 @@ const routes: Routes = [
     FrontModule,
     PagesModule,
     AdminModule,
-    ChefsModule
+    ChefsModule,
+    CustomerDashboardModule
   ],
   exports: [
     RouterModule,

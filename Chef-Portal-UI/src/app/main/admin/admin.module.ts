@@ -75,9 +75,6 @@ const routes = [
         {
           path: 'chefs/menuByChefid/:id',
           component : MenuComponent,
-          // resolve  : {
-          //   chat: MenuService
-          // }
         },
         {
           path     : 'chefs/profile/:id',

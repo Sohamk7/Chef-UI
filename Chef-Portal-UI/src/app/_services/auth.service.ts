@@ -46,6 +46,21 @@ export class AuthService {
             }),catchError(err => { return throwError("Error thrown from Server");}));
     }
 
+    customerLogin(email: string, password: string) {
+
+        //SHOW LOADER BAR #EXTRA Changes
+        this.loader.start();
+        return this.http.post<any>(`${ServerURL.SERVER_URL_ENDPOINT_CUSTOMER}auth/login`, { email, password, })
+            .pipe(map(loginResponse => {
+                console.log(loginResponse);
+                this.loader.stop();
+                // localStorage.setItem('token', JSON.stringify(loginResponse.auth_token));
+                // localStorage.setItem('userType', JSON.stringify(loginResponse.auth_admin));
+                // this.currentUserSubject.next(loginResponse);
+                return loginResponse;
+            }),catchError(err => { return throwError("Error thrown from Server");}));
+    }
+
     logout() {
         
         const token = this.currentUserValue.token;
