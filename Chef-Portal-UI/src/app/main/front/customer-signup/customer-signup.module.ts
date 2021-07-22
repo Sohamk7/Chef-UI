@@ -4,6 +4,8 @@ import { MaterialModule } from '../../material.module';
 import { CustomerSignupComponent } from './customer-signup.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
+import { FooterModule } from '../footer/footer.module';
+
 
 const routes = [
   {
@@ -21,6 +23,7 @@ const routes = [
     CommonModule,
     MaterialModule,
     SharedModule,
+    FooterModule,
     RouterModule.forChild(routes)
   ]
 })

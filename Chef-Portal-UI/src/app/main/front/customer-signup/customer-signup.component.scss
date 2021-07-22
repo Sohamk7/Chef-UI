@@ -1,5 +1,33 @@
+.text{
+    text-align: center;
+    margin-left:70px;
+    font-size: large;
+    font-weight: bold;
+}
+.mat-form-field{
+    padding:10px;
+}
+#login{
+    margin: top 10px !important;
+}
+mat-toolbar{
+    background-color:#6e41c8;
+}
+.mat-raised-button{
+    background-color:#6e41c8 ;
+    border-radius: 50px;
+}
+.mat-stroked-button{
+    border-color: white!important;
+    background-color: #6e41c8;
+    color:white;
+}
+.image{
+    padding:25px;
+    width:60%;
+    margin-top: 70px;
 
-
+}
 #login {
     width: 100%;
 
