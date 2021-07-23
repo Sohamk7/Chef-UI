@@ -102,10 +102,15 @@
     
                     <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
                     (click)="onSubmit($event)" [disabled]="isSubmit">
-                        SUBMIT
+                        CREATE AN ACCOUNT
                     </button>
     
                 </form>
+
+                <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                    <span class="text">Already got an account?</span>
+                    <a class="link" routerLink="/customer-signup">Sign in here</a>
+                </div>
             </div>
         </div>
 

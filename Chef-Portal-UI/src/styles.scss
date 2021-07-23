@@ -14,3 +14,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     display: flex !important;
    
 }
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+    background-color: #6e41c8;
+    border-radius: 50px;
+}
+
+.mat-toolbar.mat-primary {
+    background: #6e41c8;
+    color: #fff;
+}
+
