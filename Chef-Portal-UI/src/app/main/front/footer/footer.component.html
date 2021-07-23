@@ -1,7 +1,12 @@
 <div fxLayout="row" fxFlex="1 0 auto" fxLayoutAlign="space-around start" fxLayoutGap="20px" class="footer">
     <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
       <!-- <h1><b>Local MasterChefs</b></h1> -->
-      <img src="./assets/lmc_logo_white.png" class="image" style="width: 75%;">
+      <div fxShow="true" fxHide.lt-md="true">
+        <span><img src="./assets/lmc_logo_white.png" class="image" style="width: 75%;"></span>
+      </div>
+      <div fxShow="true" fxHide.gt-sm="true">
+            <span><img src="./assets/lmc_logo_white.png" class="image" style="width: 75%;"></span>
+      </div>
     </div>
     <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
       <h2>Contact Us</h2>
@@ -21,4 +26,3 @@
     </div>
    
   </div>
-  
