@@ -16,13 +16,13 @@
       <div fxShow="true" fxHide.lt-md="true" fxLayoutGap="20px">
         <!-- The following menu items will be hidden on both SM and XS screen sizes -->
 
-        <button mat-button [matMenuTriggerFor]="menu">Chefs <i class="fa fa-caret-down pl-18"></i></button>
+        <button class="btn-border" mat-button [matMenuTriggerFor]="menu">Chefs <i class="fa fa-caret-down pl-18"></i></button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item routerLink="chef-login">Login</button>
             <button mat-menu-item routerLink="become-chefs">Become a chef</button>
         </mat-menu>
 
-        <button mat-button [matMenuTriggerFor]="menuCustomer">Customers <i class="fa fa-caret-down pl-18"></i></button>
+        <button class="btn-border" mat-button [matMenuTriggerFor]="menuCustomer">Customers <i class="fa fa-caret-down"></i></button>
         <mat-menu #menuCustomer="matMenu">
             <button mat-menu-item routerLink="customer-login">Login</button>
             <button mat-menu-item routerLink="customer-signup">Sign up</button>
