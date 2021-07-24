@@ -35,7 +35,7 @@ export class DataService {
   get(info: { url: string; isLoader?: boolean; }): Observable<Response> {
     this.startLoader(info);
 
-    return this.http.get(ServerURL.SERVER_URL_ENDPOINT + info.url).pipe(
+    return this.http.get(info.url).pipe(
       map((res) => {
         return this.extractData(res, info);
       }),
@@ -102,6 +102,21 @@ export class DataService {
     }
 
     return this.http.post(ServerURL.SERVER_URL_ENDPOINT_CUSTOMER + info.url, info.data, HttpUploadOptions).pipe(
+      map((res) => {
+        return this.extractData(res, info);
+      }),
+      catchError((err: Response) => {
+        console.error(err);
+        return this.handleErrorPromise(err, info);
+      })
+    );
+  }
+
+  //GET ALL CHEFS LIST
+  getAllList(info: { url: string; data: any; isLoader?: boolean; }): Observable<Response> {
+    this.startLoader(info);
+
+    return this.http.post(ServerURL.SERVER_URL_ENDPOINT_CUSTOMER + info.url, info.data).pipe(
       map((res) => {
         return this.extractData(res, info);
       }),
