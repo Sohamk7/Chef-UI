@@ -1,24 +1,37 @@
-<div fxLayout="row" fxFlex="1 0 auto" fxLayoutAlign="space-around start" fxLayoutGap="20px" class="footer">
-    <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
-      <!-- <h1><b>Local MasterChefs</b></h1> -->
-      <img src="./assets/lmc_logo_white.png" class="image" style="width: 75%;">
-    </div>
-    <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
-      <h2>Contact Us</h2>
-      <p>About us</p>
-      <p>Phone: +447988188825</p>
-      <p>Email:ali@localmasterchefs.com</p>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
-      <h2>Customers</h2>
-      <p>Login</p>
-      <p>Signup</p>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
-      <h2>Chefs</h2>
-      <p>Become a Chef</p>
-      <p>Chef Login</p>
-    </div>
-   
+
+<div fxLayout="row"  fxLayoutAlign="space-around start" fxLayoutGap="20px" fxShow.sm="true" class="footer">
+  <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
+    <!-- <h1><b>Local MasterChefs</b></h1> -->
+    <img src="./assets/lmc_logo_white.png" class="image" style="width: 75%;">
   </div>
-  
+  <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
+    <ul>
+      <li>
+        <h2>Contact Us</h2>
+      </li>
+      <li>About us</li>
+      <li>Phone: +447988188825</li>
+      <li>Email:ali@localmasterchefs.com</li>
+    </ul>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
+    <ul>
+      <li>
+        <h2>Customers</h2>
+      </li>
+      <li><button mat-button routerLink="auth/login">Login</button></li>
+      <li><button mat-button routerLink="customer-signup">SignUp</button></li>
+
+    </ul>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="space-around center" class="pl-20" fxFlex="50">
+    <ul>
+      <li>
+        <h2>Chefs</h2>
+      </li>
+      <li><button routerLink="auth/login" mat-button>Login</button></li>
+      <li><button routerLink="become-chefs" mat-button>Become a chef</button></li>
+    </ul>
+  </div>
+
+</div>

@@ -1,27 +1,32 @@
-<div id="login" fxLayout="column">
+<div fxFlexFill>
+  <div class="bg-image">
+    <div class="main">
+      <div fxLayout="column" fxFlex="100">
 
-  <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="start start">
-
-      <div id="login-form">
-
-          <!-- <div class="logo">
-              <img src="assets/images/logos/fuse.svg">
-          </div> -->
-
-          <div class="title">Authentic Homecooked Food Delivered Straight To Your Door.</div>
-
-          <div class="register" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-            <mat-form-field appearance="outline">
-              <input matInput type="text" placeholder="Enter Pastocode" >
-            </mat-form-field>
-            <button mat-raised-button color="primary"  routerLink="view-chefs" class="submit-button" aria-label="Search">
-                Search
-            </button>
+        <div fxLayout="row" fxLayoutAlign="start start">
+          <div fxLayout="column" fxLayoutAlign="start start" class="pl-20" fxFlex="50">
+            <p>Authentic Homecooked Food.</p>
+            <p> Delivered Straight To Your Door.</p>
+            <div>
+              <div fxLayout="column" fxLayoutAlign="start start">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+                  <mat-form-field appearance="outline">
+                    <input matInput type="text" placeholder="Enter your address...">
+                  </mat-form-field>
+                  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+                    <button  class="btn" mat-stroked-button routerLink="view-chefs" class="submit-button" aria-label="Search">
+                      SEARCH
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-      </div>
-
+        </div>
+      
+      <app-footer></app-footer>
+    </div>
   </div>
+</div>
 
 </div>
-<app-footer></app-footer>

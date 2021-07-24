@@ -2,13 +2,14 @@
 
     <div id="login" fxLayout="column">
 
-        <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="start start">
+        <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="start center">
 
-            <div fxLayout="column" fxLayoutAlign="center start">
+            <div fxLayout="column" fxLayoutAlign="start center">
                 <img src="assets/sign-up preview.jpg" style="width:70%">
-                <div fxLayout="column" fxLayoutAlign="center center" style="width:60%;padding: 5%;">
+                <div fxLayout="column" fxLayoutAlign="start center" style="width:60%;padding: 5%;">
                     <p>Cinnamonbox:</p>
-                    <p>Mixed Treat box for 4 ,that include cinnamon Rolls, Eclairs and Laaded pastries.</p>
+                    <p>Mixed Treat box for 4 ,that includes</p> 
+                    <p>cinnamon Rolls, Eclairs and Laded pastries.</p>
                 </div>
                 
             </div>
@@ -17,9 +18,9 @@
 
     </div>
 
-    <div id="login" fxLayout="column">
+    <div id="login"  fxLayout="column">
 
-        <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="start start">
+        <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center start">
 
             <div id="login-form" >
 
@@ -43,7 +44,7 @@
                         <mat-icon matSuffix class="secondary-text">person</mat-icon>
                         <mat-error>
                             Last Name is required
-                        </mat-error>
+                        </mat-error> 
                       
                     </mat-form-field>
     
@@ -102,10 +103,12 @@
     
                     <button mat-raised-button color="primary" class="submit-button" aria-label="LOG IN"
                     (click)="onSubmit($event)" [disabled]="isSubmit">
-                        SUBMIT
+                        CREATE CUSTOMER
                     </button>
-    
                 </form>
+                <div fxLayoutAlign="center center">
+                    <p>Already have a account?<button mat-button routerLink="customer-login" style="font-weight: bold;font-size: medium;">Sign In</button></p>
+                   </div>
             </div>
         </div>
 

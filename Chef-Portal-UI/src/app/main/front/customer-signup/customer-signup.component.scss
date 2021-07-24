@@ -1,7 +1,17 @@
 
-
+p{
+    font-weight: bold;
+    font-size: medium;
+}
+img{
+    border-radius: 20px;
+}
+mat-form-field{
+    padding:15px;
+}
 #login {
     width: 100%;
+    margin-left:20px !important;
 
     #login-form-wrapper {
         flex: 1 0 auto;
@@ -31,6 +41,8 @@
                     width: 220px;
                     margin: 16px auto;
                     display: block;
+                    background-color: #6e41c8;
+                    border-radius: 50px;
 
                 }
             }
