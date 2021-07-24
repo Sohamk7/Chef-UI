@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ViewChefsComponent } from './view-chefs.component';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../material.module';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 const routes = [
   {
@@ -18,7 +19,8 @@ const routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MaterialModule
+    MaterialModule,
+    NgImageSliderModule
   ]
 })
 export class ViewChefsModule { }
