@@ -1,28 +1,32 @@
-<div id="login" fxLayout="column">
+<div fxFlexFill>
+  <div class="bg-image">
+    <div class="main">
+      <div fxLayout="column" fxFlex="100">
 
-  <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="start start">
-
-      <div id="login-form">
-
-          <!-- <div class="logo">
-              <img src="assets/images/logos/fuse.svg">
-          </div> -->
-
-          <div class="title"><h1>Authentic Homecooked Food Delivered Straight To Your Door.</h1></div>
-
-          <div class="register" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
-            <mat-form-field appearance="outline">
-              <input matInput type="text" placeholder="Enter Your Address" >
-            </mat-form-field>
-            <!-- <input id="searchTextField" type="text" size="50" placeholder="Anything you want!"> -->
-            <button style="border: 1px solid white;" mat-raised-button color="primary"  fxFlex="30" routerLink="view-chefs" class="submit-button" aria-label="Search">
-                SEARCH
-            </button>
+        <div fxLayout="row" fxLayoutAlign="start start">
+          <div fxLayout="column" fxLayoutAlign="start start" class="pl-20" fxFlex="50">
+            <p>Authentic Homecooked Food.</p>
+            <p> Delivered Straight To Your Door.</p>
+            <div>
+              <div fxLayout="column" fxLayoutAlign="start start">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+                  <mat-form-field appearance="outline">
+                    <input matInput type="text" placeholder="Enter your address...">
+                  </mat-form-field>
+                  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+                    <button  class="btn" mat-stroked-button routerLink="view-chefs" class="submit-button" aria-label="Search">
+                      SEARCH
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-      </div>
-
+        </div>
+      
+      <app-footer></app-footer>
+    </div>
   </div>
+</div>
 
 </div>
-<app-footer></app-footer>
